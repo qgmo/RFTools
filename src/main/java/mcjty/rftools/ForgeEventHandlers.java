@@ -134,6 +134,10 @@ public class ForgeEventHandlers {
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
+        if (mcjty.rftools.protection.Protection.isChecking()) {
+            // 封包守卫发来“问一下”的右键事件，不是玩家真的点了方块
+            return;
+        }
         EntityPlayer player = event.getEntityPlayer();
 
         if (event instanceof PlayerInteractEvent.LeftClickBlock) {

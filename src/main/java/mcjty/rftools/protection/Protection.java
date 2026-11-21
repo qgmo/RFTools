@@ -22,12 +22,19 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  *     <li>没有 Sponge 时：发 Forge 的 {@link PlayerInteractEvent.RightClickBlock}，被取消或“使用方块”被拒绝都算不能。
  *     Forge 的这个事件取的是玩家所在的世界，所以方块不在玩家所在的世界时问不了，按“不能”回答。</li>
  * </ul>
- * 只问，不调用方块的 {@code onBlockActivated}。区块没加载时回答“不能”（不会因此加载区块）。出错时按“不能”处理。
+ * 只问，不调用方块的 {@code onBlockActivated}；RFTools 自己的右键事件处理器在问的时候不做事（{@link #isChecking()}），
+ * 但别的模组若在这个事件里做事，仍会被触发（有 Sponge 时 SpongeForge 也可能把 Sponge 事件转给 Forge 的监听者）。区块没加载时回答“不能”（不会因此加载区块）。出错时按“不能”处理。
  * Sponge 是可选依赖：没有 Sponge 时 {@link SpongeProtection} 不会被加载。
  */
 public final class Protection {
 
     private static boolean warned = false;
+    /** 正在发“问一下”的事件（RFTools 自己的右键处理器据此跳过，免得真的去操作屏幕等方块）。只在主线程用。 */
+    private static boolean checking = false;
+
+    public static boolean isChecking() {
+        return checking;
+    }
 
     private Protection() {
     }
@@ -39,6 +46,8 @@ public final class Protection {
         if (player instanceof FakePlayer) {
             return false;
         }
+        boolean outer = checking;
+        checking = true;
         try {
             if (SpongeHolder.LOADED) {
                 return SpongeProtection.canInteract((WorldServer) world, pos, player);
@@ -55,6 +64,8 @@ public final class Protection {
                 Logging.logError("RFTools: protection check failed, treating as denied (logged once)", e);
             }
             return false;
+        } finally {
+            checking = outer;
         }
     }
 

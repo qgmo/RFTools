@@ -44,6 +44,10 @@ public class PacketGetDelightingInfo implements IMessage {
         ctx.enqueueWork(() -> {
             EntityPlayer player = ctx.getSender();
             World world = player.getEntityWorld();
+            // 开发者工具只给管理员用：要拿着它、是 OP（权限等级 2），而且方块所在区块已加载
+            if (!(player.getHeldItemMainhand().getItem() instanceof DevelopersDelightItem) || !player.canUseCommand(2, "") || !world.isBlockLoaded(pos)) {
+                return;
+            }
 
             List<String> blockClasses = new ArrayList<>();
             List<String> teClasses = new ArrayList<>();

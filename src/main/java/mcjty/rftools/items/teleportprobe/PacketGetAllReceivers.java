@@ -38,6 +38,10 @@ public class PacketGetAllReceivers implements IMessage {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             EntityPlayerMP player = ctx.getSender();
+            // 全服接收器列表只给拿着传送探针（创造物品）的管理员看
+            if (!(player.getHeldItemMainhand().getItem() instanceof TeleportProbeItem) || !player.canUseCommand(2, "")) {
+                return;
+            }
             TeleportDestinations destinations = TeleportDestinations.getDestinations(player.getEntityWorld());
             List<TeleportDestinationClientInfo> destinationList = new ArrayList<> (destinations.getValidDestinations(player.getEntityWorld(), null));
             addDimensions(destinationList);

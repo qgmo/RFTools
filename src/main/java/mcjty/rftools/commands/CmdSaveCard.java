@@ -22,7 +22,8 @@ public class CmdSaveCard extends AbstractRfToolsCommand {
 
     @Override
     public int getPermissionLevel() {
-        return 0;
+        // 管理员命令（原来是 0：任何玩家都能用）
+        return 2;
     }
 
     @Override

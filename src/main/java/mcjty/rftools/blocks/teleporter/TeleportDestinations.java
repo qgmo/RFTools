@@ -9,6 +9,7 @@ import mcjty.rftools.playerprops.PlayerExtendedProperties;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -59,30 +60,46 @@ public class TeleportDestinations extends AbstractWorldData<TeleportDestinations
     }
 
     public void cleanupInvalid() {
-        Set<GlobalCoordinate> keys = new HashSet<>(destinations.keySet());
-        for (GlobalCoordinate key : keys) {
+        cleanupInvalid(key -> {
             World transWorld = mcjty.lib.varia.TeleportationTools.getWorldForDimension(key.getDimension());
-            boolean removed = false;
             if (transWorld == null) {
                 Logging.log("Receiver on dimension " + key.getDimension() + " removed because world can't be loaded!");
-                removed = true;
-            } else {
-                BlockPos c = key.getCoordinate();
-                TileEntity te;
-                try {
-                    te = transWorld.getTileEntity(c);
-                } catch (Exception e) {
-                    te = null;
-                }
-                if (!(te instanceof MatterReceiverTileEntity)) {
-                    Logging.log("Receiver at " + c + " on dimension " + key.getDimension() + " removed because there is no receiver there!");
-                    removed = true;
-                }
+                return true;
             }
-            if (removed) {
-                destinations.remove(key);
+            BlockPos c = key.getCoordinate();
+            TileEntity te;
+            try {
+                te = transWorld.getTileEntity(c);
+            } catch (Exception e) {
+                te = null;
+            }
+            if (!(te instanceof MatterReceiverTileEntity)) {
+                Logging.log("Receiver at " + c + " on dimension " + key.getDimension() + " removed because there is no receiver there!");
+                return true;
+            }
+            return false;
+        });
+    }
+
+    /** 删掉 {@code invalid} 判为无效的接收器（三张映射一起删）。 */
+    public void cleanupInvalid(java.util.function.Predicate<GlobalCoordinate> invalid) {
+        Set<GlobalCoordinate> keys = new HashSet<>(destinations.keySet());
+        for (GlobalCoordinate key : keys) {
+            if (invalid.test(key)) {
+                // 原来只删 destinations，留下编号 → 坐标的映射；充能传送器之后按编号找到坐标却找不到接收器，会在世界刻里空指针崩服
+                removeDestination(key.getCoordinate(), key.getDimension());
             }
         }
+    }
+
+    /** 编号 → 坐标、坐标 → 编号、坐标 → 接收器三张映射是否一致（测试用）。 */
+    boolean isConsistent() {
+        for (Map.Entry<Integer, GlobalCoordinate> entry : destinationById.entrySet()) {
+            if (!destinations.containsKey(entry.getValue()) || !entry.getKey().equals(destinationIdByCoordinate.get(entry.getValue()))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static TeleportDestinations getDestinations(World world) {
@@ -125,15 +142,13 @@ public class TeleportDestinations extends AbstractWorldData<TeleportDestinations
             }
             destinationClientInfo.setDimensionName(dimName);
 
-            if (world != null) {
-                TileEntity te = world.getTileEntity(c);
-                if (te instanceof MatterReceiverTileEntity) {
-                    MatterReceiverTileEntity matterReceiverTileEntity = (MatterReceiverTileEntity) te;
-                    if (playerName != null && !matterReceiverTileEntity.checkAccess(playerName)) {
-                        // No access.
-                        continue;
-                    }
+            if (world != null && playerName != null) {
+                if (!hasAccess(world, destination, playerName)) {
+                    // No access.
+                    continue;
                 }
+            } else if (world == null && playerName != null && Boolean.FALSE.equals(destination.checkCachedAccess(playerName))) {
+                continue;
             }
             if (properties != null) {
                 destinationClientInfo.setFavorite(properties.isDestinationFavorite(new GlobalCoordinate(c, destination.getDimension())));
@@ -144,6 +159,28 @@ public class TeleportDestinations extends AbstractWorldData<TeleportDestinations
         Collections.sort(result);
 
         return result;
+    }
+
+    /**
+     * 这名玩家能不能用这个接收器。接收器所在区块已加载时直接问接收器（顺便更新副本）；没加载时用副本；
+     * 副本未知（旧存档里还没同步过的接收器）时才照原来的做法加载一次。{@code world} 是接收器所在的世界。
+     */
+    public static boolean hasAccess(World world, TeleportDestination destination, String playerName) {
+        BlockPos c = destination.getCoordinate();
+        if (!world.isBlockLoaded(c)) {
+            Boolean cached = destination.checkCachedAccess(playerName);
+            if (cached != null) {
+                return cached;
+            }
+        }
+        TileEntity te = world.getTileEntity(c);
+        if (te instanceof MatterReceiverTileEntity) {
+            MatterReceiverTileEntity receiver = (MatterReceiverTileEntity) te;
+            destination.setAccess(receiver.isPrivateAccess(), receiver.getAllowedPlayers());
+            return receiver.checkAccess(playerName);
+        }
+        // 原来的逻辑：那里已经没有接收器时不拦
+        return true;
     }
 
     /**
@@ -241,6 +278,14 @@ public class TeleportDestinations extends AbstractWorldData<TeleportDestinations
 
             TeleportDestination destination = new TeleportDestination(c, dim);
             destination.setName(name);
+            if (tc.hasKey("private")) {
+                List<String> players = new ArrayList<>();
+                NBTTagList playerList = tc.getTagList("players", Constants.NBT.TAG_STRING);
+                for (int j = 0 ; j < playerList.tagCount() ; j++) {
+                    players.add(playerList.getStringTagAt(j));
+                }
+                destination.setAccess(tc.getBoolean("private"), players);
+            }
             GlobalCoordinate gc = new GlobalCoordinate(c, dim);
             destinations.put(gc, destination);
 
@@ -271,6 +316,14 @@ public class TeleportDestinations extends AbstractWorldData<TeleportDestinations
             tc.setInteger("z", c.getZ());
             tc.setInteger("dim", destination.getDimension());
             tc.setString("name", destination.getName());
+            if (destination.isAccessKnown()) {
+                tc.setBoolean("private", destination.isPrivateAccess());
+                NBTTagList playerList = new NBTTagList();
+                for (String player : destination.getAllowedPlayers()) {
+                    playerList.appendTag(new NBTTagString(player));
+                }
+                tc.setTag("players", playerList);
+            }
             if (coordinateToInteger != null) {
                 Integer id = coordinateToInteger.get(new GlobalCoordinate(c, destination.getDimension()));
                 if (id != null) {

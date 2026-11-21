@@ -1,5 +1,6 @@
 package mcjty.rftools;
 
+import mcjty.lib.varia.Logging;
 import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.varia.GlobalCoordinate;
@@ -54,16 +55,28 @@ public class ForgeEventHandlers {
     private static List<Pair<TeleportDestination,EntityPlayer>> playersToTeleportHere = new ArrayList<>();
 
     public static void addPlayerToTeleportHere(TeleportDestination destination, EntityPlayer player) {
+        if (destination == null || player == null) {
+            return;
+        }
         playersToTeleportHere.add(Pair.of(destination, player));
     }
 
     private static void performDelayedTeleports() {
         if (!playersToTeleportHere.isEmpty()) {
             // Teleport players here
-            for (Pair<TeleportDestination, EntityPlayer> pair : playersToTeleportHere) {
-                TeleportationTools.performTeleport(pair.getRight(), pair.getLeft(), 0, 10, false);
-            }
+            List<Pair<TeleportDestination, EntityPlayer>> todo = new ArrayList<>(playersToTeleportHere);
             playersToTeleportHere.clear();
+            for (Pair<TeleportDestination, EntityPlayer> pair : todo) {
+                if (pair.getLeft() == null || pair.getRight() == null || pair.getRight().isDead) {
+                    continue;
+                }
+                // 这里在世界刻里执行，异常会让整个服务端崩溃，所以只记日志
+                try {
+                    TeleportationTools.performTeleport(pair.getRight(), pair.getLeft(), 0, 10, false);
+                } catch (RuntimeException e) {
+                    Logging.logError("RFTools: delayed teleport of " + pair.getRight().getName() + " failed", e);
+                }
+            }
         }
     }
 

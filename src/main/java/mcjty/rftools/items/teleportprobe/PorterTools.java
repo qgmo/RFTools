@@ -1,5 +1,8 @@
 package mcjty.rftools.items.teleportprobe;
 
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.varia.Msg;
+import net.minecraftforge.common.DimensionManager;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.rftools.ClientCommandHandler;
@@ -22,7 +25,7 @@ public class PorterTools {
 
     public static void clearTarget(EntityPlayer player, int index) {
         ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
-        if (heldItem.isEmpty()) {
+        if (heldItem.isEmpty() || !(heldItem.getItem() instanceof ChargedPorterItem) || !PacketLimits.validIndex(index, AdvancedChargedPorterItem.MAXTARGETS)) {
             return;
         }
         NBTTagCompound tagCompound = heldItem.getTagCompound();
@@ -42,6 +45,10 @@ public class PorterTools {
         boolean probeInMainHand = !player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof TeleportProbeItem;
         boolean probeInOffHand = !player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() instanceof TeleportProbeItem;
         if ((!probeInMainHand) && (!probeInOffHand)) {
+            return;
+        }
+        // 传送探针是创造物品，这里再要求是管理员，以防它流出；目标维度必须已加载
+        if (!player.canUseCommand(2, "") || pos == null || DimensionManager.getWorld(dimension) == null) {
             return;
         }
 
@@ -118,14 +125,43 @@ public class PorterTools {
 
     public static void setTarget(EntityPlayer player, int target) {
         ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
-        if (heldItem.isEmpty()) {
+        if (heldItem.isEmpty() || !(heldItem.getItem() instanceof ChargedPorterItem)) {
             return;
         }
         NBTTagCompound tagCompound = heldItem.getTagCompound();
         if (tagCompound == null) {
             return;
         }
+        // 只能设成这个传送器已经记下的目标之一（界面里列出的那些），并且现在仍有权限
+        if (!isStoredTarget(tagCompound, target)) {
+            return;
+        }
+        TeleportDestinations destinations = TeleportDestinations.getDestinations(player.getEntityWorld());
+        GlobalCoordinate gc = destinations.getCoordinateForId(target);
+        TeleportDestination destination = gc == null ? null : destinations.getDestination(gc);
+        if (destination == null) {
+            return;
+        }
+        World world = DimensionManager.getWorld(destination.getDimension());
+        if (world != null && !TeleportDestinations.hasAccess(world, destination, player.getName())) {
+            Msg.message(player, "msg.rftools.you_have_no_access_to_target_this_receiver");
+            return;
+        }
+        if (world == null && Boolean.FALSE.equals(destination.checkCachedAccess(player.getName()))) {
+            Msg.message(player, "msg.rftools.you_have_no_access_to_target_this_receiver");
+            return;
+        }
         tagCompound.setInteger("target", target);
+    }
+
+    /** {@code target} 是否是这个传送器记下的目标（target0 … target{MAXTARGETS-1}）之一。 */
+    public static boolean isStoredTarget(NBTTagCompound tagCompound, int target) {
+        for (int i = 0; i < AdvancedChargedPorterItem.MAXTARGETS; i++) {
+            if (tagCompound.hasKey("target" + i) && tagCompound.getInteger("target" + i) == target) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void returnTargets(EntityPlayer player) {

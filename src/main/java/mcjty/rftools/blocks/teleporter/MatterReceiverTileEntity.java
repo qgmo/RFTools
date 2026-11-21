@@ -77,7 +77,8 @@ public class MatterReceiverTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = mcjty.rftools.network.PacketLimits.truncate(name, mcjty.rftools.network.PacketLimits.MAX_NAME_LENGTH);
+        name = this.name;
         TeleportDestinations destinations = TeleportDestinations.getDestinations(getWorld());
         TeleportDestination destination = destinations.getDestination(getPos(), getWorld().provider.getDimension());
         if (destination != null) {
@@ -110,7 +111,7 @@ public class MatterReceiverTileEntity extends GenericEnergyReceiverTileEntity im
             } else {
                 destinations.assignId(gc, id);
             }
-            destinations.addDestination(gc);
+            destinations.addDestination(gc).setAccess(privateAccess, allowedPlayers);
             destinations.save();
 
             markDirty();
@@ -147,7 +148,29 @@ public class MatterReceiverTileEntity extends GenericEnergyReceiverTileEntity im
 
     public void setPrivateAccess(boolean privateAccess) {
         this.privateAccess = privateAccess;
+        syncAccessToDestination();
         markDirtyClient();
+    }
+
+    /** 把访问设置抄一份到传送目的地列表里（列表、设目标时不必加载这里的区块就能查权限）。 */
+    private void syncAccessToDestination() {
+        if (getWorld() == null || getWorld().isRemote) {
+            return;
+        }
+        TeleportDestinations destinations = TeleportDestinations.getDestinations(getWorld());
+        TeleportDestination destination = destinations.getDestination(getPos(), getWorld().provider.getDimension());
+        if (destination != null) {
+            destination.setAccess(privateAccess, allowedPlayers);
+            destinations.save();
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (getWorld() != null && !getWorld().isRemote) {
+            syncAccessToDestination();
+        }
     }
 
     public boolean checkAccess(String player) {
@@ -162,8 +185,12 @@ public class MatterReceiverTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
     public void addPlayer(String player) {
+        if (player == null || player.isEmpty() || player.length() > mcjty.rftools.network.PacketLimits.MAX_NAME_LENGTH) {
+            return;
+        }
         if (!allowedPlayers.contains(player)) {
             allowedPlayers.add(player);
+            syncAccessToDestination();
             markDirtyClient();
         }
     }
@@ -171,6 +198,7 @@ public class MatterReceiverTileEntity extends GenericEnergyReceiverTileEntity im
     public void delPlayer(String player) {
         if (allowedPlayers.contains(player)) {
             allowedPlayers.remove(player);
+            syncAccessToDestination();
             markDirtyClient();
         }
     }

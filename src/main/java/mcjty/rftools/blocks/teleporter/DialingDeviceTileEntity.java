@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.teleporter;
 
+import mcjty.rftools.network.GuardRules;
+import mcjty.rftools.network.PacketGuard;
 import mcjty.lib.tileentity.GenericEnergyReceiverTileEntity;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
@@ -154,6 +156,9 @@ public class DialingDeviceTileEntity extends GenericEnergyReceiverTileEntity {
                         int xx = x + dx;
                         if (dx != 0 || dy != 0 || dz != 0) {
                             BlockPos c = new BlockPos(xx, yy, zz);
+                            if (!getWorld().isBlockLoaded(c)) {
+                                continue;
+                            }
                             TileEntity tileEntity = getWorld().getTileEntity(c);
                             if (tileEntity instanceof MatterTransmitterTileEntity) {
                                 MatterTransmitterTileEntity matterTransmitterTileEntity = (MatterTransmitterTileEntity) tileEntity;
@@ -165,6 +170,18 @@ public class DialingDeviceTileEntity extends GenericEnergyReceiverTileEntity {
             }
         }
         return transmitters;
+    }
+
+    /** 发射器是否在这台拨号器的范围内（同一维度，水平 / 垂直范围同 searchTransmitters）且区块已加载。 */
+    public boolean isTransmitterInRange(BlockPos transmitter, int transDim) {
+        if (transDim != getWorld().provider.getDimension()) {
+            return false;
+        }
+        if (transmitter.equals(getPos()) || !GuardRules.inBox(getPos(), transmitter,
+                TeleportConfiguration.horizontalDialerRange.get(), TeleportConfiguration.verticalDialerRange.get())) {
+            return false;
+        }
+        return getWorld().isBlockLoaded(transmitter) && getWorld().getTileEntity(transmitter) instanceof MatterTransmitterTileEntity;
     }
 
     // Server side only.
@@ -195,17 +212,24 @@ public class DialingDeviceTileEntity extends GenericEnergyReceiverTileEntity {
         }
         consumeEnergy(cost);
 
+        // 只查已登记的接收器（坐标、维度由客户端提供，原来任意坐标都会去加载甚至生成区块）
+        TeleportDestinations destinations = TeleportDestinations.getDestinations(getWorld());
+        if (c == null || destinations.getDestination(c, dim) == null) {
+            return DialingDeviceTileEntity.DIAL_INVALID_DESTINATION_MASK;
+        }
+
         World w = mcjty.lib.varia.TeleportationTools.getWorldForDimension(dim);
         if (w == null) {
-            TeleportDestinations destinations = TeleportDestinations.getDestinations(getWorld());
-            destinations.cleanupInvalid();
+            // 只删这一个（原来调用 cleanupInvalid()，会把所有接收器所在的维度和区块全部加载一遍）
+            destinations.removeDestination(c, dim);
+            destinations.save();
             return DialingDeviceTileEntity.DIAL_INVALID_DESTINATION_MASK;
         }
 
         TileEntity tileEntity = w.getTileEntity(c);
         if (!(tileEntity instanceof MatterReceiverTileEntity)) {
-            TeleportDestinations destinations = TeleportDestinations.getDestinations(getWorld());
-            destinations.cleanupInvalid();
+            destinations.removeDestination(c, dim);
+            destinations.save();
             return DialingDeviceTileEntity.DIAL_INVALID_DESTINATION_MASK;
         }
 
@@ -248,7 +272,8 @@ public class DialingDeviceTileEntity extends GenericEnergyReceiverTileEntity {
             return rc;
         }
         if (CMD_FAVORITE.equals(command)) {
-            String player = params.get(PARAM_PLAYER);
+            // 玩家名用服务端的，不信客户端（原来可以改别人的收藏）
+            String player = playerMP.getName();
             BlockPos receiver = params.get(PARAM_POS);
             int dimension = params.get(PARAM_DIMENSION);
             boolean favorite = params.get(PARAM_FAVORITE);
@@ -271,22 +296,28 @@ public class DialingDeviceTileEntity extends GenericEnergyReceiverTileEntity {
         }
         if (CMD_CHECKSTATUS.equals(command)) {
             BlockPos c = args.get(PARAM_POS);
-            int dim = args.get(PARAM_DIMENSION);
+            Integer dimension = args.get(PARAM_DIMENSION);
+            if (c == null || dimension == null) {
+                return null;
+            }
+            int dim = dimension;
             return TypedMap.builder().put(PARAM_STATUS, checkStatus(c, dim)).build();
-        } else if (CMD_DIAL.equals(command)) {
-            String player = args.get(PARAM_PLAYER);
+        } else if (CMD_DIAL.equals(command) || CMD_DIALONCE.equals(command)) {
+            // 玩家名一律用发包的玩家（服务端的名字）；客户端给的 player 参数不用。拿不到玩家（不是从封包来的）就不拨
+            EntityPlayerMP sender = PacketGuard.currentPlayer();
+            if (sender == null) {
+                return TypedMap.builder().put(PARAM_STATUS, DIAL_TRANSMITTER_NOACCESS).build();
+            }
             BlockPos transmitter = args.get(PARAM_TRANSMITTER);
-            int transDim = args.get(PARAM_TRANS_DIMENSION);
+            Integer transDim = args.get(PARAM_TRANS_DIMENSION);
             BlockPos c = args.get(PARAM_POS);
-            int dim = args.get(PARAM_DIMENSION);
-            return TypedMap.builder().put(PARAM_STATUS, dial(player, transmitter, transDim, c, dim, false)).build();
-        } else if (CMD_DIALONCE.equals(command)) {
-            String player = args.get(PARAM_PLAYER);
-            BlockPos transmitter = args.get(PARAM_TRANSMITTER);
-            int transDim = args.get(PARAM_TRANS_DIMENSION);
-            BlockPos c = args.get(PARAM_POS);
-            int dim = args.get(PARAM_DIMENSION);
-            return TypedMap.builder().put(PARAM_STATUS, dial(player, transmitter, transDim, c, dim, true)).build();
+            Integer dim = args.get(PARAM_DIMENSION);
+            // 发射器必须与拨号器在同一维度、在拨号器的范围内（与界面列出的发射器相同）
+            if (transmitter == null || transDim == null || !isTransmitterInRange(transmitter, transDim)) {
+                return TypedMap.builder().put(PARAM_STATUS, DIAL_INVALID_TRANSMITTER).build();
+            }
+            boolean once = CMD_DIALONCE.equals(command);
+            return TypedMap.builder().put(PARAM_STATUS, dial(sender.getName(), transmitter, transDim, c, dim == null ? 0 : dim, once)).build();
         }
         return null;
     }

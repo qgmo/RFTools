@@ -97,6 +97,15 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
                     return;
                 }
                 TeleportDestination destination = destinations.getDestination(coordinate);
+                if (destination == null) {
+                    Msg.message(player, "msg.rftools.something_went_wrong_the_target_has");
+                    return;
+                }
+                // 真正传送前再查一次权限（目标可能是用别的方式设上的，或者接收器之后改成了私有）
+                if (!TeleportationTools.canTeleportTo(player, destination)) {
+                    Msg.message(player, "msg.rftools.you_have_no_access_to_target_this_receiver");
+                    return;
+                }
                 ForgeEventHandlers.addPlayerToTeleportHere(destination, player);
 //                    TeleportationTools.performTeleport(player, destination, 0, 10, false);
             } else {
@@ -202,6 +211,15 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
                 return;
             }
             TeleportDestination destination = destinations.getDestination(coordinate);
+            if (destination == null) {
+                Msg.message(player, "msg.rftools.something_went_wrong_the_target_has");
+                return;
+            }
+            // 开始传送时就查权限，免得白耗能量
+            if (!TeleportationTools.canTeleportTo(player, destination)) {
+                Msg.message(player, "msg.rftools.you_have_no_access_to_target_this_receiver");
+                return;
+            }
 
             if (!TeleportationTools.checkValidTeleport(player, world.provider.getDimension(), destination.getDimension())) {
                 return;

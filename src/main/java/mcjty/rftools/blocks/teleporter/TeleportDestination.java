@@ -4,10 +4,21 @@ import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class TeleportDestination {
     private final BlockPos coordinate;
     private final int dimension;
     private String name = "";
+
+    // 接收器访问设置的副本（只在服务端用，不进网络包），让列表、设目标时不必为了查权限去加载接收器所在的区块。
+    // accessKnown 为 false 表示还没从接收器同步过（旧存档）。
+    private boolean accessKnown = false;
+    private boolean privateAccess = false;
+    private final Set<String> allowedPlayers = new HashSet<>();
 
     public TeleportDestination(ByteBuf buf) {
         int cx = buf.readInt();
@@ -55,6 +66,33 @@ public class TeleportDestination {
         } else {
             this.name = name;
         }
+    }
+
+    public void setAccess(boolean privateAccess, Collection<String> allowedPlayers) {
+        this.accessKnown = true;
+        this.privateAccess = privateAccess;
+        this.allowedPlayers.clear();
+        this.allowedPlayers.addAll(allowedPlayers);
+    }
+
+    public boolean isAccessKnown() {
+        return accessKnown;
+    }
+
+    public boolean isPrivateAccess() {
+        return privateAccess;
+    }
+
+    public Set<String> getAllowedPlayers() {
+        return Collections.unmodifiableSet(allowedPlayers);
+    }
+
+    /** 按副本判断这名玩家能不能用这个接收器（副本未知时返回 null）。 */
+    public Boolean checkCachedAccess(String player) {
+        if (!accessKnown) {
+            return null;
+        }
+        return !privateAccess || allowedPlayers.contains(player);
     }
 
     public BlockPos getCoordinate() {

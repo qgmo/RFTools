@@ -130,6 +130,25 @@ public class TeleportationTools {
         }
     }
 
+    /**
+     * 玩家能不能传送到这个接收器（充能传送器真正传送时用）：接收器所在的世界与区块会被加载（玩家正要去那里）。
+     * 接收器已经不在了也算不能。
+     */
+    public static boolean canTeleportTo(EntityPlayer player, TeleportDestination dest) {
+        if (dest == null || dest.getCoordinate() == null) {
+            return false;
+        }
+        World world = mcjty.lib.varia.TeleportationTools.getWorldForDimension(dest.getDimension());
+        if (world == null) {
+            return false;
+        }
+        TileEntity te = world.getTileEntity(dest.getCoordinate());
+        if (!(te instanceof MatterReceiverTileEntity)) {
+            return false;
+        }
+        return ((MatterReceiverTileEntity) te).checkAccess(player.getName());
+    }
+
     // Return true if we needed a boost.
     public static boolean performTeleport(EntityPlayer player, TeleportDestination dest, int bad, int good, boolean boosted) {
         BlockPos c = dest.getCoordinate();
@@ -178,10 +197,11 @@ public class TeleportationTools {
         if (transWorld == null) {
             return DialingDeviceTileEntity.DIAL_INVALID_SOURCE_MASK;
         }
-        MatterTransmitterTileEntity transmitterTileEntity = (MatterTransmitterTileEntity) transWorld.getTileEntity(transmitter);
-        if (transmitterTileEntity == null) {
+        TileEntity transmitterTE = transmitter == null ? null : transWorld.getTileEntity(transmitter);
+        if (!(transmitterTE instanceof MatterTransmitterTileEntity)) {
             return DialingDeviceTileEntity.DIAL_INVALID_TRANSMITTER;
         }
+        MatterTransmitterTileEntity transmitterTileEntity = (MatterTransmitterTileEntity) transmitterTE;
 
         if (player != null && !transmitterTileEntity.checkAccess(player)) {
             return DialingDeviceTileEntity.DIAL_TRANSMITTER_NOACCESS;

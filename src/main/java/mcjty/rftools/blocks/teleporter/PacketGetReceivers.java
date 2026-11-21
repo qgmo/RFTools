@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.teleporter;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.ICommandHandler;
 import mcjty.lib.network.NetworkTools;
@@ -38,7 +40,7 @@ public class PacketGetReceivers implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
-        params = TypedMapTools.readArguments(buf);
+        params = SafeNetworkTools.readArguments(buf);
     }
 
     @Override
@@ -50,12 +52,13 @@ public class PacketGetReceivers implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            TileEntity te = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos);
             if (!(te instanceof ICommandHandler)) {
-                Logging.log("createStartScanPacket: TileEntity is not a CommandHandler!");
                 return;
             }
             ICommandHandler commandHandler = (ICommandHandler) te;
+            // 玩家名一律用服务端的（决定能看到哪些私有接收器），不信客户端
+            TypedMap params = TypedMap.builder().put(PARAM_PLAYER, ctx.getSender().getName()).build();
             List<TeleportDestinationClientInfo> list = commandHandler.executeWithResultList(DialingDeviceTileEntity.CMD_GETRECEIVERS, params, Type.create(TeleportDestinationClientInfo.class));
             PacketReceiversReady msg = new PacketReceiversReady(pos, DialingDeviceTileEntity.CLIENTCMD_GETRECEIVERS, list);
             RFToolsMessages.INSTANCE.sendTo(msg, ctx.getSender());

@@ -5,6 +5,7 @@ import mcjty.rftools.craftinggrid.CraftingGridInventory;
 import mcjty.rftools.craftinggrid.CraftingGridProvider;
 import mcjty.rftools.compat.jei.JEIRecipeAcceptor;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -144,4 +145,13 @@ public class RemoteStorageItemContainer extends GenericContainer {
         }
     }
 
+
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+        // 数字键交换：不许把平板所在的快捷栏格换走
+        if (clickTypeIn == ClickType.SWAP && dragType == tabletIndex) {
+            return ItemStack.EMPTY;
+        }
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
+    }
 }

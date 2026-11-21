@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.storagemonitor;
 
+import mcjty.rftools.network.PacketGuard;
+import net.minecraft.entity.player.EntityPlayerMP;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.WorldTools;
 import mcjty.rftools.ClientCommandHandler;
@@ -18,9 +20,12 @@ import java.util.Set;
 public class StorageScannerTools {
 
     public static void scannerSearch(EntityPlayer player, Integer dim, BlockPos pos, String text) {
+        if (dim == null || text == null || !(player instanceof EntityPlayerMP)) {
+            return;
+        }
         World world = DimensionManager.getWorld(dim);
-        if (WorldTools.chunkLoaded(world, pos)) {
-            TileEntity te = world.getTileEntity(pos);
+        {
+            TileEntity te = PacketGuard.machine((EntityPlayerMP) player, world, pos);
             if (te instanceof StorageScannerTileEntity) {
                 StorageScannerTileEntity scannerTileEntity = (StorageScannerTileEntity) te;
                 Set<BlockPos> inventories = scannerTileEntity.performSearch(text);
@@ -32,9 +37,13 @@ public class StorageScannerTools {
     }
 
     public static void requestContents(EntityPlayer player, Integer dim, BlockPos pos, BlockPos invpos) {
+        if (dim == null || invpos == null || !(player instanceof EntityPlayerMP)) {
+            return;
+        }
         World world = DimensionManager.getWorld(dim);
-        if (WorldTools.chunkLoaded(world, pos)) {
-            TileEntity te = world.getTileEntity(pos);
+        {
+            // 守卫 + getInventoryForBlock 只给这台扫描器库存列表里、范围内的容器
+            TileEntity te = PacketGuard.machine((EntityPlayerMP) player, world, pos);
             if (te instanceof StorageScannerTileEntity) {
                 StorageScannerTileEntity scannerTileEntity = (StorageScannerTileEntity) te;
                 List<ItemStack> inv = scannerTileEntity.getInventoryForBlock(invpos);

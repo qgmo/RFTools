@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.storagemonitor;
 
+import mcjty.rftools.network.PacketLimits;
 import com.google.common.base.Function;
 import mcjty.lib.bindings.DefaultAction;
 import mcjty.lib.bindings.DefaultValue;
@@ -449,6 +450,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
         Predicate<ItemStack> finalMatcher = matcher;
         inventories.stream()
                 .filter(this::isValid)
+                .filter(getWorld()::isBlockLoaded)
                 .map(getWorld()::getTileEntity)
                 .filter(te -> te != null && !(te instanceof StorageScannerTileEntity))
                 .forEach(te -> InventoryHelper.getItems(te, finalMatcher).forEach(s -> output.add(te.getPos())));
@@ -485,8 +487,11 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
         return radius;
     }
 
+    /** 扫描半径上限（与界面的滑条一致）。服务端以前不检查，半径过大时一次扫描会卡死主线程。 */
+    public static final int MAX_RADIUS = 20;
+
     public void setRadius(int v) {
-        radius = v;
+        radius = PacketLimits.clamp(v, 0, MAX_RADIUS);
         if (StorageScannerConfiguration.xnetRequired.get() && RFTools.setup.xnet) {
             radius = 0;
         }
@@ -687,7 +692,11 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
         inventories = new ArrayList<>();
 
         for (BlockPos p : old) {
-            if (xnetAccess.containsKey(p) || inRange(p)) {
+            if ((xnetAccess.containsKey(p) || inRange(p)) && !getWorld().isBlockLoaded(p)) {
+                // 区块没加载：不为了扫描去加载它，原样保留
+                inventories.add(p);
+                oldAdded.add(p);
+            } else if (xnetAccess.containsKey(p) || inRange(p)) {
                 TileEntity te = getWorld().getTileEntity(p);
                 if (InventoryHelper.isInventory(te) && !(te instanceof StorageScannerTileEntity)) {
                     IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -722,7 +731,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
     private void inventoryAddNew(Set<BlockPos> oldAdded, Set<IItemHandler> seenItemHandlers, BlockPos p) {
-        if (!oldAdded.contains(p)) {
+        if (!oldAdded.contains(p) && getWorld().isBlockLoaded(p)) {
             TileEntity te = getWorld().getTileEntity(p);
             if (InventoryHelper.isInventory(te) && !(te instanceof StorageScannerTileEntity)) {
                 if (!inventories.contains(p)) {
@@ -866,6 +875,9 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
     private ItemStack requestStackFromInv(BlockPos invPos, ItemStack requested, Integer[] todo, ItemStack outSlot) {
+        if (!getWorld().isBlockLoaded(invPos)) {
+            return outSlot;
+        }
         TileEntity tileEntity = getWorld().getTileEntity(invPos);
         if (tileEntity instanceof StorageScannerTileEntity) {
             return outSlot;
@@ -893,6 +905,15 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
 
     // Meant to be used from the gui
     public void requestStack(BlockPos invPos, ItemStack requested, int amount, EntityPlayer player) {
+        // 数量：-1 表示一整组，否则最多一组
+        if (amount < -1) {
+            return;
+        }
+        amount = Math.min(amount, requested.getMaxStackSize());
+        // 指定的容器必须在这台扫描器自己的库存列表里，并且在范围内（或由 XNet 提供），区块已加载
+        if (invPos.getY() != -1 && !canAccessInventory(invPos)) {
+            return;
+        }
         int rf = StorageScannerConfiguration.rfPerRequest.get();
         if (amount >= 0) {
             rf /= 10;       // Less RF usage for requesting less items
@@ -969,9 +990,26 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
 
+    /**
+     * 这台扫描器能不能访问这个容器：在它自己的库存列表里、在扫描范围内（XNet 提供的除外）、区块已加载。
+     * 取物、查看内容都要过这一关（客户端发来的坐标不可信）。
+     */
+    public boolean canAccessInventory(BlockPos p) {
+        if (p == null || !inventories.contains(p) || !isValid(p)) {
+            return false;
+        }
+        if (!xnetAccess.containsKey(p) && !inRange(p)) {
+            return false;
+        }
+        return getWorld().isBlockLoaded(p);
+    }
+
     public List<ItemStack> getInventoryForBlock(BlockPos cpos) {
         Set<Item> foundItems = new HashSet<>();
         List<ItemStack> stacks = new ArrayList<>();
+        if (cpos.getY() != -1 && !canAccessInventory(cpos)) {
+            return stacks;
+        }
 
         lastSelectedInventory = cpos;
 
@@ -990,6 +1028,9 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     }
 
     private void addItemsFromInventory(BlockPos cpos, Set<Item> foundItems, List<ItemStack> stacks) {
+        if (!getWorld().isBlockLoaded(cpos)) {
+            return;
+        }
         TileEntity tileEntity = getWorld().getTileEntity(cpos);
         IItemHandler handler = getItemHandlerAt(tileEntity, null);
         if (handler != null) {
@@ -1029,7 +1070,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     public void readRestorableFromNBT(NBTTagCompound tagCompound) {
         super.readRestorableFromNBT(tagCompound);
         readBufferFromNBT(tagCompound, inventoryHelper);
-        radius = tagCompound.getInteger("radius");
+        radius = PacketLimits.clamp(tagCompound.getInteger("radius"), 0, MAX_RADIUS);
         exportToCurrent = tagCompound.getBoolean("exportC");
         if (tagCompound.hasKey("wideview")) {
             openWideView = tagCompound.getBoolean("wideview");

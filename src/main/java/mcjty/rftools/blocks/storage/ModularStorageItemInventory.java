@@ -24,6 +24,8 @@ public class ModularStorageItemInventory implements CraftingGridProvider, JEIRec
     private final EntityPlayer entityPlayer;
     private CraftingGrid craftingGrid = new CraftingGrid();
     private ItemStack storageItem = null;       // If null use held item from player
+    // 打开平板界面时它所在的快捷栏格（-1 表示不是从手上打开的）
+    private int tabletIndex = -1;
 
     public ModularStorageItemInventory(EntityPlayer player, ItemStack storageItem) {
         this.entityPlayer = player;
@@ -39,6 +41,10 @@ public class ModularStorageItemInventory implements CraftingGridProvider, JEIRec
 
     public ModularStorageItemInventory(EntityPlayer player) {
         this.entityPlayer = player;
+        // 固定打开时手上的那个平板：之后换手持格、用数字键把平板换走时，内容仍写回这个平板，
+        // 不会写进新拿到手上的物品（原来每次都现取手上的物品，可以复制整个平板的内容）
+        this.storageItem = player.getHeldItem(EnumHand.MAIN_HAND);
+        this.tabletIndex = player.inventory.currentItem;
         int maxSize = getMaxSize();
         stacks = ItemStackList.create(maxSize);
         NBTTagCompound tagCompound = getStorageItem().getTagCompound();
@@ -206,7 +212,16 @@ public class ModularStorageItemInventory implements CraftingGridProvider, JEIRec
     }
 
     public boolean isUsable(EntityPlayer player) {
-        return true;
+        if (tabletIndex < 0 || player.world.isRemote) {
+            return true;
+        }
+        // 服务端：平板必须还在打开时的快捷栏格、还拿在手上，否则界面关闭
+        return player.inventory.currentItem == tabletIndex && player.getHeldItem(EnumHand.MAIN_HAND) == storageItem;
+    }
+
+    /** 这个界面编辑的是哪个平板（打开时手上的那个）。 */
+    public ItemStack getTabletStack() {
+        return storageItem;
     }
 
     @Override

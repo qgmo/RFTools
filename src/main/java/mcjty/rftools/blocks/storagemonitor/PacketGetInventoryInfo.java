@@ -1,6 +1,7 @@
 package mcjty.rftools.blocks.storagemonitor;
 
 
+import mcjty.rftools.network.PacketGuard;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -74,15 +75,8 @@ public class PacketGetInventoryInfo implements IMessage {
 
     private Optional<List<PacketReturnInventoryInfo.InventoryInfo>> onMessageServer(EntityPlayerMP entityPlayerMP) {
         World world = DimensionManager.getWorld(id);
-        if (world == null) {
-            return Optional.empty();
-        }
-
-        if (!WorldTools.chunkLoaded(world, pos)) {
-            return Optional.empty();
-        }
-
-        TileEntity te = world.getTileEntity(pos);
+        // 守卫：区块已加载、开着这台扫描器的界面（方块或平板）或在附近、安全卡、领地
+        TileEntity te = PacketGuard.machine(entityPlayerMP, world, pos);
         if (te instanceof StorageScannerTileEntity) {
             StorageScannerTileEntity scannerTileEntity = (StorageScannerTileEntity) te;
             Stream<BlockPos> inventories;

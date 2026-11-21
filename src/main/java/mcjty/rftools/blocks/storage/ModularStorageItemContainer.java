@@ -6,7 +6,11 @@ import mcjty.rftools.craftinggrid.CraftingGridProvider;
 import mcjty.rftools.items.storage.StorageModuleItem;
 import mcjty.rftools.compat.jei.JEIRecipeAcceptor;
 import net.minecraft.entity.player.EntityPlayer;
+import mcjty.rftools.items.storage.StorageModuleTabletItem;
+import mcjty.rftools.network.PacketLimits;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -60,7 +64,19 @@ public class ModularStorageItemContainer extends GenericContainer {
     }
 
     private int getMaxSize() {
-        return StorageModuleItem.MAXSIZE[entityPlayer.getHeldItem(EnumHand.MAIN_HAND).getTagCompound().getInteger("childDamage")];
+        ItemStack tablet = ((ModularStorageItemInventory) getInventory(CONTAINER_INVENTORY)).getTabletStack();
+        NBTTagCompound tag = tablet.getTagCompound();
+        int damage = tag == null ? 0 : tag.getInteger("childDamage");
+        return PacketLimits.validIndex(damage, StorageModuleItem.MAXSIZE.length) ? StorageModuleItem.MAXSIZE[damage] : 0;
+    }
+
+    @Override
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+        // 数字键交换：不许把平板所在的快捷栏格换走（原版只检查目标格，不检查快捷栏格）
+        if (clickTypeIn == ClickType.SWAP && dragType == tabletIndex) {
+            return ItemStack.EMPTY;
+        }
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
 
     @Override
@@ -92,7 +108,8 @@ public class ModularStorageItemContainer extends GenericContainer {
                 slot = new BaseSlot(inventories.get(slotFactory.getInventoryName()), slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
                     @Override
                     public boolean isItemValid(ItemStack stack) {
-                        return getSlotIndex() < getMaxSize();
+                        // 平板不能放进平板（防复制）
+                        return getSlotIndex() < getMaxSize() && !(stack.getItem() instanceof StorageModuleTabletItem);
                     }
                 };
             }

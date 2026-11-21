@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.storagemonitor;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -28,7 +30,7 @@ public class PacketRequestItem implements IMessage {
         pos = NetworkTools.readPos(buf);
         inventoryPos = NetworkTools.readPos(buf);
         amount = buf.readInt();
-        item = NetworkTools.readItemStack(buf);
+        item = SafeNetworkTools.readItemStack(buf);
     }
 
     @Override
@@ -59,15 +61,9 @@ public class PacketRequestItem implements IMessage {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             WorldServer world = DimensionManager.getWorld(dimensionId);
-            if (world == null) {
-                return;
-            }
-            if (!WorldTools.chunkLoaded(world, pos)) {
-                return;
-            }
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof StorageScannerTileEntity) {
-                StorageScannerTileEntity tileEntity = (StorageScannerTileEntity) te;
+            // 守卫：区块已加载、开着这台扫描器的界面（方块或平板）或在附近、安全卡、领地
+            StorageScannerTileEntity tileEntity = PacketGuard.machine(ctx.getSender(), world, pos, StorageScannerTileEntity.class);
+            if (tileEntity != null && inventoryPos != null && item != null && !item.isEmpty()) {
                 tileEntity.requestStack(inventoryPos, item, amount, ctx.getSender());
             }
         });

@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.spawner;
 
+import net.minecraft.util.math.Vec3d;
 import mcjty.lib.container.DefaultSidedInventory;
 import mcjty.lib.container.InventoryHelper;
 import mcjty.lib.bindings.DefaultValue;
@@ -194,6 +195,11 @@ public class MatterBeamerTileEntity extends GenericEnergyReceiverTileEntity impl
     }
 
     public void setDestination(BlockPos destination) {
+        // 服务端再查一次距离（原来只在客户端用扳手连线时检查）
+        if (!getWorld().isRemote && destination != null
+                && new Vec3d(destination).distanceTo(new Vec3d(getPos())) > SpawnerConfiguration.maxBeamDistance) {
+            return;
+        }
         this.destination = destination;
         disableBlockGlow();
         markDirty();

@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.environmental;
 
+import mcjty.rftools.network.PacketLimits;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -320,8 +321,11 @@ public class EnvironmentalControllerTileEntity extends GenericEnergyReceiverTile
         return radius;
     }
 
+    /** 半径与高度范围的上限（与界面一致：半径滑条 5–100，高度 0–255）。服务端以前不检查，半径过大时整数溢出、遍历巨大的范围。 */
+    public static final int MAX_RADIUS = 100;
+
     public void setRadius(int radius) {
-        this.radius = radius;
+        this.radius = PacketLimits.clamp(radius, 0, MAX_RADIUS);
         volume = -1;
         environmentModules = null;
         markDirtyClient();
@@ -332,7 +336,7 @@ public class EnvironmentalControllerTileEntity extends GenericEnergyReceiverTile
     }
 
     public void setMiny(int miny) {
-        this.miny = miny;
+        this.miny = PacketLimits.clamp(miny, 0, 255);
         volume = -1;
         environmentModules = null;
         markDirtyClient();
@@ -343,7 +347,7 @@ public class EnvironmentalControllerTileEntity extends GenericEnergyReceiverTile
     }
 
     public void setMaxy(int maxy) {
-        this.maxy = maxy;
+        this.maxy = PacketLimits.clamp(maxy, 0, 255);
         volume = -1;
         environmentModules = null;
         markDirtyClient();
@@ -501,7 +505,7 @@ public class EnvironmentalControllerTileEntity extends GenericEnergyReceiverTile
     public void readRestorableFromNBT(NBTTagCompound tagCompound) {
         super.readRestorableFromNBT(tagCompound);
         readBufferFromNBT(tagCompound, inventoryHelper);
-        radius = tagCompound.getInteger("radius");
+        radius = PacketLimits.clamp(tagCompound.getInteger("radius"), 0, MAX_RADIUS);
         miny = tagCompound.getInteger("miny");
         maxy = tagCompound.getInteger("maxy");
         volume = -1;

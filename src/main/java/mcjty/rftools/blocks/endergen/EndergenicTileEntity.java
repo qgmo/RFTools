@@ -638,6 +638,10 @@ public class EndergenicTileEntity extends GenericEnergyStorageTileEntity impleme
     }
 
     public void setDestination(BlockPos destination) {
+        // 服务端再查一次距离（原来只在客户端用扳手连线时检查，值绑定可以设成任意坐标）
+        if (!getWorld().isRemote && destination != null && (destination.equals(getPos()) || calculateDistance(destination) >= 5)) {
+            return;
+        }
         markDirtyQuick();
         this.destination = destination;
         distance = calculateDistance(destination);

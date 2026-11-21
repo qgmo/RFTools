@@ -1,5 +1,9 @@
 package mcjty.rftools.craftinggrid;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.network.SafeNetworkTools;
+import net.minecraft.entity.player.EntityPlayerMP;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.rftools.blocks.storage.ModularStorageItemContainer;
@@ -18,6 +22,9 @@ import java.util.List;
 
 public class PacketGridSync {
 
+    public static final int RECIPE_COUNT = 6;
+    public static final int RECIPE_SIZE = 10;
+
     private BlockPos pos;
     private List<ItemStack[]> recipes;
 
@@ -27,14 +34,18 @@ public class PacketGridSync {
         } else {
             pos = null;
         }
-        int s = buf.readInt();
+        // 网格固定 6 个配方、每个 10 格（1 个结果 + 9 格材料）；先封顶再分配
+        int s = PacketLimits.checkDeclaredLength(buf.readInt(), buf.readableBytes(), RECIPE_COUNT, 4);
         recipes = new ArrayList<>(s);
         for (int i = 0 ; i < s ; i++) {
-            int ss = buf.readInt();
+            int ss = PacketLimits.checkDeclaredLength(buf.readInt(), buf.readableBytes(), RECIPE_SIZE, 1);
+            if (ss != RECIPE_SIZE) {
+                throw new IllegalArgumentException("bad recipe size " + ss);
+            }
             ItemStack[] stacks = new ItemStack[ss];
             for (int j = 0 ; j < ss ; j++) {
                 if (buf.readBoolean()) {
-                    stacks[j] = NetworkTools.readItemStack(buf);
+                    stacks[j] = SafeNetworkTools.readItemStack(buf);
                 } else {
                     stacks[j] = ItemStack.EMPTY;
                 }
@@ -97,7 +108,8 @@ public class PacketGridSync {
                 }
             }
         } else {
-            TileEntity te = world.getTileEntity(pos);
+            // 方块上的网格：要过封包守卫（开着这台机器的界面等）
+            TileEntity te = player instanceof EntityPlayerMP ? PacketGuard.machine((EntityPlayerMP) player, world, pos) : null;
             if (te instanceof CraftingGridProvider) {
                 provider = ((CraftingGridProvider) te);
             }

@@ -121,7 +121,7 @@ public class ElevatorTileEntity extends GenericEnergyReceiverTileEntity implemen
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = mcjty.rftools.network.PacketLimits.truncate(name, mcjty.rftools.network.PacketLimits.MAX_NAME_LENGTH);
         markDirtyClient();
     }
 

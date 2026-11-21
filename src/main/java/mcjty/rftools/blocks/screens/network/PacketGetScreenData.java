@@ -1,5 +1,8 @@
 package mcjty.rftools.blocks.screens.network;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.RFToolsMessages;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.network.PacketHandler;
@@ -23,7 +26,7 @@ public class PacketGetScreenData implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        modid = NetworkTools.readString(buf);
+        modid = SafeNetworkTools.readString(buf);
         pos = new GlobalCoordinate(NetworkTools.readPos(buf), buf.readInt());
         millis = buf.readLong();
     }
@@ -56,16 +59,16 @@ public class PacketGetScreenData implements IMessage {
             if (pos.getDimension() != world.provider.getDimension()) {
                 return;
             }
-            TileEntity te = world.getTileEntity(pos.getCoordinate());
+            // 屏幕内容是谁都看得见的显示数据：只检查区块已加载、同一世界、在渲染距离（64 格）附近
+            TileEntity te = PacketGuard.viewable(ctx.getSender(), world, pos.getCoordinate(), 80);
             if(!(te instanceof ScreenTileEntity)) {
-                Logging.logError("PacketGetScreenData: TileEntity is not a SimpleScreenTileEntity!");
                 return;
             }
             Map<Integer, IModuleData> screenData = ((ScreenTileEntity) te).getScreenData(millis);
 
-            SimpleNetworkWrapper wrapper = PacketHandler.modNetworking.get(modid);
+            // 回包一律走 RFTools 的通道（modid 由客户端提供，原来查不到时会空指针）
             PacketReturnScreenData msg = new PacketReturnScreenData(pos, screenData);
-            wrapper.sendTo(msg, ctx.getSender());
+            RFToolsMessages.INSTANCE.sendTo(msg, ctx.getSender());
         });
         ctx.setPacketHandled(true);
     }

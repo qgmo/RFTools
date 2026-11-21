@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.monitor;
 
+import mcjty.rftools.network.GuardRules;
+import mcjty.rftools.network.PacketGuard;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -67,7 +69,14 @@ public class PacketContentsMonitor implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            TileEntity te = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos);
+            if (te == null) {
+                return;
+            }
+            // 被监视的方块必须与监视器相邻（GUI 只列出相邻的方块，见 CMD_GETADJACENTBLOCKS）
+            if (monitor != null && !GuardRules.inBox(pos, monitor, 1, 1)) {
+                return;
+            }
             if (te instanceof RFMonitorBlockTileEntity) {
                 RFMonitorBlockTileEntity monitorBlockTileEntity = (RFMonitorBlockTileEntity) te;
                 if (monitor != null) {

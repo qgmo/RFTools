@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.monitor;
 
+import mcjty.rftools.network.GuardRules;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
@@ -131,6 +132,11 @@ public class RFMonitorBlockTileEntity extends GenericTileEntity implements ITick
         }
         counter = 20;
 
+        // 只监视相邻的方块（存档里可能有以前由客户端写进来的远处坐标）
+        if (!GuardRules.inBox(getPos(), monitor, 1, 1)) {
+            setInvalid();
+            return;
+        }
         TileEntity tileEntity = getWorld().getTileEntity(monitor);
         if (!EnergyTools.isEnergyTE(tileEntity, null)) {
             setInvalid();

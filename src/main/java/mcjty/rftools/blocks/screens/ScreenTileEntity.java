@@ -405,6 +405,9 @@ public class ScreenTileEntity extends GenericTileEntity implements ITickable, De
 
     private void hitScreenServer(EntityPlayer player, int x, int y, int module) {
         List<IScreenModule<?>> screenModules = getScreenModules();
+        if (!mcjty.rftools.network.PacketLimits.validIndex(module, screenModules.size())) {
+            return;
+        }
         IScreenModule<?> screenModule = screenModules.get(module);
         if (screenModule != null) {
             ItemStack itemStack = inventoryHelper.getStackInSlot(module);

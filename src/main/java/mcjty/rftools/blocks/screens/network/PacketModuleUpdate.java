@@ -1,5 +1,8 @@
 package mcjty.rftools.blocks.screens.network;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.blocks.screens.ScreenContainer;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -63,6 +66,9 @@ public class PacketModuleUpdate implements IMessage {
         ctx.enqueueWork(() -> {
             EntityPlayerMP player = ctx.getSender();
             World world = player.getEntityWorld();
+            if (!world.isBlockLoaded(pos)) {
+                return;
+            }
             Block block = world.getBlockState(pos).getBlock();
             // adapted from NetHandlerPlayServer.processTryUseItemOnBlock
             double dist = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue() + 3;
@@ -79,6 +85,9 @@ public class PacketModuleUpdate implements IMessage {
             }
             if(!(te instanceof ScreenTileEntity)) {
                 Logging.logError("PacketModuleUpdate: TileEntity is not a SimpleScreenTileEntity!");
+                return;
+            }
+            if (!PacketLimits.validIndex(slotIndex, ScreenContainer.SCREEN_MODULES) || PacketGuard.machine(player, world, pos) == null) {
                 return;
             }
             ((ScreenTileEntity) te).updateModuleData(slotIndex, tagCompound);

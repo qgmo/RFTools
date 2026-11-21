@@ -8,6 +8,7 @@ import mcjty.rftools.blocks.storage.RemoteStorageItemContainer;
 import mcjty.rftools.blocks.storagemonitor.GuiStorageScanner;
 import mcjty.rftools.blocks.storagemonitor.StorageScannerContainer;
 import mcjty.rftools.blocks.storagemonitor.StorageScannerTileEntity;
+import mcjty.rftools.network.PacketGuard;
 import mcjty.rftools.items.builder.GuiChamberDetails;
 import mcjty.rftools.items.builder.GuiShapeCard;
 import mcjty.rftools.items.creativeonly.GuiDevelopersDelight;
@@ -111,14 +112,17 @@ public class GuiProxy implements IGuiHandler {
             int monitordim = RFToolsTools.getDimensionFromModule(tablet);
             BlockPos pos = RFToolsTools.getPositionFromModule(tablet);
             WorldServer w = DimensionManager.getWorld(monitordim);
-            if (w == null) {
+            if (w == null || !w.isBlockLoaded(pos)) {
                 return null;
             }
             TileEntity te = w.getTileEntity(pos);
             if (!(te instanceof StorageScannerTileEntity)) {
                 return null;
             }
-            return new StorageScannerContainer(entityPlayer, (IInventory) te);
+            StorageScannerContainer container = new StorageScannerContainer(entityPlayer, (IInventory) te);
+            // 封包守卫据此认定玩家开着这台扫描器的界面
+            PacketGuard.rememberGui(container, monitordim, pos);
+            return container;
         } else if (guiid == GUI_MODULAR_STORAGE_ITEM) {
             return new ModularStorageItemContainer(entityPlayer);
         } else if (guiid == GUI_STORAGE_FILTER) {
@@ -136,7 +140,10 @@ public class GuiProxy implements IGuiHandler {
         if (block instanceof GenericBlock) {
             GenericBlock<?, ?> genericBlock = (GenericBlock<?, ?>) block;
             TileEntity te = world.getTileEntity(pos);
-            return genericBlock.createServerContainer(entityPlayer, te);
+            Object container = genericBlock.createServerContainer(entityPlayer, te);
+            // 封包守卫据此认定玩家开着这台机器的界面
+            PacketGuard.rememberGui(container, world.provider.getDimension(), pos);
+            return container;
         }
         return null;
     }

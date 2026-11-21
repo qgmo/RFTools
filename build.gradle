@@ -102,7 +102,21 @@ repositories {
             includeGroup 'maven.modrinth'
         }
     }
-    mavenCentral()
+    maven {
+        // SpongeAPI（只编译）：有 SpongeForge 时用 Sponge 的事件问领地保护插件（见 protection.Protection）
+        name 'Sponge'
+        url 'https://repo.spongepowered.org/repository/maven-public/'
+        content {
+            includeGroup 'org.spongepowered'
+            includeGroup 'com.flowpowered'
+        }
+    }
+    mavenCentral {
+        content {
+            excludeGroup 'org.spongepowered'
+            excludeGroup 'com.flowpowered'
+        }
+    }
 }
 
 dependencies {
@@ -121,6 +135,10 @@ dependencies {
     compileOnly rfg.deobf("cofh:RedstoneFlux:${property('redstoneflux_version')}:universal")
     compileOnly rfg.deobf("net.darkhax.tesla:Tesla-1.12.2:${property('tesla_version')}")
     compileOnly rfg.deobf("li.cil.oc:OpenComputers:${property('oc_version')}:api")
+
+    // SpongeAPI 7.4.0（与 SpongeForge 7.4.7 对应）：只编译、不打包；运行时由 SpongeForge 提供，没有 Sponge 时相关类不会被加载
+    compileOnly('org.spongepowered:spongeapi:7.4.0') { transitive = false }
+    compileOnly('com.flowpowered:flow-math:1.0.3') { transitive = false }
 }
 
 jar {

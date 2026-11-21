@@ -29,9 +29,9 @@ public class PacketGetPlayers implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
-        command = NetworkTools.readString(buf);
-        params = TypedMapTools.readArguments(buf);
-        clientcmd = NetworkTools.readString(buf);
+        command = SafeNetworkTools.readString(buf);
+        params = SafeNetworkTools.readArguments(buf);
+        clientcmd = SafeNetworkTools.readString(buf);
     }
 
     @Override
@@ -55,9 +55,8 @@ public class PacketGetPlayers implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            TileEntity te = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos);
             if(!(te instanceof ICommandHandler)) {
-                Logging.log("createStartScanPacket: TileEntity is not a CommandHandler!");
                 return;
             }
             ICommandHandler commandHandler = (ICommandHandler) te;

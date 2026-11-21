@@ -1,5 +1,6 @@
 package mcjty.rftools.craftinggrid;
 
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -19,10 +20,14 @@ public class PacketGridToServer extends PacketGridSync implements IMessage {
     public void fromBytes(ByteBuf buf) {
         convertFromBytes(buf);
         int len = buf.readInt();
+        // 网格固定 10 格
+        if (len != RECIPE_SIZE) {
+            throw new IllegalArgumentException("bad grid size " + len);
+        }
         stacks = new ItemStack[len];
         for (int i = 0 ; i < len ; i++) {
             if (buf.readBoolean()) {
-                stacks[i] = NetworkTools.readItemStack(buf);
+                stacks[i] = SafeNetworkTools.readItemStack(buf);
             } else {
                 stacks[i] = ItemStack.EMPTY;
             }

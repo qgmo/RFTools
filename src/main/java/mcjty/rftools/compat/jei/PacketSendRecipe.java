@@ -1,5 +1,8 @@
 package mcjty.rftools.compat.jei;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -23,11 +26,12 @@ public class PacketSendRecipe implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        int l = buf.readInt();
+        // JEI 传来的配方固定 10 格（见 RFToolsJeiPlugin）
+        int l = PacketLimits.checkDeclaredLength(buf.readInt(), buf.readableBytes(), 10, 1);
         stacks = ItemStackList.create(l);
         for (int i = 0 ; i < l ; i++) {
             if (buf.readBoolean()) {
-                stacks.set(i, NetworkTools.readItemStack(buf));
+                stacks.set(i, SafeNetworkTools.readItemStack(buf));
             } else {
                 stacks.set(i, ItemStack.EMPTY);
             }
@@ -91,7 +95,7 @@ public class PacketSendRecipe implements IMessage {
                     }
                 }
             } else {
-                TileEntity te = world.getTileEntity(pos);
+                TileEntity te = PacketGuard.machine(player, world, pos);
                 if (te instanceof JEIRecipeAcceptor) {
                     JEIRecipeAcceptor acceptor = (JEIRecipeAcceptor) te;
                     acceptor.setGridContents(stacks);

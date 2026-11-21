@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.monitor;
 
+import mcjty.rftools.network.GuardRules;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
@@ -136,6 +137,11 @@ public class LiquidMonitorBlockTileEntity extends GenericTileEntity implements I
         long stored = 0;
         long maxContents = 0;
 
+        // 只监视相邻的方块（存档里可能有以前由客户端写进来的远处坐标）
+        if (!GuardRules.inBox(getPos(), monitor, 1, 1)) {
+            setInvalid();
+            return;
+        }
         TileEntity tileEntity = getWorld().getTileEntity(monitor);
         net.minecraftforge.fluids.capability.IFluidHandler fluidHandler = CapabilityTools.hasFluidCapabilitySafe(tileEntity);
         if (fluidHandler != null) {

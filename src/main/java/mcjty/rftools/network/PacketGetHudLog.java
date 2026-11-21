@@ -38,7 +38,7 @@ public class PacketGetHudLog implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
-        params = TypedMapTools.readArguments(buf);
+        params = SafeNetworkTools.readArguments(buf);
     }
 
     @Override
@@ -50,9 +50,9 @@ public class PacketGetHudLog implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            // HUD 是显示在方块上方、谁都看得见的状态，只检查区块已加载与距离
+            TileEntity te = PacketGuard.viewable(ctx.getSender(), ctx.getSender().getEntityWorld(), pos, 64);
             if(!(te instanceof ICommandHandler)) {
-                Logging.log("TileEntity is not a CommandHandler!");
                 return;
             }
             ICommandHandler commandHandler = (ICommandHandler) te;

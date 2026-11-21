@@ -1,5 +1,6 @@
 package mcjty.rftools.craftinggrid;
 
+import mcjty.rftools.network.PacketGuard;
 import gnu.trove.set.hash.TIntHashSet;
 import mcjty.rftools.blocks.storage.ModularStorageItemContainer;
 import mcjty.rftools.blocks.storage.ModularStorageSetup;
@@ -317,7 +318,8 @@ public class StorageCraftingTools {
                 }
             }
         } else {
-            TileEntity te = player.getEntityWorld().getTileEntity(pos);
+            // 方块上的网格：要过封包守卫（用别人存储里的材料合成，产物进发包人背包）
+            TileEntity te = player instanceof EntityPlayerMP ? PacketGuard.machine((EntityPlayerMP) player, player.getEntityWorld(), pos) : null;
             if (te instanceof CraftingGridProvider) {
                 testResult = ((CraftingGridProvider) te).craft(player, count, test);
             }
@@ -346,7 +348,7 @@ public class StorageCraftingTools {
                 }
             }
         } else {
-            TileEntity te = world.getTileEntity(pos);
+            TileEntity te = player instanceof EntityPlayerMP ? PacketGuard.machine((EntityPlayerMP) player, world, pos) : null;
             if (te instanceof CraftingGridProvider) {
                 provider = ((CraftingGridProvider) te);
             }

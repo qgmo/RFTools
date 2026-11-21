@@ -36,6 +36,17 @@ public abstract class GenericRFToolsBlock<T extends GenericTileEntity, C extends
 
     @Override
     public boolean checkAccess(World world, EntityPlayer player, TileEntity te) {
+        if (isAccessDenied(world, player, te)) {
+            Msg.message(player, "msg.rftools.you_have_no_permission_to_use_this_block");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 安全卡检查（不发提示）：返回 true 表示这名玩家不能使用这台机器。打开界面和封包守卫共用。
+     */
+    public static boolean isAccessDenied(World world, EntityPlayer player, TileEntity te) {
         if (SecurityConfiguration.enabled.get() && te instanceof GenericTileEntity) {
             GenericTileEntity genericTileEntity = (GenericTileEntity) te;
             if ((!OrphaningCardItem.isPrivileged(player, world)) && (!player.getPersistentID().equals(genericTileEntity.getOwnerUUID()))) {
@@ -43,9 +54,11 @@ public abstract class GenericRFToolsBlock<T extends GenericTileEntity, C extends
                 if (securityChannel != -1) {
                     SecurityChannels securityChannels = SecurityChannels.getChannels(world);
                     SecurityChannels.SecurityChannel channel = securityChannels.getChannel(securityChannel);
+                    if (channel == null) {
+                        return false;
+                    }
                     boolean playerListed = channel.getPlayers().contains(player.getDisplayNameString());
                     if (channel.isWhitelist() != playerListed) {
-                        Msg.message(player, "msg.rftools.you_have_no_permission_to_use_this_block");
                         return true;
                     }
                 }

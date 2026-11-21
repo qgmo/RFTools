@@ -1,5 +1,7 @@
 package mcjty.rftools.items.modifier;
 
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.thirteen.Context;
 import mcjty.rftools.items.ModItems;
@@ -18,10 +20,10 @@ public class PacketUpdateModifier implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        cmd = ModifierCommand.values()[buf.readByte()];
+        cmd = SafeNetworkTools.readEnumByte(buf, ModifierCommand.values());
         index = buf.readInt();
-        type = ModifierFilterType.values()[buf.readByte()];
-        op = ModifierFilterOperation.values()[buf.readByte()];
+        type = SafeNetworkTools.readEnumByte(buf, ModifierFilterType.values());
+        op = SafeNetworkTools.readEnumByte(buf, ModifierFilterOperation.values());
     }
 
     @Override
@@ -52,6 +54,14 @@ public class PacketUpdateModifier implements IMessage {
             EntityPlayer player = ctx.getSender();
             ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
             if (!heldItem.isEmpty() && heldItem.getItem() == ModItems.modifierItem) {
+                if (cmd != ModifierCommand.ADD) {
+                    int size = ModifierItem.getModifiers(heldItem).size();
+                    // 上移不能是第一个、下移不能是最后一个
+                    if (!PacketLimits.validIndex(index, size) || (cmd == ModifierCommand.UP && index == 0)
+                            || (cmd == ModifierCommand.DOWN && index == size - 1)) {
+                        return;
+                    }
+                }
                 ModifierItem.performCommand(player, heldItem, cmd, index, type, op);
             }
         });

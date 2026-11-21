@@ -1,5 +1,8 @@
 package mcjty.rftools.blocks.crafter;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.PacketLimits;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -26,18 +29,22 @@ public class PacketCrafter implements IMessage {
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
         keepOne = buf.readBoolean();
-        craftInternal = CraftingRecipe.CraftMode.values()[buf.readByte()];
+        craftInternal = SafeNetworkTools.readEnumByte(buf, CraftingRecipe.CraftMode.values());
 
         recipeIndex = buf.readByte();
         int l = buf.readByte();
         if (l == 0) {
             items = null;
         } else {
+            // 合成器的配方固定是 9 格 + 1 个结果
+            if (l != 10) {
+                throw new IllegalArgumentException("bad recipe size " + l);
+            }
             items = new ItemStack[l];
             for (int i = 0 ; i < l ; i++) {
                 boolean b = buf.readBoolean();
                 if (b) {
-                    items[i] = NetworkTools.readItemStack(buf);
+                    items[i] = SafeNetworkTools.readItemStack(buf);
                 } else {
                     items[i] = ItemStack.EMPTY;
                 }
@@ -100,14 +107,15 @@ public class PacketCrafter implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
-            if(!(te instanceof CrafterBaseTE)) {
-                Logging.logError("Wrong type of tile entity (expected CrafterBaseTE)!");
+            CrafterBaseTE crafterBlockTileEntity = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos, CrafterBaseTE.class);
+            if (crafterBlockTileEntity == null) {
                 return;
             }
-            CrafterBaseTE crafterBlockTileEntity = (CrafterBaseTE) te;
             crafterBlockTileEntity.noRecipesWork = false;
             if (recipeIndex != -1) {
+                if (items == null || !PacketLimits.validIndex(recipeIndex, crafterBlockTileEntity.getSupportedRecipes())) {
+                    return;
+                }
                 updateRecipe(crafterBlockTileEntity);
             }
         });

@@ -1,5 +1,8 @@
 package mcjty.rftools.shapes;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.blocks.shaper.ComposerTileEntity;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -17,13 +20,20 @@ public class PacketSendComposerData implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         int s = buf.readInt();
+        // 合成器固定 9 个槽位；数量不对、名字不认识都不收（数组短了会在机器每刻更新时越界）
+        if (s != ComposerTileEntity.SLOT_COUNT) {
+            throw new IllegalArgumentException("bad modifier count " + s);
+        }
         modifiers = new ShapeModifier[s];
         for (int i = 0 ; i < s ; i++) {
-            String code = NetworkTools.readString(buf);
+            String code = SafeNetworkTools.readString(buf);
             ShapeOperation op = ShapeOperation.getByName(code);
             boolean flip = buf.readBoolean();
-            code = NetworkTools.readString(buf);
+            code = SafeNetworkTools.readString(buf);
             ShapeRotation rot = ShapeRotation.getByName(code);
+            if (op == null || rot == null) {
+                throw new IllegalArgumentException("bad modifier");
+            }
             modifiers[i] = new ShapeModifier(op, flip, rot);
         }
         pos = NetworkTools.readPos(buf);
@@ -55,7 +65,7 @@ public class PacketSendComposerData implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            TileEntity te = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos);
             if (te instanceof ComposerTileEntity) {
                 ((ComposerTileEntity) te).setModifiers(modifiers);
             }

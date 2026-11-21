@@ -1,5 +1,11 @@
 package mcjty.rftools.items.netmonitor;
 
+import mcjty.rftools.network.PacketGuard;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumFacing;
+import java.util.ArrayDeque;
+import java.util.HashSet;
+import java.util.Set;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -42,9 +48,16 @@ public class PacketGetConnectedBlocks implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            EntityPlayer player = ctx.getSender();
+            EntityPlayerMP player = ctx.getSender();
+            // 要拿着网络监视器，并且能碰这个方块（守卫：区块已加载、在附近、安全卡、领地）
+            if (!(player.getHeldItemMainhand().getItem() instanceof NetworkMonitorItem) && !(player.getHeldItemOffhand().getItem() instanceof NetworkMonitorItem)) {
+                return;
+            }
+            if (PacketGuard.machine(player, player.getEntityWorld(), pos) == null) {
+                return;
+            }
             Map<BlockPos,BlockInfo> connectedBlocks = new HashMap<>();
-            findConnectedBlocks(connectedBlocks, player.getEntityWorld(), pos);
+            findConnectedBlocks(connectedBlocks, player.getEntityWorld(), pos, NetworkMonitorConfiguration.maximumBlocks.get() * 4);
 
             if (connectedBlocks.size() > NetworkMonitorConfiguration.maximumBlocks.get()) {
                 connectedBlocks = compactConnectedBlocks(connectedBlocks, pos, NetworkMonitorConfiguration.maximumBlocks.get());
@@ -80,23 +93,26 @@ public class PacketGetConnectedBlocks implements IMessage {
     }
 
 
-    private void findConnectedBlocks(Map<BlockPos,BlockInfo> connectedBlocks, World world, BlockPos pos) {
-        if (pos.getY() < 0 || pos.getY() >= world.getHeight()) {
-            return;
-        }
-        if (connectedBlocks.containsKey(pos)) {
-            return;
-        }
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity != null) {
-            if (EnergyTools.isEnergyTE(tileEntity, null)) {
+    /** 广度优先，只走已加载的区块，最多找 {@code limit} 个（原来是递归深搜，大网络会栈溢出，而且沿途加载区块）。 */
+    private void findConnectedBlocks(Map<BlockPos,BlockInfo> connectedBlocks, World world, BlockPos start, int limit) {
+        ArrayDeque<BlockPos> todo = new ArrayDeque<>();
+        Set<BlockPos> seen = new HashSet<>();
+        todo.add(start);
+        seen.add(start);
+        while (!todo.isEmpty() && connectedBlocks.size() < limit) {
+            BlockPos pos = todo.removeFirst();
+            if (pos.getY() < 0 || pos.getY() >= world.getHeight() || !world.isBlockLoaded(pos)) {
+                continue;
+            }
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity != null && EnergyTools.isEnergyTE(tileEntity, null)) {
                 connectedBlocks.put(pos, new BlockInfo(tileEntity, null, pos));
-                findConnectedBlocks(connectedBlocks, world, pos.up());
-                findConnectedBlocks(connectedBlocks, world, pos.down());
-                findConnectedBlocks(connectedBlocks, world, pos.east());
-                findConnectedBlocks(connectedBlocks, world, pos.west());
-                findConnectedBlocks(connectedBlocks, world, pos.south());
-                findConnectedBlocks(connectedBlocks, world, pos.north());
+                for (EnumFacing facing : EnumFacing.VALUES) {
+                    BlockPos p = pos.offset(facing);
+                    if (seen.add(p)) {
+                        todo.addLast(p);
+                    }
+                }
             }
         }
     }

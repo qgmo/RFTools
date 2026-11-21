@@ -1,9 +1,14 @@
 package mcjty.rftools.network;
 
+import mcjty.lib.network.IClientServerDelayed;
+import mcjty.lib.network.PacketDataFromServer;
+import mcjty.lib.network.PacketFinalizeLogin;
 import mcjty.lib.network.PacketHandler;
+import mcjty.lib.network.PacketRequestDataFromServer;
 import mcjty.lib.network.PacketSendClientCommand;
+import mcjty.lib.network.PacketSendGuiData;
 import mcjty.lib.network.PacketSendServerCommand;
-import mcjty.lib.thirteen.ChannelBuilder;
+import mcjty.lib.network.PacketServerCommandTyped;
 import mcjty.lib.thirteen.SimpleChannel;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftools.RFTools;
@@ -44,11 +49,18 @@ import mcjty.rftools.items.teleportprobe.PacketGetAllReceivers;
 import mcjty.rftools.items.teleportprobe.PacketTargetsReady;
 import mcjty.rftools.compat.jei.PacketSendRecipe;
 import mcjty.rftools.playerprops.PacketSendBuffsToClient;
+import mcjty.rftools.network.guarded.GuardedRequestDataFromServer;
+import mcjty.rftools.network.guarded.GuardedSendServerCommand;
+import mcjty.rftools.network.guarded.GuardedServerCommandTyped;
+import mcjty.rftools.network.guarded.IgnoredMessage;
 import mcjty.rftools.shapes.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 
@@ -59,15 +71,45 @@ public class RFToolsMessages {
         return PacketHandler.nextPacketID();
     }
 
+    /**
+     * 建 RFTools 的网络通道。原来由 McJtyLib 的 {@code ChannelBuilder…simpleChannel()} 建，并在同一通道上注册 McJtyLib 的通用包；
+     * 现在自己建，判别号与顺序照旧（客户端协议不变）：
+     * <ul>
+     *     <li>0 PacketServerCommandTyped、1 PacketSendServerCommand、2 PacketRequestDataFromServer：客户端照旧发 McJtyLib 的类，
+     *     服务端用 {@code network.guarded} 里同格式的类解码（长度有上限）并先过 {@link PacketGuard}；</li>
+     *     <li>3、4 两个调试包（PacketDumpItemInfo / PacketDumpBlockInfo）不再注册，收到的直接丢弃；</li>
+     *     <li>5–8 发往客户端的包照旧；RFTools 自己的包照旧从 {@link PacketHandler#nextPacketID()}（12 起）取号。</li>
+     * </ul>
+     */
     public static void registerMessages(String name) {
-        SimpleChannel net = ChannelBuilder
-                .named(new ResourceLocation(RFTools.MODID, name))
-                .networkProtocolVersion(() -> "1.0")
-                .clientAcceptedVersions(s -> true)
-                .serverAcceptedVersions(s -> true)
-                .simpleChannel();
+        SimpleNetworkWrapper wrapper = new SimpleNetworkWrapper(name) {
+            @Override
+            public void sendToServer(IMessage message) {
+                // 同 McJtyLib 的 PacketHandler：登录数据就绪前不发这类包
+                if (message instanceof IClientServerDelayed && !PacketHandler.connected) {
+                    return;
+                }
+                super.sendToServer(message);
+            }
+        };
+        PacketHandler.modNetworking.put(RFTools.MODID, wrapper);
+        INSTANCE = wrapper;
+        SimpleChannel net = new SimpleChannel(wrapper);
 
-        INSTANCE = net.getNetwork();
+        // McJtyLib 的通用包（判别号 0–8）
+        // 客户端编码用 McJtyLib 的类（只在客户端一侧登记，处理器不会被调用），服务端解码用我们的类（后登记的生效）
+        wrapper.registerMessage(PacketGuardIgnore.INSTANCE, PacketServerCommandTyped.class, 0, Side.CLIENT);
+        net.registerMessageServer(0, GuardedServerCommandTyped.class, null, null, GuardedServerCommandTyped::handle);
+        wrapper.registerMessage(PacketGuardIgnore.INSTANCE, PacketSendServerCommand.class, 1, Side.CLIENT);
+        net.registerMessageServer(1, GuardedSendServerCommand.class, null, null, GuardedSendServerCommand::handle);
+        wrapper.registerMessage(PacketGuardIgnore.INSTANCE, PacketRequestDataFromServer.class, 2, Side.CLIENT);
+        net.registerMessageServer(2, GuardedRequestDataFromServer.class, null, null, GuardedRequestDataFromServer::handle);
+        wrapper.registerMessage(PacketGuardIgnore.INSTANCE, IgnoredMessage.DumpItem.class, 3, Side.SERVER);
+        wrapper.registerMessage(PacketGuardIgnore.INSTANCE, IgnoredMessage.DumpBlock.class, 4, Side.SERVER);
+        net.registerMessageClient(5, PacketSendClientCommand.class, PacketSendClientCommand::toBytes, PacketSendClientCommand::new, PacketSendClientCommand::handle);
+        net.registerMessageClient(6, PacketDataFromServer.class, PacketDataFromServer::toBytes, PacketDataFromServer::new, PacketDataFromServer::handle);
+        net.registerMessageClient(7, PacketSendGuiData.class, PacketSendGuiData::toBytes, PacketSendGuiData::new, PacketSendGuiData::handle);
+        net.registerMessageClient(8, PacketFinalizeLogin.class, PacketFinalizeLogin::toBytes, PacketFinalizeLogin::new, PacketFinalizeLogin::handle);
 
         // Server side
         if (CrafterConfiguration.enabled.get()) {
@@ -129,6 +171,16 @@ public class RFToolsMessages {
         net.registerMessageClient(id(), PacketProjectorClientNotification.class, PacketProjectorClientNotification::toBytes, PacketProjectorClientNotification::new, PacketProjectorClientNotification::handle);
         net.registerMessageClient(id(), PacketReturnExtraData.class, PacketReturnExtraData::toBytes, PacketReturnExtraData::new, PacketReturnExtraData::handle);
         net.registerMessageClient(id(), PacketReturnInventoryInfo.class, PacketReturnInventoryInfo::toBytes, PacketReturnInventoryInfo::new, PacketReturnInventoryInfo::handle);
+    }
+
+    /** 什么都不做的处理器：客户端一侧编码用的登记、以及丢弃的调试包。 */
+    private enum PacketGuardIgnore implements IMessageHandler<IMessage, IMessage> {
+        INSTANCE;
+
+        @Override
+        public IMessage onMessage(IMessage message, MessageContext ctx) {
+            return null;
+        }
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {

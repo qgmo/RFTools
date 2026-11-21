@@ -138,6 +138,7 @@ public class SecurityManagerTileEntity extends GenericTileEntity implements Defa
     }
 
     private void setChannelName(String name) {
+        name = mcjty.rftools.network.PacketLimits.truncate(name, mcjty.rftools.network.PacketLimits.MAX_NAME_LENGTH);
         NBTTagCompound tagCompound = getCardInfo();
         if (tagCompound == null) {
             return;

@@ -1,5 +1,7 @@
 package mcjty.rftools.blocks.monitor;
 
+import mcjty.rftools.network.PacketGuard;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.ICommandHandler;
 import mcjty.lib.network.NetworkTools;
@@ -36,7 +38,7 @@ public class PacketGetAdjacentBlocks implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
-        params = TypedMapTools.readArguments(buf);
+        params = SafeNetworkTools.readArguments(buf);
     }
 
     @Override
@@ -48,9 +50,8 @@ public class PacketGetAdjacentBlocks implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = ctx.getSender().getEntityWorld().getTileEntity(pos);
+            TileEntity te = PacketGuard.machine(ctx.getSender(), ctx.getSender().getEntityWorld(), pos);
             if(!(te instanceof ICommandHandler)) {
-                Logging.log("createStartScanPacket: TileEntity is not a CommandHandler!");
                 return;
             }
             ICommandHandler commandHandler = (ICommandHandler) te;

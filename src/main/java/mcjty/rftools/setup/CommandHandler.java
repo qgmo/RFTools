@@ -17,6 +17,8 @@ import mcjty.rftools.items.storage.StorageTools;
 import mcjty.rftools.items.teleportprobe.PorterTools;
 import mcjty.rftools.network.RFToolsMessages;
 import mcjty.rftools.varia.RFToolsTools;
+import mcjty.rftools.network.PacketGuard;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -91,15 +93,27 @@ public class CommandHandler {
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_REQUEST_STORAGE_INFO, (player, arguments) -> {
-            StorageTools.returnStorageInfo(player, arguments.get(PARAM_DIMENSION), arguments.get(PARAM_POS));
+            // Waila 的提示：只回答已加载、就在附近的方块
+            Integer dim = arguments.get(PARAM_DIMENSION);
+            WorldServer world = dim == null ? null : DimensionManager.getWorld(dim);
+            BlockPos pos = arguments.get(PARAM_POS);
+            if (player instanceof EntityPlayerMP && PacketGuard.viewable((EntityPlayerMP) player, world, pos, PacketGuard.MAX_DISTANCE) != null) {
+                StorageTools.returnStorageInfo(player, dim, pos);
+            }
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_CLEAR_TARGET, (player, arguments) -> {
-            PorterTools.clearTarget(player, arguments.get(PARAM_TARGET));
+            Integer target = arguments.get(PARAM_TARGET);
+            if (target != null) {
+                PorterTools.clearTarget(player, target);
+            }
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_SET_TARGET, (player, arguments) -> {
-            PorterTools.setTarget(player, arguments.get(PARAM_TARGET));
+            Integer target = arguments.get(PARAM_TARGET);
+            if (target != null) {
+                PorterTools.setTarget(player, target);
+            }
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_GET_TARGETS, (player, arguments) -> {
@@ -107,7 +121,10 @@ public class CommandHandler {
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_FORCE_TELEPORT, (player, arguments) -> {
-            PorterTools.forceTeleport(player, arguments.get(PARAM_DIMENSION), arguments.get(PARAM_POS));
+            Integer dim = arguments.get(PARAM_DIMENSION);
+            if (dim != null) {
+                PorterTools.forceTeleport(player, dim, arguments.get(PARAM_POS));
+            }
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_CYCLE_DESTINATION, (player, arguments) -> {
@@ -131,7 +148,10 @@ public class CommandHandler {
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_REQUEST_LOCATOR_ENERGY, (player, arguments) -> {
-            ShaperTools.requestLocatorEnergyConsumption(player, arguments.get(PARAM_POS));
+            BlockPos pos = arguments.get(PARAM_POS);
+            if (player instanceof EntityPlayerMP && PacketGuard.machine((EntityPlayerMP) player, player.getEntityWorld(), pos) != null) {
+                ShaperTools.requestLocatorEnergyConsumption(player, pos);
+            }
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_GET_CHAMBER_INFO, (player, arguments) -> {
@@ -140,16 +160,29 @@ public class CommandHandler {
         });
         if(SecurityConfiguration.enabled.get()) {
             McJtyLib.registerCommand(RFTools.MODID, CMD_GET_SECURITY_INFO, (player, arguments) -> {
-                SecurityTools.returnSecurityInfo(player, arguments.get(PARAM_ID));
+                // 只告诉玩家他手上 / 开着的界面里那张安全卡的频道（原来任意频道的名单都能查）
+                Integer id = arguments.get(PARAM_ID);
+                if (id != null && SecurityTools.canSeeChannel(player, id)) {
+                    SecurityTools.returnSecurityInfo(player, id);
+                }
                 return true;
             });
             McJtyLib.registerCommand(RFTools.MODID, CMD_GET_SECURITY_NAME, (player, arguments) -> {
-                SecurityTools.returnSecurityName(player, arguments.get(PARAM_ID));
+                Integer id = arguments.get(PARAM_ID);
+                if (id != null && SecurityTools.canSeeChannel(player, id)) {
+                    SecurityTools.returnSecurityName(player, id);
+                }
                 return true;
             });
         }
         McJtyLib.registerCommand(RFTools.MODID, CMD_CRAFT_FROM_GRID, (player, arguments) -> {
-            StorageCraftingTools.craftFromGrid(player, arguments.get(PARAM_COUNT), arguments.get(PARAM_TEST), arguments.get(PARAM_POS));
+            // 数量：-1 表示一组，否则 1–64（界面只发 1、4、8、-1）
+            Integer count = arguments.get(PARAM_COUNT);
+            Boolean test = arguments.get(PARAM_TEST);
+            if (count == null || test == null || count == 0 || count < -1) {
+                return true;
+            }
+            StorageCraftingTools.craftFromGrid(player, Math.min(count, 64), test, arguments.get(PARAM_POS));
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_REQUEST_GRID_SYNC, (player, arguments) -> {
@@ -157,9 +190,11 @@ public class CommandHandler {
             return true;
         });
         McJtyLib.registerCommand(RFTools.MODID, CMD_GET_COUNTER_INFO, (player, arguments) -> {
-            WorldServer world = DimensionManager.getWorld(arguments.get(PARAM_DIMENSION));
-            if (world != null) {
-                TileEntity te = world.getTileEntity(arguments.get(PARAM_POS));
+            Integer dim = arguments.get(PARAM_DIMENSION);
+            WorldServer world = dim == null ? null : DimensionManager.getWorld(dim);
+            if (world != null && player instanceof EntityPlayerMP) {
+                // 计数器的当前值：只回答已加载、就在附近的方块（界面或 Waila 提示）
+                TileEntity te = PacketGuard.viewable((EntityPlayerMP) player, world, arguments.get(PARAM_POS), PacketGuard.MAX_DISTANCE);
                 if (te instanceof CounterTileEntity) {
                     CounterTileEntity tileEntity = (CounterTileEntity) te;
                     int cnt = tileEntity.getCurrent();

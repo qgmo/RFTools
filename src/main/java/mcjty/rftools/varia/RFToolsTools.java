@@ -1,5 +1,6 @@
 package mcjty.rftools.varia;
 
+import mcjty.rftools.items.netmonitor.NetworkMonitorItem;
 import mcjty.lib.api.information.IMachineInformation;
 import mcjty.lib.varia.EnergyTools;
 import mcjty.rftools.network.MachineInfo;
@@ -71,6 +72,10 @@ public class RFToolsTools {
     }
 
     public static void returnRfInRange(EntityPlayer player) {
+        // 只给拿着网络监视器的玩家（客户端也只在这时请求）
+        if (!(player.getHeldItemMainhand().getItem() instanceof NetworkMonitorItem) && !(player.getHeldItemOffhand().getItem() instanceof NetworkMonitorItem)) {
+            return;
+        }
         BlockPos pos = player.getPosition();
         World world = player.getEntityWorld();
         Map<BlockPos, MachineInfo> result = new HashMap<>();
@@ -79,6 +84,9 @@ public class RFToolsTools {
             for (int y = -range; y <= range; y++) {
                 for (int z = -range; z <= range; z++) {
                     BlockPos p = pos.add(x, y, z);
+                    if (!world.isBlockLoaded(p)) {
+                        continue;
+                    }
                     TileEntity te = world.getTileEntity(p);
                     if (EnergyTools.isEnergyTE(te, null)) {
                         EnergyTools.EnergyLevel level = EnergyTools.getEnergyLevel(te, null);

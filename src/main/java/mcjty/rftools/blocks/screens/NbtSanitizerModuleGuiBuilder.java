@@ -52,7 +52,7 @@ public class NbtSanitizerModuleGuiBuilder implements IModuleGuiBuilder {
 
         for(String key : stringKeys) {
             if(fromClient.hasKey(key, Constants.NBT.TAG_STRING)) {
-                newCompound.setString(key, fromClient.getString(key));
+                newCompound.setString(key, mcjty.rftools.network.PacketLimits.truncate(fromClient.getString(key), mcjty.rftools.network.PacketLimits.MAX_NBT_STRING_LENGTH));
             }
         }
 

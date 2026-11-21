@@ -1,5 +1,6 @@
 package mcjty.rftools.blocks.builder;
 
+import mcjty.rftools.network.GuardRules;
 import com.mojang.authlib.GameProfile;
 import mcjty.lib.bindings.DefaultAction;
 import mcjty.lib.bindings.DefaultValue;
@@ -358,7 +359,8 @@ public class BuilderTileEntity extends GenericEnergyReceiverTileEntity implement
                         sourceToDest(src, dest);
                         IBlockState srcState = world.getBlockState(src);
                         Block srcBlock = srcState.getBlock();
-                        IBlockState dstState = world.getBlockState(dest);
+                        // dest 是建造者所在世界的坐标（原来从空间室的世界读，跨维度时读错）
+                        IBlockState dstState = getWorld().getBlockState(dest);
                         Block dstBlock = dstState.getBlock();
                         int error = SupportBlock.STATUS_OK;
                         if (mode != MODE_COPY) {
@@ -370,7 +372,8 @@ public class BuilderTileEntity extends GenericEnergyReceiverTileEntity implement
                             error = Math.max(error1, error2);
                         }
                         if (isEmpty(srcState, srcBlock) && !isEmpty(dstState, dstBlock)) {
-                            getWorld().setBlockState(src, BuilderSetup.supportBlock.getDefaultState().withProperty(SupportBlock.STATUS, error), 3);
+                            // src 是空间室所在世界的坐标（原来写进了建造者所在的世界，跨维度时会覆盖那里原有的方块）
+                            world.setBlockState(src, BuilderSetup.supportBlock.getDefaultState().withProperty(SupportBlock.STATUS, error), 3);
                         }
                         if (isEmpty(dstState, dstBlock) && !isEmpty(srcState, srcBlock)) {
                             getWorld().setBlockState(dest, BuilderSetup.supportBlock.getDefaultState().withProperty(SupportBlock.STATUS, error), 3);
@@ -496,7 +499,20 @@ public class BuilderTileEntity extends GenericEnergyReceiverTileEntity implement
         return supportMode;
     }
 
+    /** 两次切换支撑方块模式之间至少隔多少刻（每次切换都要遍历整个区域，最大约 210 万格）。 */
+    public static final int SUPPORT_TOGGLE_COOLDOWN = 40;
+    private long lastSupportToggle = Long.MIN_VALUE / 2;
+
     public void setSupportMode(boolean supportMode) {
+        if (getWorld() != null && !getWorld().isRemote) {
+            long now = getWorld().getTotalWorldTime();
+            // 值没变就不重做；切换太频繁时不接受（把真实状态同步回客户端）
+            if (supportMode == this.supportMode || !GuardRules.cooledDown(lastSupportToggle, now, SUPPORT_TOGGLE_COOLDOWN)) {
+                markDirtyClient();
+                return;
+            }
+            lastSupportToggle = now;
+        }
         this.supportMode = supportMode;
         if (supportMode) {
             makeSupportBlocks();
@@ -1820,7 +1836,24 @@ public class BuilderTileEntity extends GenericEnergyReceiverTileEntity implement
         if (!TeleportationTools.allowTeleport(entity, world.provider.getDimension(), entity.getPosition(), destWorld.provider.getDimension(), new BlockPos(newX, newY, newZ))) {
             return;
         }
-        mcjty.lib.varia.TeleportationTools.teleportEntity(entity, destWorld, newX, newY, newZ, null);
+        if (entity instanceof EntityPlayer || world.provider.getDimension() == destWorld.provider.getDimension()) {
+            mcjty.lib.varia.TeleportationTools.teleportEntity(entity, destWorld, newX, newY, newZ, null);
+            return;
+        }
+        // 非玩家实体跨维度：走原版的 changeDimension（与传送门相同）。McJtyLib 的做法是先 removeEntity 再按 NBT 生成新实体，
+        // 运输矿车（箱子 / 漏斗矿车）在 removeEntity 时会把内容物掉出来，新矿车里又有同样的东西，等于复制。
+        // changeDimension 会先关掉矿车的掉落，并发出维度切换事件（保护插件能拦）。
+        entity.removePassengers();
+        entity.dismountRidingEntity();
+        float yaw = entity.rotationYaw;
+        float pitch = entity.rotationPitch;
+        Entity moved = entity.changeDimension(destWorld.provider.getDimension(), (w, e, y) -> {
+            e.motionX = e.motionY = e.motionZ = 0;
+            e.setLocationAndAngles(newX, newY, newZ, yaw, pitch);
+        });
+        if (moved != null) {
+            moved.setLocationAndAngles(newX, newY, newZ, yaw, pitch);
+        }
     }
 
 
@@ -2023,10 +2056,21 @@ public class BuilderTileEntity extends GenericEnergyReceiverTileEntity implement
         chunkUnload();
     }
 
+    @Override
+    public void onChunkUnload() {
+        super.onChunkUnload();
+        // 1.12 区块卸载时不调用 invalidate：这里也要放掉强制加载与票据，否则每次卸载再加载都多留一张票据和一个常驻区块
+        chunkUnload();
+    }
+
     private void chunkUnload() {
         if (forcedChunk != null && ticket != null) {
             ForgeChunkManager.unforceChunk(ticket, forcedChunk);
-            forcedChunk = null;
+        }
+        forcedChunk = null;
+        if (ticket != null) {
+            ForgeChunkManager.releaseTicket(ticket);
+            ticket = null;
         }
     }
 

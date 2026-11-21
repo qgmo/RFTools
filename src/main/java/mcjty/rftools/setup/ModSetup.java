@@ -58,7 +58,12 @@ public class ModSetup extends DefaultModSetup {
         CommandHandler.registerCommands();
         RFTools.screenModuleRegistry.registerBuiltins();
         reflect();
-        ForgeChunkManager.setForcedChunkLoadingCallback(RFTools.instance, (tickets, world) -> { });
+        // RFTools 的票据只有采石建造者在用，建造者需要时会重新申请；存档里留下的旧票据一律释放（原来留着不放，占满每个世界的票据上限）
+        ForgeChunkManager.setForcedChunkLoadingCallback(RFTools.instance, (tickets, world) -> {
+            for (ForgeChunkManager.Ticket t : tickets) {
+                ForgeChunkManager.releaseTicket(t);
+            }
+        });
         setupCapabilities();
 
         RFToolsMessages.registerMessages("rftools");

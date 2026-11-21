@@ -12,6 +12,7 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiCoalGenerator extends GenericGuiContainer<CoalGeneratorTileEntity> {
 
@@ -25,6 +26,7 @@ public class GuiCoalGenerator extends GenericGuiContainer<CoalGeneratorTileEntit
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/coalgenerator.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

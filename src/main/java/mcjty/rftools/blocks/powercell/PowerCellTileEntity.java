@@ -40,6 +40,7 @@ import java.util.Set;
 
 import static mcjty.rftools.blocks.powercell.PowerCellConfiguration.advancedFactor;
 import static mcjty.rftools.blocks.powercell.PowerCellConfiguration.simpleFactor;
+import mcjty.rftools.varia.Msg;
 
 public class PowerCellTileEntity extends GenericTileEntity implements DefaultSidedInventory, ITickable, SmartWrenchSelector, MachineInformation {
 
@@ -666,7 +667,7 @@ public class PowerCellTileEntity extends GenericTileEntity implements DefaultSid
                 }
             }
 
-            Logging.message(player, "Block: " + BlockPosTools.toString(b.getCoordinate()) + " (" + b.getDimension() + "): " + msg);
+            Msg.message(player, "msg.rftools.block_s_s_s", BlockPosTools.toString(b.getCoordinate()), b.getDimension(), msg);
         });
     }
 

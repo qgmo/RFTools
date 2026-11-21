@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiSequencer extends GenericGuiContainer<SequencerTileEntity> {
 
@@ -26,6 +27,7 @@ public class GuiSequencer extends GenericGuiContainer<SequencerTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/sequencer.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

@@ -13,6 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class FeatherFallingEModuleItem extends GenericRFToolsItem implements EnvModuleProvider {
 
@@ -25,10 +28,9 @@ public class FeatherFallingEModuleItem extends GenericRFToolsItem implements Env
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add("This module gives feather falling bonus");
-        list.add("when used in the environmental controller.");
-        list.add(TextFormatting.GOLD + "Damage will be half the normal value.");
-        list.add(TextFormatting.GREEN + "Uses " + EnvironmentalConfiguration.FEATHERFALLING_RFPERTICK.get() + " RF/tick (per cubic block)");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_gives_feather_falling_bonus"));
+        list.add(I18n.format("tooltip.rftools.damage_will_be_half_the_normal_value"));
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick_per_cubic_block", EnvironmentalConfiguration.FEATHERFALLING_RFPERTICK.get()));
     }
 
     @Override

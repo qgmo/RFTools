@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import mcjty.rftools.varia.Msg;
 
 public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity implements MachineInformation, ITickable {
 
@@ -354,7 +355,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
             // We were teleporting a player but for some reason the destination went away. Interrupt.
             EntityPlayer player = getWorld().getPlayerEntityByName(teleportingPlayer);
             if (player != null) {
-                Logging.warn(player, "The destination vanished! Aborting.");
+                Msg.warn(player, "msg.rftools.the_destination_vanished_aborting");
             }
             clearTeleport(80);
         } else if (isPlayerOutsideBeam()) {
@@ -519,7 +520,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
             EntityPlayer player = getWorld().getPlayerEntityByName(teleportingPlayer);
             if (player != null) {
                 TeleportationTools.applyBadEffectIfNeeded(player, 10, badTicks, totalTicks, false);
-                Logging.warn(player, "Missing destination!");
+                Msg.warn(player, "msg.rftools.missing_destination");
             }
             clearTeleport(200);
             return;
@@ -561,7 +562,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
             // Too many bad ticks. Total failure!
             EntityPlayer player = getWorld().getPlayerEntityByName(teleportingPlayer);
             if (player != null) {
-                Logging.warn(player, "Power failure during transit!");
+                Msg.warn(player, "msg.rftools.power_failure_during_transit");
             }
             clearTeleport(200);
         }
@@ -580,7 +581,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
         }
         prepareBeamBox();
         if (!playerBB.intersects(beamBox)) {
-            Logging.message(player, "Teleportation was interrupted!");
+            Msg.message(player, "msg.rftools.teleportation_was_interrupted");
             return true;
         }
         return false;
@@ -614,7 +615,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
             cost = (int) (cost * (4.0f - getInfusedFactor()) / 4.0f);
 
             if (getStoredPower() < cost) {
-                Logging.warn(player, "Not enough power to start the teleport!");
+                Msg.warn(player, "msg.rftools.not_enough_power_to_start_the_teleport");
                 cooldownTimer = 80;
                 return;
             }
@@ -626,7 +627,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
                 return;
             }
 
-            Logging.message(player, "Start teleportation...");
+            Msg.message(player, "msg.rftools.start_teleportation");
             teleportingPlayer = player.getName();
             teleportTimer = TeleportationTools.calculateTime(getWorld(), getPos(), dest);
             teleportTimer = (int) (teleportTimer * (1.2f - getInfusedFactor()) / 1.2f);
@@ -640,7 +641,7 @@ public class MatterTransmitterTileEntity extends GenericEnergyReceiverTileEntity
             goodTicks = 0;
             badTicks = 0;
         } else {
-            Logging.warn(player, "Something is wrong with the destination!");
+            Msg.warn(player, "msg.rftools.something_is_wrong_with_the_destination");
         }
     }
 

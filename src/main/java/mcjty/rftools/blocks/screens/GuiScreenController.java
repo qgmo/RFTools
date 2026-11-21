@@ -14,6 +14,8 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.Rectangle;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiScreenController extends GenericGuiContainer<ScreenControllerTileEntity> {
     public static final int CONTROLLER_WIDTH = 180;
@@ -42,10 +44,10 @@ public class GuiScreenController extends GenericGuiContainer<ScreenControllerTil
 
         Button scanButton = new Button(mc, this)
                 .setName("scan")
-                .setText("Scan").setTooltips("Find all nearby screens", "and connect to them").setLayoutHint(30, 7, 50, 14);
+                .setText(I18n.format("gui.rftools.common.scan")).setTooltips(GuiLoc.lines("gui.rftools.find_all_nearby_screens_and_connect_to_them")).setLayoutHint(30, 7, 50, 14);
         Button detachButton = new Button(mc, this)
                 .setName("detach")
-                .setText("Detach").setTooltips("Detach from all screens").setLayoutHint(90, 7, 50, 14);
+                .setText(I18n.format("gui.rftools.detach")).setTooltips(GuiLoc.lines("gui.rftools.detach_from_all_screens")).setLayoutHint(90, 7, 50, 14);
         infoLabel = new Label(mc, this);
         infoLabel.setLayoutHint(30, 25, 140, 14);
 
@@ -66,7 +68,7 @@ public class GuiScreenController extends GenericGuiContainer<ScreenControllerTil
         drawWindow();
 
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
-        infoLabel.setText(tileEntity.getConnectedScreens().size() + " connected screens");
+        infoLabel.setText(I18n.format("gui.rftools.s_connected_screens", tileEntity.getConnectedScreens().size()));
 
         tileEntity.requestRfFromServer(RFTools.MODID);
     }

@@ -30,6 +30,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class MatterReceiverBlock extends GenericRFToolsBlock<MatterReceiverTileEntity, EmptyContainer> implements Infusable {
 
@@ -52,15 +55,13 @@ public class MatterReceiverBlock extends GenericRFToolsBlock<MatterReceiverTileE
         if (tagCompound != null) {
             String name = tagCompound.getString("tpName");
             int id = tagCompound.getInteger("destinationId");
-            list.add(TextFormatting.GREEN + "Name: " + name + (id == -1 ? "" : (", Id: " + id)));
+            list.add(id == -1 ? I18n.format("tooltip.rftools.name_s", name) : I18n.format("tooltip.rftools.name_s_id_s", name, id));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "If you place this block anywhere in the world then");
-            list.add(TextFormatting.WHITE + "you can dial to it using a Dialing Device. Before");
-            list.add(TextFormatting.WHITE + "teleporting to this block make sure to give it power!");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.if_you_place_this_block_anywhere_in_the"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

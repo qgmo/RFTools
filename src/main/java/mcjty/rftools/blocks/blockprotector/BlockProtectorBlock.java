@@ -38,6 +38,10 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 //@Optional.InterfaceList({
 //        @Optional.Interface(iface = "crazypants.enderio.api.redstone.IRedstoneConnectable", modid = "EnderIO")})
@@ -67,15 +71,13 @@ public class BlockProtectorBlock extends GenericRFToolsBlock<BlockProtectorTileE
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             int id = tagCompound.getInteger("protectorId");
-            list.add(TextFormatting.GREEN + "Id: " + id);
+            list.add(I18n.format("tooltip.rftools.id_s", id));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Use the smart wrench with this block to select");
-            list.add(TextFormatting.WHITE + "other blocks to protect them against explosions");
-            list.add(TextFormatting.WHITE + "and other breackage.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.use_the_smart_wrench_with_this_block_to"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -113,10 +115,10 @@ public class BlockProtectorBlock extends GenericRFToolsBlock<BlockProtectorTileE
             GlobalCoordinate currentBlock = SmartWrenchItem.getCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND));
             if (currentBlock == null) {
                 SmartWrenchItem.setCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND), new GlobalCoordinate(pos, world.provider.getDimension()));
-                Logging.message(player, TextFormatting.YELLOW + "Selected block");
+                Msg.message(player, "msg.rftools.selected_block");
             } else {
                 SmartWrenchItem.setCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND), null);
-                Logging.message(player, TextFormatting.YELLOW + "Cleared selected block");
+                Msg.message(player, "msg.rftools.cleared_selected_block");
             }
         }
         return true;

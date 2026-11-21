@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import mcjty.rftools.varia.Msg;
 
 public class SpaceChamberControllerTileEntity extends GenericTileEntity {
     private BlockPos minCorner;
@@ -46,12 +47,12 @@ public class SpaceChamberControllerTileEntity extends GenericTileEntity {
         }
 
         if (x1 == x2 || z2 == z1) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
         if (getWorld().getBlockState(new BlockPos(x2, y1, z2)).getBlock() != BuilderSetup.spaceChamberBlock) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
@@ -67,22 +68,22 @@ public class SpaceChamberControllerTileEntity extends GenericTileEntity {
         }
 
         if (y1 == y2) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
         if (getWorld().getBlockState(new BlockPos(x2, y2, z2)).getBlock() != BuilderSetup.spaceChamberBlock) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
         if (getWorld().getBlockState(new BlockPos(x1, y2, z2)).getBlock() != BuilderSetup.spaceChamberBlock) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
         if (getWorld().getBlockState(new BlockPos(x2, y2, z1)).getBlock() != BuilderSetup.spaceChamberBlock) {
-            Logging.message(player, TextFormatting.RED + "Not a valid chamber shape!");
+            Msg.message(player, "msg.rftools.not_a_valid_chamber_shape");
             return;
         }
 
@@ -90,13 +91,13 @@ public class SpaceChamberControllerTileEntity extends GenericTileEntity {
         minCorner = new BlockPos(Math.min(x1, x2)+1, Math.min(y1, y2)+1, Math.min(z1, z2)+1);
         maxCorner = new BlockPos(Math.max(x1, x2)-1, Math.max(y1, y2)-1, Math.max(z1, z2)-1);
         if (minCorner.getX() > maxCorner.getX() || minCorner.getY() > maxCorner.getY() || minCorner.getZ() > maxCorner.getZ()) {
-            Logging.message(player, TextFormatting.RED + "Chamber is too small!");
+            Msg.message(player, "msg.rftools.chamber_is_too_small");
             minCorner = null;
             maxCorner = null;
             return;
         }
 
-        Logging.message(player, TextFormatting.WHITE + "Chamber succesfully created!");
+        Msg.message(player, "msg.rftools.chamber_succesfully_created");
 
         SpaceChamberRepository chamberRepository = SpaceChamberRepository.getChannels(getWorld());
         SpaceChamberRepository.SpaceChamberChannel chamberChannel = chamberRepository.getOrCreateChannel(channel);

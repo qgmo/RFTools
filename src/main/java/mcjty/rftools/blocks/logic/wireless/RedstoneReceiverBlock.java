@@ -15,6 +15,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class RedstoneReceiverBlock extends RedstoneChannelBlock<RedstoneReceiverTileEntity, EmptyContainer> {
 
@@ -38,11 +41,9 @@ public class RedstoneReceiverBlock extends RedstoneChannelBlock<RedstoneReceiver
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This logic block sends redstone signals from");
-            list.add(TextFormatting.WHITE + "a linked transmitter. Right click on a transmitter");
-            list.add(TextFormatting.WHITE + "(or other receiver) to link");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_logic_block_sends_redstone_signals"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

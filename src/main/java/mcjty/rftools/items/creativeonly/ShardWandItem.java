@@ -14,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import mcjty.rftools.varia.Msg;
 
 public class ShardWandItem extends GenericRFToolsItem {
 
@@ -38,17 +39,17 @@ public class ShardWandItem extends GenericRFToolsItem {
                     int infused = genericTileEntity.getInfused();
                     if (infused < GeneralConfig.maxInfuse) {
                         infused = GeneralConfig.maxInfuse;
-                        Logging.message(player, "Maximized infusion level!");
+                        Msg.message(player, "msg.rftools.maximized_infusion_level");
                     } else {
                         infused = 0;
-                        Logging.message(player, "Cleared infusion level!");
+                        Msg.message(player, "msg.rftools.cleared_infusion_level");
                     }
                     genericTileEntity.setInfused(infused);
                 } else {
-                    Logging.message(player, "This block doesn't have the right tile entity!");
+                    Msg.message(player, "msg.rftools.this_block_doesn_t_have_the_right_tile");
                 }
             } else {
-                Logging.message(player, "This block is not infusable!");
+                Msg.message(player, "msg.rftools.this_block_is_not_infusable");
             }
             return EnumActionResult.SUCCESS;
         }

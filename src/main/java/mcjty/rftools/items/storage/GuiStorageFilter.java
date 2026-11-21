@@ -18,6 +18,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.Rectangle;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 
 public class GuiStorageFilter extends GenericGuiContainer<GenericTileEntity> {
@@ -43,25 +46,25 @@ public class GuiStorageFilter extends GenericGuiContainer<GenericTileEntity> {
     public void initGui() {
         super.initGui();
 
-        blacklistMode = new ImageChoiceLabel(mc, this).setLayoutHint(130, 9, 16, 16).setTooltips("Black or whitelist mode").addChoiceEvent((parent, newChoice) -> updateSettings());
-        blacklistMode.addChoice("Black", "Blacklist items", guiElements, 14 * 16, 32);
-        blacklistMode.addChoice("White", "Whitelist items", guiElements, 15 * 16, 32);
+        blacklistMode = new LocImageChoiceLabel(mc, this).setLayoutHint(130, 9, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.common.black_or_whitelist_mode")).addChoiceEvent((parent, newChoice) -> updateSettings());
+        blacklistMode.addChoice("Black", I18n.format("gui.rftools.blacklist_items"), guiElements, 14 * 16, 32);
+        blacklistMode.addChoice("White", I18n.format("gui.rftools.whitelist_items"), guiElements, 15 * 16, 32);
 
-        oredictMode = new ImageChoiceLabel(mc, this).setLayoutHint(148, 9, 16, 16).setTooltips("Filter based on ore dictionary").addChoiceEvent((parent, newChoice) -> updateSettings());
-        oredictMode.addChoice("Off", "Oredict matching off", guiElements, 10 * 16, 32);
-        oredictMode.addChoice("On", "Oredict matching on", guiElements, 11 * 16, 32);
+        oredictMode = new LocImageChoiceLabel(mc, this).setLayoutHint(148, 9, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.filter_based_on_ore_dictionary")).addChoiceEvent((parent, newChoice) -> updateSettings());
+        oredictMode.addChoice("Off", I18n.format("gui.rftools.oredict_matching_off"), guiElements, 10 * 16, 32);
+        oredictMode.addChoice("On", I18n.format("gui.rftools.oredict_matching_on"), guiElements, 11 * 16, 32);
 
-        damageMode = new ImageChoiceLabel(mc, this).setLayoutHint(130, 27, 16, 16).setTooltips("Filter ignoring damage").addChoiceEvent((parent, newChoice) -> updateSettings());
-        damageMode.addChoice("Off", "Ignore damage", guiElements, 6 * 16, 32);
-        damageMode.addChoice("On", "Damage must match", guiElements, 7 * 16, 32);
+        damageMode = new LocImageChoiceLabel(mc, this).setLayoutHint(130, 27, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.filter_ignoring_damage")).addChoiceEvent((parent, newChoice) -> updateSettings());
+        damageMode.addChoice("Off", I18n.format("gui.rftools.ignore_damage"), guiElements, 6 * 16, 32);
+        damageMode.addChoice("On", I18n.format("gui.rftools.damage_must_match"), guiElements, 7 * 16, 32);
 
-        nbtMode = new ImageChoiceLabel(mc, this).setLayoutHint(148, 27, 16, 16).setTooltips("Filter ignoring NBT").addChoiceEvent((parent, newChoice) -> updateSettings());
-        nbtMode.addChoice("Off", "Ignore NBT", guiElements, 8 * 16, 32);
-        nbtMode.addChoice("On", "NBT must match", guiElements, 9 * 16, 32);
+        nbtMode = new LocImageChoiceLabel(mc, this).setLayoutHint(148, 27, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.filter_ignoring_nbt")).addChoiceEvent((parent, newChoice) -> updateSettings());
+        nbtMode.addChoice("Off", I18n.format("gui.rftools.ignore_nbt"), guiElements, 8 * 16, 32);
+        nbtMode.addChoice("On", I18n.format("gui.rftools.nbt_must_match"), guiElements, 9 * 16, 32);
 
-        modMode = new ImageChoiceLabel(mc, this).setLayoutHint(130, 45, 16, 16).setTooltips("Filter ignoring mod").addChoiceEvent((parent, newChoice) -> updateSettings());
-        modMode.addChoice("Off", "Don't match on mod", guiElements, 12 * 16, 32);
-        modMode.addChoice("On", "Only mod must match", guiElements, 13 * 16, 32);
+        modMode = new LocImageChoiceLabel(mc, this).setLayoutHint(130, 45, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.filter_ignoring_mod")).addChoiceEvent((parent, newChoice) -> updateSettings());
+        modMode.addChoice("Off", I18n.format("gui.rftools.don_t_match_on_mod"), guiElements, 12 * 16, 32);
+        modMode.addChoice("On", I18n.format("gui.rftools.only_mod_must_match"), guiElements, 13 * 16, 32);
 
         NBTTagCompound tagCompound = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND).getTagCompound();
         if (tagCompound != null) {

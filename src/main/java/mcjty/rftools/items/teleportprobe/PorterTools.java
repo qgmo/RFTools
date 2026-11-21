@@ -16,6 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class PorterTools {
 
@@ -93,8 +94,7 @@ public class PorterTools {
                     if (donext == 1) {
                         String name = destination.getName() + " (dimension " + destination.getDimension() + ")";
                         tagCompound.setInteger("target", target);
-                        ITextComponent component = new TextComponentString(TextFormatting.GREEN + "Target: "+
-                        TextFormatting.WHITE + name);
+                        ITextComponent component = new TextComponentTranslation("msg.rftools.target_s", name);
                         if (playerEntity != null) {
                             playerEntity.sendStatusMessage(component, false);
                         }

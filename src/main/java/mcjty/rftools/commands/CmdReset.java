@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CmdReset extends AbstractRfToolsCommand {
     @Override
@@ -27,7 +28,7 @@ public class CmdReset extends AbstractRfToolsCommand {
     @Override
     public void execute(ICommandSender sender, String[] args) {
         if (args.length > 1) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Too many parameters!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.too_many_parameters");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -37,7 +38,7 @@ public class CmdReset extends AbstractRfToolsCommand {
         }
 
         if (!(sender instanceof EntityPlayer)) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "This command only works as a player!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.this_command_only_works_as_a_player");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

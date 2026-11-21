@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ScanDataManager extends AbstractWorldData<ScanDataManager> {
 
@@ -119,14 +120,9 @@ public class ScanDataManager extends AbstractWorldData<ScanDataManager> {
             Scan scan = entry.getValue();
             BlockPos dim = scan.getDataDim();
             if (dim == null) {
-                sender.sendMessage(new TextComponentString(
-                        TextFormatting.YELLOW + "Scan: " + TextFormatting.WHITE + scanid +
-                                TextFormatting.RED + "   Invalid"));
+                sender.sendMessage(new TextComponentTranslation("msg.rftools.scan_s_invalid", scanid));
             } else {
-                sender.sendMessage(new TextComponentString(
-                        TextFormatting.YELLOW + "Scan: " + TextFormatting.WHITE + scanid +
-                                TextFormatting.YELLOW + "   Dim: " + TextFormatting.WHITE + dim.getX() + "," + dim.getY() + "," + dim.getZ() +
-                                TextFormatting.YELLOW + "   Size: " + TextFormatting.WHITE + scan.getRledata().length + " bytes"));
+                sender.sendMessage(new TextComponentTranslation("msg.rftools.scan_s_dim_s_s_s_size_s_bytes", scanid, dim.getX(), dim.getY(), dim.getZ(), scan.getRledata().length));
             }
         }
     }

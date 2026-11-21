@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.Optional;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
+import mcjty.rftools.varia.Msg;
 
 @Optional.InterfaceList({
         @Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "opencomputers")
@@ -235,7 +236,7 @@ public class BlockProtectorTileEntity extends GenericEnergyReceiverTileEntity im
         if (Math.abs(pos.getX()-xCoord) > BlockProtectorConfiguration.maxProtectDistance.get()
                 || Math.abs(pos.getY()-yCoord) > BlockProtectorConfiguration.maxProtectDistance.get()
                 || Math.abs(pos.getZ()-zCoord) > BlockProtectorConfiguration.maxProtectDistance.get()) {
-            Logging.message(player, TextFormatting.RED + "Block out of range of the block protector!");
+            Msg.message(player, "msg.rftools.block_out_of_range_of_the_block_protector");
             return;
         }
         GlobalCoordinate gc = new GlobalCoordinate(pos, getWorld().provider.getDimension());

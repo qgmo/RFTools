@@ -19,7 +19,7 @@ window {
             bgfilled1(-7631989)
             panel('','horizontal') {
                 desired(-1,16)
-                label('','Radius:')
+                label('','gui.rftools.environmental.label.text')
                 slider {
                     horizontal(true)
                     minimumknob(12)
@@ -33,7 +33,7 @@ window {
             }
             panel('','horizontal') {
                 desired(-1,17)
-                label('','Height:')
+                label('','gui.rftools.environmental.label.text_2')
                 textfield('miny') {
                     channel('miny')
                 }
@@ -63,22 +63,22 @@ window {
                 desired(40,15)
                 choices {
                     choice('BL') {
-                        tooltips('Players in the list above will not get the effects')
+                        tooltips('gui.rftools.environmental.mode.bl.tip')
                     }
                     choice('WL') {
-                        tooltips('Players in the list above will get the effects')
+                        tooltips('gui.rftools.environmental.mode.wl.tip')
                     }
                     choice('Mobs') {
-                        tooltips('Affect hostile and passive mobs','(needs more power)')
+                        tooltips('gui.rftools.environmental.mode.mobs.tip')
                     }
                     choice('Host') {
-                        tooltips('Affect hostile mobs','(needs more power)')
+                        tooltips('gui.rftools.environmental.mode.host.tip')
                     }
                     choice('Pass') {
-                        tooltips('Affect passive mobs','(needs more power)')
+                        tooltips('gui.rftools.environmental.mode.pass.tip')
                     }
                     choice('All') {
-                        tooltips('Affect all mobs and players','(needs more power)')
+                        tooltips('gui.rftools.environmental.mode.all.tip')
                     }
                 }
             }
@@ -86,13 +86,13 @@ window {
                 channel('add')
                 enableon('name')
                 desired(-1,15)
-                tooltips('Add a player to the list')
+                tooltips('gui.rftools.environmental.add.tip')
             }
             button('del','-') {
                 channel('del')
                 enableon('selected')
                 desired(-1,15)
-                tooltips('Remove selected player from the list')
+                tooltips('gui.rftools.environmental.del.tip')
             }
             textfield('name')
             imagechoicelabel('redstone') {
@@ -103,17 +103,17 @@ window {
                 choices {
                     choice('Ignored') {
                         uv(0,0)
-                        tooltips('Redstone mode:','Ignored')
+                        tooltips('gui.rftools.common.redstone_mode_ignored')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('Off') {
                         uv(16,0)
-                        tooltips('Redstone mode:','Off to activate')
+                        tooltips('gui.rftools.common.redstone_mode_off_to_activate')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('On') {
                         uv(32,0)
-                        tooltips('Redstone mode:','On to activate')
+                        tooltips('gui.rftools.common.redstone_mode_on_to_activate')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }

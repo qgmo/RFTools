@@ -44,6 +44,10 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class StorageTerminalBlock extends LogicSlabBlock<StorageTerminalTileEntity, StorageTerminalContainer> {
 
@@ -75,11 +79,9 @@ public class StorageTerminalBlock extends LogicSlabBlock<StorageTerminalTileEnti
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This terminal can be retrofitted with");
-            list.add(TextFormatting.WHITE + "a Storage Control Screen Module so");
-            list.add(TextFormatting.WHITE + "that you can access a Storage Scanner");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_terminal_can_be_retrofitted_with_a"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -144,12 +146,12 @@ public class StorageTerminalBlock extends LogicSlabBlock<StorageTerminalTileEnti
                     BlockPos pos = RFToolsTools.getPositionFromModule(module);
                     WorldServer world = DimensionManager.getWorld(dimension);
                     if (!WorldTools.chunkLoaded(world, pos)) {
-                        entityPlayer.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "Storage scanner out of range!"), false);
+                        entityPlayer.sendStatusMessage(new TextComponentTranslation("msg.rftools.storage_scanner_out_of_range"), false);
                         return null;
                     }
                     TileEntity scannerTE = world.getTileEntity(pos);
                     if (!(scannerTE instanceof StorageScannerTileEntity)) {
-                        entityPlayer.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "Storage scanner is missing!"), false);
+                        entityPlayer.sendStatusMessage(new TextComponentTranslation("msg.rftools.storage_scanner_is_missing"), false);
                         return null;
                     }
 
@@ -216,7 +218,7 @@ public class StorageTerminalBlock extends LogicSlabBlock<StorageTerminalTileEnti
                     if (!player.inventory.addItemStackToInventory(module)) {
                         player.entityDropItem(module, 1.05f);
                     }
-                    player.sendStatusMessage(new TextComponentString("Removed module"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("msg.rftools.removed_module"), false);
                 }
             }
         }

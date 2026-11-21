@@ -19,6 +19,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class ButtonModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -60,20 +63,16 @@ public class ButtonModuleItem extends GenericRFToolsItem implements IModuleProvi
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World player, List<String> list, ITooltipFlag advanced) {
         super.addInformation(itemStack, player, list, advanced);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.BUTTON_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.BUTTON_RFPERTICK.get()));
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Label: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.label_s", tagCompound.getString("text")));
             int channel = tagCompound.getInteger("channel");
             if (channel != -1) {
-                list.add(TextFormatting.YELLOW + "Channel: " + channel);
+                list.add(I18n.format("tooltip.rftools.channel_s_2", channel));
             }
         }
-        list.add(TextFormatting.WHITE + "Sneak right-click on a redstone receiver");
-        list.add(TextFormatting.WHITE + "to create a channel for this module and also");
-        list.add(TextFormatting.WHITE + "set it to the receiver. You can also use this");
-        list.add(TextFormatting.WHITE + "on a transmitter or already set receiver to copy");
-        list.add(TextFormatting.WHITE + "the channel to the button");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_redstone_receiver_to"));
     }
 
     @Override

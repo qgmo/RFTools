@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 public class ClockModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -26,7 +27,7 @@ public class ClockModuleItem extends GenericRFToolsItem implements IModuleProvid
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.CLOCK_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.CLOCK_RFPERTICK.get()));
     }
 
     @Override

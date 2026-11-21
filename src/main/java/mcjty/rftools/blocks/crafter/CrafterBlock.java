@@ -25,6 +25,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 //@Optional.InterfaceList({
 //        @Optional.Interface(iface = "crazypants.enderio.api.redstone.IRedstoneConnectable", modid = "EnderIO")})
@@ -61,7 +64,7 @@ public class CrafterBlock extends GenericRFToolsBlock<CrafterBaseTE, CrafterCont
                 }
             }
 
-            list.add(TextFormatting.GREEN + "Contents: " + rc + " stacks");
+            list.add(I18n.format("tooltip.rftools.contents_s_stacks", rc));
 
             rc = 0;
             for (int i = 0 ; i < recipeTagList.tagCount() ; i++) {
@@ -75,7 +78,7 @@ public class CrafterBlock extends GenericRFToolsBlock<CrafterBaseTE, CrafterCont
                 }
             }
 
-            list.add(TextFormatting.GREEN + "Recipes: " + rc + " recipes");
+            list.add(I18n.format("tooltip.rftools.recipes_s_recipes", rc));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
@@ -87,12 +90,11 @@ public class CrafterBlock extends GenericRFToolsBlock<CrafterBaseTE, CrafterCont
             } else {
                 amount = 8;
             }
-            list.add(TextFormatting.WHITE + "This machine can handle up to " + amount + " recipes");
-            list.add(TextFormatting.WHITE + "at once and allows recipes to use the crafting results");
-            list.add(TextFormatting.WHITE + "of previous steps.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption.");
+            list.add(I18n.format("tooltip.rftools.this_machine_can_handle_up_to_s_recipes", amount));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.at_once_and_allows_recipes_to_use_the"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

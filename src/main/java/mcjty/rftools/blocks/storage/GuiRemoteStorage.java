@@ -17,6 +17,8 @@ import java.awt.Rectangle;
 
 import static mcjty.rftools.blocks.storage.RemoteStorageTileEntity.PARAM_GLOBAL;
 import static mcjty.rftools.blocks.storage.RemoteStorageTileEntity.PARAM_INDEX;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 
 public class GuiRemoteStorage extends GenericGuiContainer<RemoteStorageTileEntity> {
@@ -46,11 +48,11 @@ public class GuiRemoteStorage extends GenericGuiContainer<RemoteStorageTileEntit
 
         Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChild(energyBar);
         for (int i = 0 ; i < 4 ; i++) {
-            global[i] = new ImageChoiceLabel(mc, this);
+            global[i] = new LocImageChoiceLabel(mc, this);
             final int finalI = i;
             global[i].addChoiceEvent((parent, newChoice) -> changeGlobal(finalI));
-            global[i].addChoice("off" + i, "Cross-dimension access disabled", guiElements, 0, 32);
-            global[i].addChoice("on" + i, "Cross-dimension access enabled", guiElements, 16, 32);
+            global[i].addChoice("off" + i, I18n.format("gui.rftools.cross_dimension_access_disabled"), guiElements, 0, 32);
+            global[i].addChoice("on" + i, I18n.format("gui.rftools.cross_dimension_access_enabled"), guiElements, 16, 32);
             global[i].setLayoutHint(new PositionalLayout.PositionalHint(i < 2 ? (43 - 18) : (120 - 18), (i % 2) == 0 ? 9 : 36, 16, 16));
             global[i].setCurrentChoice(tileEntity.isGlobal(i) ? 1 : 0);
             toplevel.addChild(global[i]);

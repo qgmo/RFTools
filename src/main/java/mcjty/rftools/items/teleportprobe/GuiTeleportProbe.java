@@ -21,6 +21,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 public class GuiTeleportProbe extends GuiScreen {
 
@@ -105,7 +106,7 @@ public class GuiTeleportProbe extends GuiScreen {
 
             panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setText(destination.getName()).setDesiredWidth(100));
             panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setText(BlockPosTools.toString(coordinate)).setDesiredWidth(75));
-            panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setText("Id " + dim).setDesiredWidth(75));
+            panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setText(I18n.format("gui.rftools.id_s", dim)).setDesiredWidth(75));
             list.addChild(panel);
         }
     }

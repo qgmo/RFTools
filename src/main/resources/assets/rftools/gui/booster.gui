@@ -24,17 +24,17 @@ window {
             choices {
                 choice('Ignored') {
                     uv(0,0)
-                    tooltips('Redstone mode:','Ignored')
+                    tooltips('gui.rftools.common.redstone_mode_ignored')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('Off') {
                     uv(16,0)
-                    tooltips('Redstone mode:','Off to activate')
+                    tooltips('gui.rftools.common.redstone_mode_off_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('On') {
                     uv(32,0)
-                    tooltips('Redstone mode:','On to activate')
+                    tooltips('gui.rftools.common.redstone_mode_on_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
             }

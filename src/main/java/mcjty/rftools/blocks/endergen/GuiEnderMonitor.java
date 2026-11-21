@@ -8,6 +8,7 @@ import mcjty.rftools.RFTools;
 import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiEnderMonitor extends GenericGuiContainer<EnderMonitorTileEntity> {
 
@@ -18,6 +19,7 @@ public class GuiEnderMonitor extends GenericGuiContainer<EnderMonitorTileEntity>
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/endermonitor.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         ChoiceLabel mode = window.findChild("mode");

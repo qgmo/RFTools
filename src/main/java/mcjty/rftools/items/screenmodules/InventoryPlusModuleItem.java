@@ -27,6 +27,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -39,11 +43,11 @@ public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModu
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.ITEMSTACK_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.ITEMSTACK_RFPERTICK.get()));
         boolean hasTarget = false;
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Label: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.label_s", tagCompound.getString("text")));
             if (tagCompound.hasKey("monitorx")) {
                 int dim;
                 if (tagCompound.hasKey("monitordim")) {
@@ -56,14 +60,13 @@ public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModu
                 int monitory = tagCompound.getInteger("monitory");
                 int monitorz = tagCompound.getInteger("monitorz");
                 String monitorname = tagCompound.getString("monitorname");
-                list.add(TextFormatting.YELLOW + "Monitoring: " + monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")");
-                list.add(TextFormatting.YELLOW + "Dimension: " + dim);
+                list.add(I18n.format("tooltip.rftools.monitoring_s_at_s_s_s", monitorname, monitorx, monitory, monitorz));
+                list.add(I18n.format("tooltip.rftools.dimension_s_2", dim));
                 hasTarget = true;
             }
         }
         if (!hasTarget) {
-            list.add(TextFormatting.YELLOW + "Sneak right-click on an inventory to set the");
-            list.add(TextFormatting.YELLOW + "target for this inventory module");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_an_inventory_to_set"));
         }
     }
 
@@ -73,7 +76,7 @@ public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModu
         TileEntity te = world.getTileEntity(pos);
         if (te == null) {
             if (world.isRemote) {
-                Logging.message(player, TextFormatting.RED + "This is not a valid inventory!");
+                Msg.message(player, "msg.rftools.this_is_not_a_valid_inventory");
             }
             return EnumActionResult.SUCCESS;
         }
@@ -94,7 +97,7 @@ public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModu
             }
             tagCompound.setString("monitorname", name);
             if (world.isRemote) {
-                Logging.message(player, "Inventory module is set to block '" + name + "'");
+                Msg.message(player, "msg.rftools.inventory_module_is_set_to_block_s", name);
             }
         } else {
             tagCompound.removeTag("monitordim");
@@ -103,7 +106,7 @@ public class InventoryPlusModuleItem extends GenericRFToolsItem implements IModu
             tagCompound.removeTag("monitorz");
             tagCompound.removeTag("monitorname");
             if (world.isRemote) {
-                Logging.message(player, "Inventory module is cleared");
+                Msg.message(player, "msg.rftools.inventory_module_is_cleared");
             }
         }
         stack.setTagCompound(tagCompound);

@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static mcjty.rftools.blocks.shaper.LocatorTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
 
@@ -91,7 +93,7 @@ public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
         playerBeacon.setPressed(tileEntity.isPlayerBeacon());
 
         toplevel.addChild(new Label(mc, this)
-                .setText("Filter")
+                .setText(I18n.format("gui.rftools.filter_2"))
                 .setLayoutHint(8, 82, 40, 14));
         filter = new TextField(mc, this);
         filter.setLayoutHint(50, 82, 90, 14);
@@ -121,7 +123,7 @@ public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
         toplevel.addChild(new Label(mc, this)
                 .setColor(0x993300)
                 .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
-                .setText("RF per scan (every " + ScannerConfiguration.ticksPerLocatorScan + " ticks):")
+                .setText(I18n.format("gui.rftools.rf_per_scan_every_s_ticks", ScannerConfiguration.ticksPerLocatorScan))
                 .setLayoutHint(8, 186, 156, 14));
         energyLabel = new Label(mc, this).setText("");
         energyLabel.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
@@ -152,7 +154,7 @@ public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
             update();
         });
         toplevel.addChild(choice);
-        toggle.setCheckMarker(true).setText("Beacon");
+        toggle.setCheckMarker(true).setText(I18n.format("gui.rftools.beacon"));
         toggle.setLayoutHint(new PositionalLayout.PositionalHint(90, y, 60, 14));
         toggle.addButtonEvent(parent -> update());
         toplevel.addChild(toggle);
@@ -186,11 +188,11 @@ public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
     }
 
     private ImageChoiceLabel initRedstoneMode() {
-        ImageChoiceLabel redstoneMode = new ImageChoiceLabel(mc, this).
+        ImageChoiceLabel redstoneMode = new LocImageChoiceLabel(mc, this).
                 setName("redstone").
-                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), "Redstone mode:\nIgnored", iconGuiElements, 0, 0).
-                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), "Redstone mode:\nOff to activate", iconGuiElements, 16, 0).
-                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), "Redstone mode:\nOn to activate", iconGuiElements, 32, 0);
+                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_ignored"), iconGuiElements, 0, 0).
+                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_off_to_activate"), iconGuiElements, 16, 0).
+                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_on_to_activate"), iconGuiElements, 32, 0);
         redstoneMode.setLayoutHint(8, 10, 16, 16);
         return redstoneMode;
     }
@@ -211,7 +213,7 @@ public class GuiLocator extends GenericGuiContainer<LocatorTileEntity> {
             sendServerCommand(RFTools.MODID, CommandHandler.CMD_REQUEST_LOCATOR_ENERGY,
                     TypedMap.builder().put(CommandHandler.PARAM_POS, tileEntity.getPos()).build());
         }
-        energyLabel.setText(energyConsumption + " RF");
+        energyLabel.setText(I18n.format("gui.rftools.s_rf", energyConsumption));
     }
 
 }

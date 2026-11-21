@@ -15,6 +15,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class StorageScannerBlock extends GenericRFToolsBlock<StorageScannerTileEntity, StorageScannerContainer> implements Infusable {
 
@@ -34,12 +37,10 @@ public class StorageScannerBlock extends GenericRFToolsBlock<StorageScannerTileE
         super.addInformation(itemStack, player, list, advancedToolTip);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This machine will scan all nearby inventories");
-            list.add(TextFormatting.WHITE + "and show them in a list. You can then search");
-            list.add(TextFormatting.WHITE + "for items in all those inventories.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_machine_will_scan_all_nearby"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

@@ -23,6 +23,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import mcjty.rftools.varia.Msg;
 
 public class MatterBeamerTileEntity extends GenericEnergyReceiverTileEntity implements DefaultSidedInventory, ITickable {
 
@@ -182,13 +183,13 @@ public class MatterBeamerTileEntity extends GenericEnergyReceiverTileEntity impl
             } else {
                 RFTools.instance.clientInfo.setDestinationTE(destinationTE.getPos());
             }
-            Logging.message(player, "Select a spawner as destination");
+            Msg.message(player, "msg.rftools.select_a_spawner_as_destination");
         } else if (coord.equals(getPos())) {
             // Unselect this one.
             RFTools.instance.clientInfo.setSelectedTE(null);
             RFTools.instance.clientInfo.setDestinationTE(null);
             setDestination(null);
-            Logging.message(player, "Destination cleared!");
+            Msg.message(player, "msg.rftools.destination_cleared");
         }
     }
 

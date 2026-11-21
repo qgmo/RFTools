@@ -29,6 +29,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 
 public class GuiCraftingGrid {
@@ -72,15 +74,15 @@ public class GuiCraftingGrid {
             }
         });
         craft1Button = new Button(mc, gui).setChannel("craft1").setText("1").setLayoutHint(29, 183, 14, 10)
-                .setTooltips("Craft one");
+                .setTooltips(GuiLoc.lines("gui.rftools.craft_one"));
         craft4Button = new Button(mc, gui).setChannel("craft4").setText("4").setLayoutHint(45, 183, 14, 10)
-                .setTooltips("Craft four");
+                .setTooltips(GuiLoc.lines("gui.rftools.craft_four"));
         craft8Button = new Button(mc, gui).setChannel("craft8").setText("8").setLayoutHint(29, 195, 14, 10)
-                .setTooltips("Craft eight");
+                .setTooltips(GuiLoc.lines("gui.rftools.craft_eight"));
         craftSButton = new Button(mc, gui).setChannel("craftstack").setText("*").setLayoutHint(45, 195, 14, 10)
-                .setTooltips("Craft a stack");
-        storeButton = new Button(mc, gui).setChannel("store").setText("Store").setLayoutHint(5, 109, 56, 14)
-                .setTooltips("Store the current recipe");
+                .setTooltips(GuiLoc.lines("gui.rftools.craft_a_stack"));
+        storeButton = new Button(mc, gui).setChannel("store").setText(I18n.format("gui.rftools.store")).setLayoutHint(5, 109, 56, 14)
+                .setTooltips(GuiLoc.lines("gui.rftools.store_the_current_recipe"));
         Panel sidePanel = new Panel(mc, gui).setLayout(new PositionalLayout())
                 .addChildren(craft1Button, craft4Button, craft8Button, craftSButton, storeButton, recipeList);
         int sideLeft = guiLeft - CraftingGridInventory.GRID_WIDTH - 2;
@@ -224,7 +226,7 @@ public class GuiCraftingGrid {
         String readableName = BlockTools.getReadableName(craftingResult);
         int color = StyleConfig.colorTextInListNormal;
         if (craftingResult.isEmpty()) {
-            readableName = "<recipe>";
+            readableName = I18n.format("gui.rftools.recipe_placeholder");
             color = 0xFF505050;
         }
         Panel panel = new Panel(mc, gui).setLayout(new PositionalLayout()).

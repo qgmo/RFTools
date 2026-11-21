@@ -27,6 +27,7 @@ import net.minecraftforge.common.DimensionManager;
 
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class StorageControlScreenModule implements IScreenModule<StorageControlScreenModule.ModuleDataStacks>, ITooltipInfo,
         IScreenModuleUpdater {
@@ -216,7 +217,7 @@ public class StorageControlScreenModule implements IScreenModule<StorageControlS
             return;
         }
         if (BlockPosTools.INVALID.equals(coordinate)) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Module is not linked to storage scanner!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.module_is_not_linked_to_storage_scanner"), false);
             return;
         }
         StorageScannerTileEntity scannerTileEntity = getStorageScanner(dim, coordinate);

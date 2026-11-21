@@ -21,6 +21,9 @@ import org.lwjgl.input.Keyboard;
 import java.awt.Rectangle;
 
 import static mcjty.rftools.blocks.security.SecurityManagerTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiSecurityManager extends GenericGuiContainer<SecurityManagerTileEntity> {
     public static final int SECURITYMANAGER_WIDTH = 244;
@@ -58,10 +61,10 @@ public class GuiSecurityManager extends GenericGuiContainer<SecurityManagerTileE
 
         nameField = new TextField(mc, this).setDesiredHeight(15).setName("name")
             .setEnabledFlags("card");
-        Widget<?> addButton = new Button(mc, this).setText("Add").setDesiredHeight(14).setDesiredWidth(34).setTooltips("Add a player to the access list")
+        Widget<?> addButton = new Button(mc, this).setText(I18n.format("gui.rftools.common.add")).setDesiredHeight(14).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.add_a_player_to_the_access_list"))
                 .setEnabledFlags("card")
                 .setName("addbutton").setChannel("addbutton");
-        Widget<?> delButton = new Button(mc, this).setText("Del").setDesiredHeight(14).setDesiredWidth(34).setTooltips("Remove the selected player", "from the access list")
+        Widget<?> delButton = new Button(mc, this).setText(I18n.format("gui.rftools.common.del")).setDesiredHeight(14).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.remove_the_selected_player_from_the_access"))
                 .setEnabledFlags("card")
                 .setName("delbutton").setChannel("delbutton");
         Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(3).setSpacing(1)).addChildren(nameField, addButton, delButton).setDesiredHeight(16)
@@ -71,11 +74,11 @@ public class GuiSecurityManager extends GenericGuiContainer<SecurityManagerTileE
                 .setName("channelname")
                 .setEnabledFlags("card");
 
-        blacklistMode = new ImageChoiceLabel(mc, this).setLayoutHint(10, 44, 16, 16).setTooltips("Black or whitelist mode").addChoiceEvent((parent, newChoice) -> updateSettings())
+        blacklistMode = new LocImageChoiceLabel(mc, this).setLayoutHint(10, 44, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.common.black_or_whitelist_mode")).addChoiceEvent((parent, newChoice) -> updateSettings())
                 .setName("blacklistmode")
                 .setEnabledFlags("card");
-        blacklistMode.addChoice("White", "Whitelist players", guiElements, 15 * 16, 32);
-        blacklistMode.addChoice("Black", "Blacklist players", guiElements, 14 * 16, 32);
+        blacklistMode.addChoice("White", I18n.format("gui.rftools.common.whitelist_players"), guiElements, 15 * 16, 32);
+        blacklistMode.addChoice("Black", I18n.format("gui.rftools.common.blacklist_players"), guiElements, 14 * 16, 32);
 
 
         Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChildren(allowedPlayersPanel, buttonPanel, channelNameField, blacklistMode);

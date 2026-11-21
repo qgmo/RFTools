@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import mcjty.rftools.varia.Msg;
 
 public class TeleportationTools {
     public static final int STATUS_OK = 0;
@@ -147,7 +148,7 @@ public class TeleportationTools {
         }
 
         if (TeleportConfiguration.whooshMessage.get()) {
-            Logging.message(player, "Whoosh!");
+            Msg.message(player, "msg.rftools.whoosh");
         }
         // @todo achievements
 //        Achievements.trigger(player, Achievements.firstTeleport);
@@ -248,7 +249,7 @@ public class TeleportationTools {
         World world = DimensionManager.getWorld(dimension);
         TileEntity te = world.getTileEntity(c);
         if (!(te instanceof MatterReceiverTileEntity)) {
-            Logging.warn(player, "Something went wrong with the destination!");
+            Msg.warn(player, "msg.rftools.something_went_wrong_with_the_destination");
             return 0;
         }
 
@@ -265,11 +266,11 @@ public class TeleportationTools {
 
         long remainingRf = matterReceiverTileEntity.getStoredPower();
         if (remainingRf <= 1) {
-            Logging.warn(player, "The matter receiver has run out of power!");
+            Msg.warn(player, "msg.rftools.the_matter_receiver_has_run_out_of_power");
         } else if (remainingRf < (TeleportConfiguration.RECEIVER_MAXENERGY.get() / 10)) {
-            Logging.warn(player, "The matter receiver is getting very low on power!");
+            Msg.warn(player, "msg.rftools.the_matter_receiver_is_getting_very_low_on");
         } else if (remainingRf < (TeleportConfiguration.RECEIVER_MAXENERGY.get() / 5)) {
-            Logging.warn(player, "The matter receiver is getting low on power!");
+            Msg.warn(player, "msg.rftools.the_matter_receiver_is_getting_low_on_power");
         }
 
         return 10 - (extracted * 10 / rf);
@@ -355,16 +356,16 @@ public class TeleportationTools {
     public static boolean checkValidTeleport(EntityPlayer player, int srcId, int dstId) {
         if (TeleportConfiguration.preventInterdimensionalTeleports.get()) {
             if (srcId == dstId) {
-                Logging.warn(player, "Teleportation in the same dimension is not allowed!");
+                Msg.warn(player, "msg.rftools.teleportation_in_the_same_dimension_is_not");
                 return false;
             }
         }
         if (TeleportConfiguration.getBlacklistedTeleportationDestinations().contains(dstId)) {
-            Logging.warn(player, "Teleportation to that dimension is not allowed!");
+            Msg.warn(player, "msg.rftools.teleportation_to_that_dimension_is_not");
             return false;
         }
         if (TeleportConfiguration.getBlacklistedTeleportationSources().contains(srcId)) {
-            Logging.warn(player, "Teleportation from this dimension is not allowed!");
+            Msg.warn(player, "msg.rftools.teleportation_from_this_dimension_is_not");
             return false;
         }
         return true;

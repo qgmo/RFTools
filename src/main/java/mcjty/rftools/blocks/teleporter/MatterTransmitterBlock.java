@@ -32,6 +32,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class MatterTransmitterBlock extends GenericRFToolsBlock<MatterTransmitterTileEntity, EmptyContainer> implements Infusable {
 
@@ -68,7 +71,7 @@ public class MatterTransmitterBlock extends GenericRFToolsBlock<MatterTransmitte
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             String name = tagCompound.getString("tpName");
-            list.add(TextFormatting.GREEN + "Name: " + name);
+            list.add(I18n.format("tooltip.rftools.name_s", name));
 
             boolean dialed = false;
             BlockPos c = BlockPosTools.readFromNBT(tagCompound, "dest");
@@ -91,27 +94,19 @@ public class MatterTransmitterBlock extends GenericRFToolsBlock<MatterTransmitte
                 if (clientSideId != null && clientSideId == destId) {
                     destname = clientSideName;
                 }
-                list.add(TextFormatting.YELLOW + "[DIALED to " + destname + "]");
+                list.add(I18n.format("tooltip.rftools.dialed_to_s", destname));
             }
 
             boolean once = tagCompound.getBoolean("once");
             if (once) {
-                list.add(TextFormatting.YELLOW + "[ONCE]");
+                list.add(I18n.format("tooltip.rftools.once"));
             }
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "If you place this block near a Dialing Device then");
-            list.add(TextFormatting.WHITE + "you can dial it to a Matter Receiver. Make sure to give");
-            list.add(TextFormatting.WHITE + "it sufficient power!");
-            list.add(TextFormatting.WHITE + "Use a Destination Analyzer adjacent to this block");
-            list.add(TextFormatting.WHITE + "to check destination status (red is bad, green ok,");
-            list.add(TextFormatting.WHITE + "yellow is unknown).");
-            list.add(TextFormatting.WHITE + "Use a  Matter Booster adjacent to this block");
-            list.add(TextFormatting.WHITE + "to be able to teleport to unpowered receivers.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption and");
-            list.add(TextFormatting.YELLOW + "increased teleportation speed.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.if_you_place_this_block_near_a_dialing"));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.infusing_bonus_reduced_power_consumption_4"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

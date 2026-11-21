@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class AbstractRfToolsCommand implements RfToolsCommand {
 
@@ -22,7 +23,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Boolean.valueOf(args[index]);
         } catch (NumberFormatException e) {
             value = false;
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Parameter is not a valid boolean!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.parameter_is_not_a_valid_boolean");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -40,7 +41,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Integer.parseInt(args[index]);
         } catch (NumberFormatException e) {
             value = 0;
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Parameter is not a valid integer!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.parameter_is_not_a_valid_integer");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -58,7 +59,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Float.parseFloat(args[index]);
         } catch (NumberFormatException e) {
             value = 0.0f;
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Parameter is not a valid real number!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.parameter_is_not_a_valid_real_number");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

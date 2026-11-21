@@ -34,6 +34,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 //@Optional.InterfaceList({
 //        @Optional.Interface(iface = "crazypants.enderio.api.redstone.IRedstoneConnectable", modid = "EnderIO")})
@@ -72,13 +75,10 @@ public class MatterBeamerBlock extends GenericRFToolsBlock<MatterBeamerTileEntit
 //            list.add(EnumChatFormatting.GREEN + "Name: " + name + (id == -1 ? "" : (", Id: " + id)));
 //        }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This block converts matter into a beam");
-            list.add(TextFormatting.WHITE + "of energy. It can then send that beam to");
-            list.add(TextFormatting.WHITE + "a connected spawner. Connect by using a wrench.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power usage");
-            list.add(TextFormatting.YELLOW + "increased speed and less material needed");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_block_converts_matter_into_a_beam_of"));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.infusing_bonus_reduced_power_usage"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

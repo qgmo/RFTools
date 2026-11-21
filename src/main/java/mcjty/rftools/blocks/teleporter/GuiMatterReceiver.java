@@ -20,6 +20,9 @@ import java.awt.Rectangle;
 import java.util.*;
 
 import static mcjty.rftools.blocks.teleporter.MatterReceiverTileEntity.PARAM_PLAYER;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiMatterReceiver extends GenericGuiContainer<MatterReceiverTileEntity> {
     public static final int MATTER_WIDTH = 180;
@@ -62,14 +65,14 @@ public class GuiMatterReceiver extends GenericGuiContainer<MatterReceiverTileEnt
 
         TextField textField = new TextField(mc, this)
                 .setName("name")
-                .setTooltips("Use this name to", "identify this receiver", "in the dialer");
-        Panel namePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText("Name:")).addChild(textField).setDesiredHeight(16);
+                .setTooltips(GuiLoc.lines("gui.rftools.use_this_name_to_identify_this_receiver_in"));
+        Panel namePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.name"))).addChild(textField).setDesiredHeight(16);
 
-        privateSetting = new ChoiceLabel(mc, this).addChoices(ACCESS_PUBLIC, ACCESS_PRIVATE).setDesiredHeight(14).setDesiredWidth(60).
+        privateSetting = new LocChoiceLabel(mc, this).addChoices(ACCESS_PUBLIC, ACCESS_PRIVATE).setDesiredHeight(14).setDesiredWidth(60).
                 setName("private").
-                setChoiceTooltip(ACCESS_PUBLIC, "Everyone can dial to this receiver").
-                setChoiceTooltip(ACCESS_PRIVATE, "Only people in the access list below", "can dial to this receiver");
-        Panel privatePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText("Access:")).addChild(privateSetting).setDesiredHeight(16);
+                setChoiceTooltip(ACCESS_PUBLIC, GuiLoc.lines("gui.rftools.everyone_can_dial_to_this_receiver")).
+                setChoiceTooltip(ACCESS_PRIVATE, GuiLoc.lines("gui.rftools.only_people_in_the_access_list_below_can"));
+        Panel privatePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.access"))).addChild(privateSetting).setDesiredHeight(16);
 
         allowedPlayers = new WidgetList(mc, this).setName("allowedplayers");
         Slider allowedPlayerSlider = new Slider(mc, this).setDesiredWidth(10).setVertical().setScrollableName("allowedplayers");
@@ -77,8 +80,8 @@ public class GuiMatterReceiver extends GenericGuiContainer<MatterReceiverTileEnt
                 .setFilledBackground(0xff9e9e9e);
 
         nameField = new TextField(mc, this);
-        addButton = new Button(mc, this).setChannel("addplayer").setText("Add").setDesiredHeight(13).setDesiredWidth(34).setTooltips("Add a player to the access list");
-        delButton = new Button(mc, this).setChannel("delplayer").setText("Del").setDesiredHeight(13).setDesiredWidth(34).setTooltips("Remove the selected player", "from the access list");
+        addButton = new Button(mc, this).setChannel("addplayer").setText(I18n.format("gui.rftools.common.add")).setDesiredHeight(13).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.add_a_player_to_the_access_list"));
+        delButton = new Button(mc, this).setChannel("delplayer").setText(I18n.format("gui.rftools.common.del")).setDesiredHeight(13).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.remove_the_selected_player_from_the_access"));
         Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChildren(nameField, addButton, delButton).setDesiredHeight(16);
 
         Panel toplevel = new Panel(mc, this).setFilledRectThickness(2).setLayout(new VerticalLayout().setHorizontalMargin(3).setVerticalMargin(3).setSpacing(1)).

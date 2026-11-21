@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static mcjty.rftools.blocks.logic.threelogic.ThreeLogicTileEntity.PARAM_INDEX;
 import static mcjty.rftools.blocks.logic.threelogic.ThreeLogicTileEntity.PARAM_STATE;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiThreeLogic extends GenericGuiContainer<ThreeLogicTileEntity> {
 
@@ -22,6 +23,7 @@ public class GuiThreeLogic extends GenericGuiContainer<ThreeLogicTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/threelogic.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

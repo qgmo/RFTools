@@ -22,6 +22,8 @@ import net.minecraft.util.ResourceLocation;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocChoiceLabel;
 
 
 public class GuiModifier extends GenericGuiContainer<GenericTileEntity> {
@@ -62,7 +64,7 @@ public class GuiModifier extends GenericGuiContainer<GenericTileEntity> {
 
         Panel toplevel = new Panel(mc, this).setLayout(new PositionalLayout()).setBackground(iconLocation);
 
-        mode = new ChoiceLabel(mc, this).addChoices(
+        mode = new LocChoiceLabel(mc, this).addChoices(
                 ModifierFilterType.FILTER_SLOT.getCode(),
                 ModifierFilterType.FILTER_ORE.getCode(),
                 ModifierFilterType.FILTER_LIQUID.getCode(),
@@ -70,25 +72,25 @@ public class GuiModifier extends GenericGuiContainer<GenericTileEntity> {
         mode.setLayoutHint(30, 9, 45, 14);
         toplevel.addChild(mode);
 
-        op = new ChoiceLabel(mc, this).addChoices(
+        op = new LocChoiceLabel(mc, this).addChoices(
                 ModifierFilterOperation.OPERATION_SLOT.getCode(),
                 ModifierFilterOperation.OPERATION_VOID.getCode());
         op.setLayoutHint(110, 9, 40, 14);
         toplevel.addChild(op);
 
-        add = new Button(mc, this).setChannel("add").setText("Add");
+        add = new Button(mc, this).setChannel("add").setText(I18n.format("gui.rftools.common.add"));
         add.setLayoutHint(10, 30, 40, 13);
         toplevel.addChild(add);
 
-        del = new Button(mc, this).setChannel("del").setText("Del");
+        del = new Button(mc, this).setChannel("del").setText(I18n.format("gui.rftools.common.del"));
         del.setLayoutHint(52, 30, 40, 13);
         toplevel.addChild(del);
 
-        up = new Button(mc, this).setChannel("up").setText("Up");
+        up = new Button(mc, this).setChannel("up").setText(I18n.format("gui.rftools.common.up"));
         up.setLayoutHint(110, 30, 30, 13);
         toplevel.addChild(up);
 
-        down = new Button(mc, this).setChannel("down").setText("Down");
+        down = new Button(mc, this).setChannel("down").setText(I18n.format("gui.rftools.common.down"));
         down.setLayoutHint(142, 30, 30, 13);
         toplevel.addChild(down);
 

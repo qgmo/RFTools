@@ -22,6 +22,9 @@ import java.awt.Rectangle;
 import java.io.IOException;
 
 import static mcjty.rftools.blocks.shaper.ProjectorTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> implements IShapeParentGui {
 
@@ -86,7 +89,7 @@ public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> imple
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
         toplevel.addChild(energyBar);
 
-        Label angleI = new Label(mc, this).setText("Angle");
+        Label angleI = new Label(mc, this).setText(I18n.format("gui.rftools.angle"));
         angleI.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         angleI.setLayoutHint(16, 30, 32, 15);
         angleLabel = new ScrollableLabel(mc, this).setName("angle").setRealMinimum(0).setRealMaximum(360)
@@ -99,7 +102,7 @@ public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> imple
                 .setLayoutHint(5, 46, 76, 15);
         toplevel.addChildren(angleI, angleLabel, angleSlider, angleM, angleP);
 
-        Label scaleI = new Label(mc, this).setText("Scale");
+        Label scaleI = new Label(mc, this).setText(I18n.format("gui.rftools.scale"));
         scaleI.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         scaleI.setLayoutHint(16, 62, 32, 15);
         scaleLabel = new ScrollableLabel(mc, this).setName("scale").setRealMinimum(0).setRealMaximum(100)
@@ -112,7 +115,7 @@ public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> imple
                 .setLayoutHint(5, 78, 76, 15);
         toplevel.addChildren(scaleI, scaleLabel, scaleSlider, scaleM, scaleP);
 
-        Label offsetI = new Label(mc, this).setText("Offset");
+        Label offsetI = new Label(mc, this).setText(I18n.format("gui.rftools.offset_2"));
         offsetI.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         offsetI.setLayoutHint(16, 94, 32, 15);
         offsetLabel = new ScrollableLabel(mc, this).setName("offset").setRealMinimum(0).setRealMaximum(100)
@@ -126,26 +129,26 @@ public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> imple
         toplevel.addChildren(offsetI, offsetLabel, offsetSlider, offsetM, offsetP);
 
         autoRotate = new ToggleButton(mc, this).setCheckMarker(true)
-                .setText("Auto")
-                .setTooltips("Automatic client-side rotation")
+                .setText(I18n.format("gui.rftools.auto"))
+                .setTooltips(GuiLoc.lines("gui.rftools.automatic_client_side_rotation"))
                 .setLayoutHint(2, 128, 39, 16);
         autoRotate.setPressed(tileEntity.isAutoRotate());
         toplevel.addChild(autoRotate);
         scanline = new ToggleButton(mc, this).setCheckMarker(true)
-                .setText("SL")
-                .setTooltips("Enable/disable visual scanlines when", "the scan is refreshed")
+                .setText(I18n.format("gui.rftools.sl"))
+                .setTooltips(GuiLoc.lines("gui.rftools.enable_disable_visual_scanlines_when_the"))
                 .setLayoutHint(42, 128, 39, 16);
         scanline.setPressed(tileEntity.isScanline());
         toplevel.addChild(scanline);
         sound = new ToggleButton(mc, this).setCheckMarker(true)
-                .setText("Snd")
-                .setTooltips("Enable/disable sound during", "visual scan")
+                .setText(I18n.format("gui.rftools.snd"))
+                .setTooltips(GuiLoc.lines("gui.rftools.enable_disable_sound_during_visual_scan"))
                 .setLayoutHint(2, 146, 39, 16);
         sound.setPressed(tileEntity.isSound());
         toplevel.addChild(sound);
         grayScale = new ToggleButton(mc, this).setCheckMarker(true)
-                .setText("Gray")
-                .setTooltips("Enable/disable grayscale", "mode")
+                .setText(I18n.format("gui.rftools.gray"))
+                .setTooltips(GuiLoc.lines("gui.rftools.enable_disable_grayscale_mode"))
                 .setLayoutHint(42, 146, 39, 16);
         grayScale.setPressed(tileEntity.isGrayscale());
         toplevel.addChild(grayScale);
@@ -201,19 +204,19 @@ public class GuiProjector extends GenericGuiContainer<ProjectorTileEntity> imple
         redstoneOff.setLayoutHint(new PositionalLayout.PositionalHint(54, dy+8, 16, 16));
         sidePanel.addChild(redstoneOn).addChild(redstoneOff);
 
-        rsLabelOn[o] = new ChoiceLabel(mc, this);
+        rsLabelOn[o] = new LocChoiceLabel(mc, this);
         rsLabelOn[o].addChoices(ProjectorOpcode.getChoices());
         rsLabelOn[o].setLayoutHint(new PositionalLayout.PositionalHint(8, dy+26, 32, 14));
         for (ProjectorOpcode operation : ProjectorOpcode.values()) {
-            rsLabelOn[o].setChoiceTooltip(operation.getCode(), operation.getDescription());
+            rsLabelOn[o].setChoiceTooltip(operation.getCode(), GuiLoc.engLines(operation.getDescription()));
         }
         sidePanel.addChild(rsLabelOn[o]);
 
-        rsLabelOff[o] = new ChoiceLabel(mc, this);
+        rsLabelOff[o] = new LocChoiceLabel(mc, this);
         rsLabelOff[o].addChoices(ProjectorOpcode.getChoices());
         rsLabelOff[o].setLayoutHint(new PositionalLayout.PositionalHint(42, dy+26, 32, 14));
         for (ProjectorOpcode operation : ProjectorOpcode.values()) {
-            rsLabelOff[o].setChoiceTooltip(operation.getCode(), operation.getDescription());
+            rsLabelOff[o].setChoiceTooltip(operation.getCode(), GuiLoc.engLines(operation.getDescription()));
         }
         sidePanel.addChild(rsLabelOff[o]);
 

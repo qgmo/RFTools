@@ -10,6 +10,7 @@ import mcjty.rftools.RFTools;
 import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiBooster extends GenericGuiContainer<BoosterTileEntity> {
 
@@ -23,6 +24,7 @@ public class GuiBooster extends GenericGuiContainer<BoosterTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/booster.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

@@ -23,6 +23,7 @@ import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.client.resources.I18n;
 
 public class GuiChamberDetails extends GuiItemScreen {
 
@@ -118,9 +119,9 @@ public class GuiChamberDetails extends GuiItemScreen {
             costLabel.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
 
             if (cost == -1) {
-                costLabel.setText("NOT MOVABLE!");
+                costLabel.setText(I18n.format("gui.rftools.not_movable"));
             } else {
-                costLabel.setText("Move Cost " + cost + " RF");
+                costLabel.setText(I18n.format("gui.rftools.move_cost_s_rf", cost));
                 totalCost += cost;
             }
             panel.addChildren(blockRender, nameLabel, countLabel, costLabel);
@@ -176,9 +177,9 @@ public class GuiChamberDetails extends GuiItemScreen {
             costLabel.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
 
             if (cost == -1) {
-                costLabel.setText("NOT MOVABLE!");
+                costLabel.setText(I18n.format("gui.rftools.not_movable"));
             } else {
-                costLabel.setText("Move Cost " + cost + " RF");
+                costLabel.setText(I18n.format("gui.rftools.move_cost_s_rf", cost));
                 totalCostEntities += cost;
             }
             panel.addChildren(blockRender, nameLabel, countLabel, costLabel);
@@ -186,8 +187,8 @@ public class GuiChamberDetails extends GuiItemScreen {
         }
 
 
-        infoLabel.setText("Total cost blocks: " + totalCost + " RF");
-        info2Label.setText("Total cost entities: " + totalCostEntities + " RF");
+        infoLabel.setText(I18n.format("gui.rftools.total_cost_blocks_s_rf", totalCost));
+        info2Label.setText(I18n.format("gui.rftools.total_cost_entities_s_rf", totalCostEntities));
     }
 
     @Override

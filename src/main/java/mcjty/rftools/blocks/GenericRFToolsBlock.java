@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import mcjty.rftools.varia.Msg;
 
 public abstract class GenericRFToolsBlock<T extends GenericTileEntity, C extends Container> extends GenericBlock<T, C> {
 
@@ -44,7 +45,7 @@ public abstract class GenericRFToolsBlock<T extends GenericTileEntity, C extends
                     SecurityChannels.SecurityChannel channel = securityChannels.getChannel(securityChannel);
                     boolean playerListed = channel.getPlayers().contains(player.getDisplayNameString());
                     if (channel.isWhitelist() != playerListed) {
-                        Logging.message(player, TextFormatting.RED + "You have no permission to use this block!");
+                        Msg.message(player, "msg.rftools.you_have_no_permission_to_use_this_block");
                         return true;
                     }
                 }

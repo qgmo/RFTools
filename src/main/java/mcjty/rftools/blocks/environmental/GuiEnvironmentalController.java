@@ -19,6 +19,7 @@ import java.util.List;
 
 import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
 import static mcjty.rftools.blocks.environmental.EnvironmentalControllerTileEntity.*;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiEnvironmentalController extends GenericGuiContainer<EnvironmentalControllerTileEntity> {
 
@@ -47,6 +48,7 @@ public class GuiEnvironmentalController extends GenericGuiContainer<Environmenta
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/environmental.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

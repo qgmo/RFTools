@@ -24,6 +24,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class StorageModuleItem extends GenericRFToolsItem implements INBTPreservingIngredient {
     public static final int STORAGE_TIER1 = 0;
@@ -52,7 +56,7 @@ public class StorageModuleItem extends GenericRFToolsItem implements INBTPreserv
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
-            Logging.message(player, TextFormatting.YELLOW + "Place this module in a storage module tablet to access contents");
+            Msg.message(player, "msg.rftools.place_this_module_in_a_storage_module");
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
@@ -81,15 +85,14 @@ public class StorageModuleItem extends GenericRFToolsItem implements INBTPreserv
             addModuleInformation(list, max, tagCompound);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This storage module is for the Modular Storage block.");
+            list.add(I18n.format("tooltip.rftools.this_storage_module_is_for_the_modular"));
             if (max == -1) {
-                list.add(TextFormatting.WHITE + "This module supports a remote inventory.");
-                list.add(TextFormatting.WHITE + "Link to another storage module in the remote storage block.");
+                Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_supports_a_remote_inventory"));
             } else {
-                list.add(TextFormatting.WHITE + "This module supports " + max + " stacks");
+                list.add(I18n.format("tooltip.rftools.this_module_supports_s_stacks", max));
             }
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -98,17 +101,17 @@ public class StorageModuleItem extends GenericRFToolsItem implements INBTPreserv
             // This is a remote storage module.
             if (tagCompound.hasKey("id")) {
                 int id = tagCompound.getInteger("id");
-                list.add(TextFormatting.GREEN + "Remote id: " + id);
+                list.add(I18n.format("tooltip.rftools.remote_id_s", id));
             } else {
-                list.add(TextFormatting.YELLOW + "Unlinked");
+                list.add(I18n.format("tooltip.rftools.unlinked_2"));
             }
         } else {
             int cnt = tagCompound.getInteger("count");
             if (tagCompound.hasKey("id")) {
                 int id = tagCompound.getInteger("id");
-                list.add(TextFormatting.GREEN + "Contents id: " + id);
+                list.add(I18n.format("tooltip.rftools.contents_id_s", id));
             }
-            list.add(TextFormatting.GREEN + "Contents: " + cnt + "/" + max + " stacks");
+            list.add(I18n.format("tooltip.rftools.contents_s_s_stacks", cnt, max));
         }
     }
 

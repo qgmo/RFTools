@@ -49,6 +49,9 @@ import java.util.function.BiFunction;
 
 import static mcjty.rftools.blocks.powercell.PowerCellConfiguration.advancedFactor;
 import static mcjty.rftools.blocks.powercell.PowerCellConfiguration.simpleFactor;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class PowerCellBlock extends GenericRFToolsBlock<PowerCellTileEntity, PowerCellContainer> implements Infusable,
         INBTPreservingIngredient {
@@ -99,17 +102,16 @@ public class PowerCellBlock extends GenericRFToolsBlock<PowerCellTileEntity, Pow
 
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Energy: " + tagCompound.getInteger("energy"));
+            list.add(I18n.format("tooltip.rftools.energy_s", tagCompound.getInteger("energy")));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
             int totpower = PowerCellConfiguration.rfPerNormalCell.get() * getPowerFactor() / simpleFactor.get();
-            list.add(TextFormatting.WHITE + "This block can store power (" + totpower + " RF)");
-            list.add(TextFormatting.WHITE + "Optionally in a big multi dimensional structure");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced long distance power");
-            list.add(TextFormatting.YELLOW + "extraction cost and increased RF/tick output");
+            list.add(I18n.format("tooltip.rftools.this_block_can_store_power_s_rf", totpower));
+            list.add(I18n.format("tooltip.rftools.optionally_in_a_big_multi_dimensional"));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.infusing_bonus_reduced_long_distance_power"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
 
 public class EnderMonitorBlock extends LogicSlabBlock<EnderMonitorTileEntity, EmptyContainer> {
 
@@ -48,7 +49,7 @@ public class EnderMonitorBlock extends LogicSlabBlock<EnderMonitorTileEntity, Em
         if (tagCompound != null) {
             int mode = tagCompound.getInteger("mode");
             String smode = EnderMonitorMode.values()[mode].getDescription();
-            list.add(TextFormatting.GREEN + "Mode: " + smode);
+            list.add(I18n.format("tooltip.rftools.mode_s", smode));
         }
     }
 

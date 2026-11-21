@@ -24,6 +24,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.client.resources.I18n;
 
 public class GuiCrafter extends GenericGuiContainer<CrafterBaseTE> {
     private EnergyBar energyBar;
@@ -44,6 +46,7 @@ public class GuiCrafter extends GenericGuiContainer<CrafterBaseTE> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/crafter.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();
@@ -87,19 +90,19 @@ public class GuiCrafter extends GenericGuiContainer<CrafterBaseTE> {
         String readableName = BlockTools.getReadableName(craftingResult);
         int color = StyleConfig.colorTextInListNormal;
         if (craftingResult.isEmpty()) {
-            readableName = "<no recipe>";
+            readableName = I18n.format("gui.rftools.no_recipe");
             color = 0xFF505050;
         }
         Panel panel = new Panel(mc, this).setLayout(new HorizontalLayout())
                 .addChild(new BlockRender(mc, this)
                         .setRenderItem(craftingResult)
-                        .setTooltips("Double click to edit this recipe"))
+                        .setTooltips(GuiLoc.lines("gui.rftools.double_click_to_edit_this_recipe")))
                 .addChild(new Label(mc, this)
                         .setColor(color)
                         .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
                         .setDynamic(true)
                         .setText(readableName)
-                        .setTooltips("Double click to edit this recipe"));
+                        .setTooltips(GuiLoc.lines("gui.rftools.double_click_to_edit_this_recipe")));
         recipeList.addChild(panel);
     }
 

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
     private Minecraft mc;
@@ -55,21 +57,21 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public ScreenModuleGuiBuilder label(String text) {
-        Label label = new Label(mc, gui).setText(text);
+        Label label = new Label(mc, gui).setText(GuiLoc.eng(text));
         row.add(label);
         return this;
     }
 
     @Override
     public ScreenModuleGuiBuilder leftLabel(String text) {
-        Label label = new Label(mc, gui).setText(text).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
+        Label label = new Label(mc, gui).setText(GuiLoc.eng(text)).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         row.add(label);
         return this;
     }
 
     @Override
     public ScreenModuleGuiBuilder text(final String tagname, String... tooltip) {
-        TextField textField = new TextField(mc, gui).setDesiredHeight(15).setTooltips(tooltip).addTextEvent((parent, newText) -> {
+        TextField textField = new TextField(mc, gui).setDesiredHeight(15).setTooltips(GuiLoc.engLines(tooltip)).addTextEvent((parent, newText) -> {
             currentData.setString(tagname, newText);
             moduleGuiChanged.updateData();
         });
@@ -82,7 +84,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public ScreenModuleGuiBuilder integer(final String tagname, String... tooltip) {
-        TextField textField = new TextField(mc, gui).setDesiredHeight(15).setTooltips(tooltip).addTextEvent((parent, newText) -> {
+        TextField textField = new TextField(mc, gui).setDesiredHeight(15).setTooltips(GuiLoc.engLines(tooltip)).addTextEvent((parent, newText) -> {
             int value;
             try {
                 value = Integer.parseInt(newText);
@@ -104,7 +106,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public ScreenModuleGuiBuilder toggle(final String tagname, String label, String... tooltip) {
-        final ToggleButton toggleButton = new ToggleButton(mc, gui).setText(label).setTooltips(tooltip).setDesiredHeight(14).setCheckMarker(true);
+        final ToggleButton toggleButton = new ToggleButton(mc, gui).setText(GuiLoc.eng(label)).setTooltips(GuiLoc.engLines(tooltip)).setDesiredHeight(14).setCheckMarker(true);
         toggleButton.addButtonEvent(parent -> {
             currentData.setBoolean(tagname, toggleButton.isPressed());
             moduleGuiChanged.updateData();
@@ -119,7 +121,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public ScreenModuleGuiBuilder toggleNegative(final String tagname, String label, String... tooltip) {
-        final ToggleButton toggleButton = new ToggleButton(mc, gui).setText(label).setTooltips(tooltip).setDesiredHeight(14).setDesiredWidth(36).setCheckMarker(true);
+        final ToggleButton toggleButton = new ToggleButton(mc, gui).setText(GuiLoc.eng(label)).setTooltips(GuiLoc.engLines(tooltip)).setDesiredHeight(14).setDesiredWidth(36).setCheckMarker(true);
         toggleButton.addButtonEvent(parent -> {
             currentData.setBoolean(tagname, !toggleButton.isPressed());
             moduleGuiChanged.updateData();
@@ -136,7 +138,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public ScreenModuleGuiBuilder color(final String tagname, String... tooltip) {
-        ColorSelector colorSelector = new ColorSelector(mc, gui).setTooltips(tooltip)
+        ColorSelector colorSelector = new ColorSelector(mc, gui).setTooltips(GuiLoc.engLines(tooltip))
                 .setDesiredWidth(20).setDesiredHeight(14).addChoiceEvent((parent, newColor) -> {
                     currentData.setInteger(tagname, newColor);
                     moduleGuiChanged.updateData();
@@ -153,7 +155,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public IModuleGuiBuilder choices(String tagname, String tooltip, String... choices) {
-        ChoiceLabel choiceLabel = new ChoiceLabel(mc, gui).setTooltips(tooltip)
+        ChoiceLabel choiceLabel = new LocChoiceLabel(mc, gui).setTooltips(GuiLoc.engLines(tooltip))
                 .setDesiredWidth(50).setDesiredHeight(14);
         for (String s : choices) {
             choiceLabel.addChoices(s);
@@ -174,7 +176,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
 
     @Override
     public IModuleGuiBuilder choices(String tagname, Choice... choices) {
-        ChoiceLabel choiceLabel = new ChoiceLabel(mc, gui)
+        ChoiceLabel choiceLabel = new LocChoiceLabel(mc, gui)
                 .setDesiredWidth(50).setDesiredHeight(14);
         Map<String, Integer> choicesMap = new HashMap<>(choices.length);
         for (int i = 0; i < choices.length; ++i) {
@@ -182,7 +184,7 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
             String name = c.getName();
             choicesMap.put(name, i);
             choiceLabel.addChoices(name);
-            choiceLabel.setChoiceTooltip(name, c.getTooltips());
+            choiceLabel.setChoiceTooltip(name, GuiLoc.engLines(c.getTooltips()));
         }
         choiceLabel.addChoiceEvent((parent, newChoice) -> {
             currentData.setInteger(tagname, choicesMap.get(newChoice));
@@ -233,10 +235,10 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
                 row.add(new BlockRender(mc, gui).setRenderItem(block).setDesiredWidth(20));
                 row.add(new Label(mc, gui).setText(x + "," + y + "," + z).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setDesiredWidth(150));
             } else {
-                monitoring = "<unreachable>";
+                monitoring = GuiLoc.eng("<unreachable>");
             }
         } else {
-            monitoring = "<not set>";
+            monitoring = GuiLoc.eng("<not set>");
         }
         row.add(new Label(mc, gui).setText(monitoring));
 
@@ -300,10 +302,10 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
         final String modeFull = FormatStyle.MODE_FULL.getName();
         final String modeCompact = FormatStyle.MODE_COMPACT.getName();
         final String modeCommas = FormatStyle.MODE_COMMAS.getName();
-        final ChoiceLabel modeButton = new ChoiceLabel(mc, gui).setDesiredWidth(58).setDesiredHeight(14).addChoices(modeFull, modeCompact, modeCommas).
-                setChoiceTooltip(modeFull, "Full format: 3123555").
-                setChoiceTooltip(modeCompact, "Compact format: 3.1M").
-                setChoiceTooltip(modeCommas, "Comma format: 3,123,555").
+        final ChoiceLabel modeButton = new LocChoiceLabel(mc, gui).setDesiredWidth(58).setDesiredHeight(14).addChoices(modeFull, modeCompact, modeCommas).
+                setChoiceTooltip(modeFull, GuiLoc.lines("gui.rftools.full_format_3123555")).
+                setChoiceTooltip(modeCompact, GuiLoc.lines("gui.rftools.compact_format_3_1m")).
+                setChoiceTooltip(modeCommas, GuiLoc.lines("gui.rftools.comma_format_3_123_555")).
                 addChoiceEvent((parent, newChoice) -> {
 //                    currentData.setInteger(tagname, FormatStyle.getStyle(newChoice).ordinal());
                     currentData.setString(tagname, FormatStyle.getStyle(newChoice).getName());
@@ -321,11 +323,11 @@ public class ScreenModuleGuiBuilder implements IModuleGuiBuilder {
         String modeNone = "None";
         final String modePertick = componentName + "/t";
         final String modePct = componentName + "%";
-        final ChoiceLabel modeButton = new ChoiceLabel(mc, gui).setDesiredWidth(50).setDesiredHeight(14).addChoices(modeNone, componentName, modePertick, modePct).
-                setChoiceTooltip(modeNone, "No text is shown").
-                setChoiceTooltip(componentName, "Show the amount of " + componentName).
-                setChoiceTooltip(modePertick, "Show the average "+componentName+"/tick", "gain or loss").
-                setChoiceTooltip(modePct, "Show the amount of "+componentName, "as a percentage").
+        final ChoiceLabel modeButton = new LocChoiceLabel(mc, gui).setDesiredWidth(50).setDesiredHeight(14).addChoices(modeNone, componentName, modePertick, modePct).
+                setChoiceTooltip(modeNone, GuiLoc.lines("gui.rftools.no_text_is_shown")).
+                setChoiceTooltip(componentName, GuiLoc.lines("gui.rftools.show_the_amount_of", componentName)).
+                setChoiceTooltip(modePertick, GuiLoc.lines("gui.rftools.show_the_average_tick", componentName)).
+                setChoiceTooltip(modePct, GuiLoc.lines("gui.rftools.show_the_amount_of_as_a_percentage", componentName)).
                 addChoiceEvent((parent, newChoice) -> {
                     if (componentName.equals(newChoice)) {
                         currentData.setBoolean("showdiff", false);

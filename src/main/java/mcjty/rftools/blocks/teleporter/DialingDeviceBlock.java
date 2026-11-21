@@ -16,6 +16,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class DialingDeviceBlock extends GenericRFToolsBlock<DialingDeviceTileEntity, EmptyContainer> implements Infusable {
 
@@ -35,15 +38,10 @@ public class DialingDeviceBlock extends GenericRFToolsBlock<DialingDeviceTileEnt
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "With the dialing device you can 'dial-up' any");
-            list.add(TextFormatting.WHITE + "nearby matter transmitter to any matter receiver");
-            list.add(TextFormatting.WHITE + "in the Minecraft universe. This requires power.");
-            list.add(TextFormatting.WHITE + "If a Destination Analyzer is adjacent to this block");
-            list.add(TextFormatting.WHITE + "you will also be able to check if the destination");
-            list.add(TextFormatting.WHITE + "has enough power to be safe.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.with_the_dialing_device_you_can_dial_up_any"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

@@ -15,7 +15,7 @@ window {
 
     panel('','positional') {
         bg1('rftools:textures/gui/sensor.png')
-        label('','Type:') {
+        label('','gui.rftools.sensor.label.text') {
             hint(10,3,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -24,26 +24,26 @@ window {
             hint(60,19,80,14)
             choices {
                 choice('Area 1') {
-                    tooltips('1 block in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_1.tip')
                 }
                 choice('Area 3') {
-                    tooltips('3 blocks in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_3.tip')
                 }
                 choice('Area 5') {
-                    tooltips('5 blocks in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_5.tip')
                 }
                 choice('Area 3x3') {
-                    tooltips('3x3 blocks in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_3x3.tip')
                 }
                 choice('Area 5x5') {
-                    tooltips('5x5 blocks in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_5x5.tip')
                 }
                 choice('Area 7x7') {
-                    tooltips('7x7 blocks in front of sensor')
+                    tooltips('gui.rftools.sensor.area.area_7x7.tip')
                 }
             }
         }
-        label('','Area:') {
+        label('','gui.rftools.sensor.label.text_2') {
             hint(10,19,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -52,29 +52,29 @@ window {
             hint(60,3,80,14)
             choices {
                 choice('Block') {
-                    tooltips('Detect if a certain type','of block is present')
+                    tooltips('gui.rftools.sensor.type.block.tip')
                 }
                 choice('Fluid') {
-                    tooltips('Detect if a certain type','of fluid is present')
+                    tooltips('gui.rftools.sensor.type.fluid.tip')
                 }
                 choice('Growth') {
-                    tooltips('Detect the growth percentage','of a crop')
+                    tooltips('gui.rftools.sensor.type.growth.tip')
                 }
                 choice('Entities') {
-                    tooltips('Count the amount of entities')
+                    tooltips('gui.rftools.sensor.type.entities.tip')
                 }
                 choice('Players') {
-                    tooltips('Count the amount of players')
+                    tooltips('gui.rftools.sensor.type.players.tip')
                 }
                 choice('Hostile') {
-                    tooltips('Count the amount of hostile mobs')
+                    tooltips('gui.rftools.sensor.type.hostile.tip')
                 }
                 choice('Passive') {
-                    tooltips('Count the amount of passive mobs')
+                    tooltips('gui.rftools.sensor.type.passive.tip')
                 }
             }
         }
-        label('','Group:') {
+        label('','gui.rftools.sensor.label.text_3') {
             hint(10,35,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -84,14 +84,14 @@ window {
             enableon('group')
             choices {
                 choice('One') {
-                    tooltips('At least one detected','to match the sensor')
+                    tooltips('gui.rftools.sensor.group.one.tip')
                 }
                 choice('All') {
-                    tooltips('All blocks in area','must match the sensor')
+                    tooltips('gui.rftools.sensor.group.all.tip')
                 }
             }
         }
-        label('','Number:') {
+        label('','gui.rftools.sensor.label.text_4') {
             hint(10,51,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -99,7 +99,7 @@ window {
             channel('number')
             hint(60,51,80,14)
             enableon('number')
-            tooltips('Set a number specific to the type of sensor')
+            tooltips('gui.rftools.sensor.number.tip')
         }
     }
 }

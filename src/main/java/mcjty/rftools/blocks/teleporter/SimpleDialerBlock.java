@@ -30,6 +30,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class SimpleDialerBlock extends LogicSlabBlock<SimpleDialerTileEntity, EmptyContainer> {
 
@@ -53,22 +57,21 @@ public class SimpleDialerBlock extends LogicSlabBlock<SimpleDialerTileEntity, Em
                 int transY = tagCompound.getInteger("transY");
                 int transZ = tagCompound.getInteger("transZ");
                 int dim = tagCompound.getInteger("transDim");
-                list.add(TextFormatting.GREEN + "Transmitter at: " + transX + "," + transY + "," + transZ + " (dim " + dim + ")");
+                list.add(I18n.format("tooltip.rftools.transmitter_at_s_s_s_dim_s", transX, transY, transZ, dim));
             }
             if (tagCompound.hasKey("receiver")) {
                 int receiver = tagCompound.getInteger("receiver");
-                list.add(TextFormatting.GREEN + "Receiver: " + receiver);
+                list.add(I18n.format("tooltip.rftools.receiver_s", receiver));
             }
             if (tagCompound.getBoolean("once")) {
-                list.add(TextFormatting.GREEN + "Dial Once mode enabled");
+                list.add(I18n.format("tooltip.rftools.dial_once_mode_enabled"));
             }
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "When this block gets a redstone signal it");
-            list.add(TextFormatting.WHITE + "dials or interrupts a transmitter.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.when_this_block_gets_a_redstone_signal_it"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -126,9 +129,9 @@ public class SimpleDialerBlock extends LogicSlabBlock<SimpleDialerTileEntity, Em
             boolean onceMode = !simpleDialerTileEntity.isOnceMode();
             simpleDialerTileEntity.setOnceMode(onceMode);
             if (onceMode) {
-                Logging.message(player, "Enabled 'dial once' mode");
+                Msg.message(player, "msg.rftools.enabled_dial_once_mode");
             } else {
-                Logging.message(player, "Disabled 'dial once' mode");
+                Msg.message(player, "msg.rftools.disabled_dial_once_mode");
             }
         }
         return true;

@@ -6,19 +6,19 @@ window {
     panel('','vertical') {
         bgthickness(2)
         panel('','horizontal') {
-            label('','Mode:')
+            label('','gui.rftools.endermonitor.label.text')
             choicelabel('mode') {
                 channel('mode')
                 desired(80,13)
                 choices {
                     choice('Lost Pearl') {
-                        tooltips('Send a redstone pulse when a','pearl is lost')
+                        tooltips('gui.rftools.endermonitor.mode.lost_pearl.tip')
                     }
                     choice('Pearl Fired') {
-                        tooltips('Send a redstone pulse when a','pearl is fired')
+                        tooltips('gui.rftools.endermonitor.mode.pearl_fired.tip')
                     }
                     choice('Pearl Arrived') {
-                        tooltips('Send a redstone pulse when a','pearl arrives')
+                        tooltips('gui.rftools.endermonitor.mode.pearl_arrived.tip')
                     }
                 }
             }

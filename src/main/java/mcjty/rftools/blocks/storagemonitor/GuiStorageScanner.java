@@ -36,6 +36,10 @@ import java.util.*;
 import java.util.function.Predicate;
 
 import static mcjty.rftools.blocks.storagemonitor.StorageScannerTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocImageChoiceLabel;
+import mcjty.rftools.varia.Msg;
 
 
 public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEntity> {
@@ -94,14 +98,14 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
 
         openViewButton = new ToggleButton(mc, this).setCheckMarker(false).setText("V")
-                .setTooltips("Toggle wide storage list");
+                .setTooltips(GuiLoc.lines("gui.rftools.toggle_wide_storage_list"));
         openViewButton.setPressed(tileEntity.isOpenWideView());
         openViewButton.addButtonEvent(widget -> toggleView());
-        upButton = new Button(mc, this).setChannel("up").setText("U").setTooltips("Move inventory up");
-        topButton = new Button(mc, this).setChannel("top").setText("T").setTooltips("Move inventory to the top");
-        downButton = new Button(mc, this).setChannel("down").setText("D").setTooltips("Move inventory down");
-        bottomButton = new Button(mc, this).setChannel("bottom").setText("B").setTooltips("Move inventory to the bottom");
-        removeButton = new Button(mc, this).setChannel("remove").setText("R").setTooltips("Remove inventory from list");
+        upButton = new Button(mc, this).setChannel("up").setText("U").setTooltips(GuiLoc.lines("gui.rftools.move_inventory_up"));
+        topButton = new Button(mc, this).setChannel("top").setText("T").setTooltips(GuiLoc.lines("gui.rftools.move_inventory_to_the_top"));
+        downButton = new Button(mc, this).setChannel("down").setText("D").setTooltips(GuiLoc.lines("gui.rftools.move_inventory_down"));
+        bottomButton = new Button(mc, this).setChannel("bottom").setText("B").setTooltips(GuiLoc.lines("gui.rftools.move_inventory_to_the_bottom"));
+        removeButton = new Button(mc, this).setChannel("remove").setText("R").setTooltips(GuiLoc.lines("gui.rftools.remove_inventory_from_list"));
 
         Panel energyPanel = new Panel(mc, this).setLayout(new VerticalLayout().setVerticalMargin(0).setSpacing(1))
                 .setDesiredWidth(10);
@@ -115,31 +119,31 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
                 .addChild(new Label(mc, this).setText(" "))
                 .addChild(removeButton);
 
-        exportToStarred = new ImageChoiceLabel(mc, this)
+        exportToStarred = new LocImageChoiceLabel(mc, this)
                 .setName("export")
                 .setLayoutHint(12, 223, 13, 13);
-        exportToStarred.addChoice("No", "Export to current container", guielements, 131, 19);
-        exportToStarred.addChoice("Yes", "Export to first routable container", guielements, 115, 19);
+        exportToStarred.addChoice("No", I18n.format("gui.rftools.export_to_current_container"), guielements, 131, 19);
+        exportToStarred.addChoice("Yes", I18n.format("gui.rftools.export_to_first_routable_container"), guielements, 115, 19);
 
         storagePanel = makeStoragePanel(energyPanel);
         itemPanel = makeItemPanel();
 
         Button scanButton = new Button(mc, this)
                 .setChannel("scan")
-                .setText("Scan")
+                .setText(I18n.format("gui.rftools.common.scan"))
                 .setDesiredWidth(50)
                 .setDesiredHeight(14);
         if (RFTools.setup.xnet) {
             if (StorageScannerConfiguration.xnetRequired.get()) {
                 scanButton
-                        .setTooltips("Do a scan of all", "storage units connected", "with an active XNet channel");
+                        .setTooltips(GuiLoc.lines("gui.rftools.do_a_scan_of_all_storage_units_connected"));
             } else {
                 scanButton
-                        .setTooltips("Do a scan of all", "storage units in radius", "Use 'xnet' radius to", "restrict to XNet only");
+                        .setTooltips(GuiLoc.lines("gui.rftools.do_a_scan_of_all_storage_units_in_radius"));
             }
         } else {
             scanButton
-                    .setTooltips("Do a scan of all", "storage units in radius");
+                    .setTooltips(GuiLoc.lines("gui.rftools.do_a_scan_of_all_storage_units_in_radius_2"));
         }
         radiusLabel = new ScrollableLabel(mc, this)
                 .setLayoutHint(1, 1, 1, 1)
@@ -158,12 +162,12 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
         Panel searchPanel = new Panel(mc, this)
                 .setLayoutHint(new PositionalLayout.PositionalHint(8, 142, 256 - 11, 18))
                 .setLayout(new HorizontalLayout()).setDesiredHeight(18)
-                .addChild(new Label(mc, this).setText("Search:"))
+                .addChild(new Label(mc, this).setText(I18n.format("gui.rftools.search")))
                 .addChild(searchField);
 
         Slider radiusSlider = new Slider(mc, this)
                 .setHorizontal()
-                .setTooltips("Radius of scan")
+                .setTooltips(GuiLoc.lines("gui.rftools.radius_of_scan"))
                 .setMinimumKnobSize(12)
                 .setDesiredHeight(14)
                 .setScrollableName("radius");
@@ -349,7 +353,7 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
         PacketReturnInventoryInfo.InventoryInfo c = fromServer_inventories.get(index - 1);
         if (c != null) {
             RFTools.instance.clientInfo.hilightBlock(c.getPos(), System.currentTimeMillis() + 1000 * StorageScannerConfiguration.hilightTime.get());
-            Logging.message(mc.player, "The inventory is now highlighted");
+            Msg.message(mc.player, "msg.rftools.the_inventory_is_now_highlighted");
             mc.player.closeScreen();
         }
     }
@@ -477,7 +481,7 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
 
     private void updateStorageList() {
         storageList.removeChildren();
-        addStorageLine(null, "All routable", false);
+        addStorageLine(null, I18n.format("gui.rftools.all_routable"), false);
         for (PacketReturnInventoryInfo.InventoryInfo c : fromServer_inventories) {
             String displayName = c.getName();
             boolean routable = c.isRoutable();
@@ -516,19 +520,17 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
                     .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
                     .setDesiredWidth(58);
             if (c == null) {
-                label.setTooltips(TextFormatting.GREEN + "All routable inventories")
+                label.setTooltips(GuiLoc.lines("gui.rftools.all_routable_inventories"))
                         .setDesiredWidth(74);
             } else {
-                label.setTooltips(TextFormatting.GREEN + "Block at: " + TextFormatting.WHITE + BlockPosTools.toString(c.getPos()),
-                        TextFormatting.GREEN + "Name: " + TextFormatting.WHITE + displayName,
-                        "(doubleclick to highlight)");
+                label.setTooltips(GuiLoc.lines("gui.rftools.block_at_s_name_s_doubleclick_to_highlight", BlockPosTools.toString(c.getPos()), displayName));
             }
             panel.addChild(label);
             if (c != null) {
-                ImageChoiceLabel choiceLabel = new ImageChoiceLabel(mc, this)
+                ImageChoiceLabel choiceLabel = new LocImageChoiceLabel(mc, this)
                         .addChoiceEvent((parent, newChoice) -> changeRoutable(c.getPos())).setDesiredWidth(13);
-                choiceLabel.addChoice("No", "Not routable", guielements, 131, 19);
-                choiceLabel.addChoice("Yes", "Routable", guielements, 115, 19);
+                choiceLabel.addChoice("No", I18n.format("gui.rftools.not_routable"), guielements, 131, 19);
+                choiceLabel.addChoice("Yes", I18n.format("gui.rftools.routable_2"), guielements, 115, 19);
                 choiceLabel.setCurrentChoice(routable ? 1 : 0);
                 panel.addChild(choiceLabel);
             }
@@ -620,8 +622,7 @@ public class GuiStorageScanner extends GenericGuiContainer<StorageScannerTileEnt
     protected List<String> addCustomLines(List<String> oldList, BlockRender blockRender, ItemStack stack) {
         if (blockRender.getUserObject() instanceof Integer) {
             List<String> newlist = new ArrayList<>();
-            newlist.add(TextFormatting.GREEN + "Click: " + TextFormatting.WHITE + "full stack");
-            newlist.add(TextFormatting.GREEN + "Shift + click: " + TextFormatting.WHITE + "single item");
+            Collections.addAll(newlist, GuiLoc.lines("tooltip.rftools.click_full_stack_shift_click_single_item"));
             newlist.add("");
             newlist.addAll(oldList);
             return newlist;

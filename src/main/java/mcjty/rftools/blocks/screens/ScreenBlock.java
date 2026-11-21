@@ -52,6 +52,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 public class ScreenBlock extends GenericRFToolsBlock<ScreenTileEntity, ScreenContainer> {
     public static final PropertyDirection HORIZONTAL_FACING = PropertyDirection.create("horizontal_facing", EnumFacing.Plane.HORIZONTAL);
@@ -545,12 +547,12 @@ public class ScreenBlock extends GenericRFToolsBlock<ScreenTileEntity, ScreenCon
             }
             boolean transparent = tagCompound.getBoolean("transparent");
             if (size == ScreenTileEntity.SIZE_HUGE) {
-                list.add(TextFormatting.BLUE + "Huge screen.");
+                list.add(I18n.format("tooltip.rftools.huge_screen"));
             } else if (size == ScreenTileEntity.SIZE_LARGE) {
-                list.add(TextFormatting.BLUE + "Large screen.");
+                list.add(I18n.format("tooltip.rftools.large_screen"));
             }
             if (transparent) {
-                list.add(TextFormatting.BLUE + "Transparent screen.");
+                list.add(I18n.format("tooltip.rftools.transparent_screen"));
             }
             int rc = 0;
             NBTTagList bufferTagList = tagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
@@ -563,16 +565,13 @@ public class ScreenBlock extends GenericRFToolsBlock<ScreenTileEntity, ScreenCon
                     }
                 }
             }
-            list.add(TextFormatting.BLUE + String.valueOf(rc) + " modules");
+            list.add(I18n.format("tooltip.rftools.s_modules", rc));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This is a modular screen. As such it doesn't show anything.");
-            list.add(TextFormatting.WHITE + "You must insert modules to control what you can see.");
-            list.add(TextFormatting.WHITE + "This screen cannot be directly powered. It has to be remotely");
-            list.add(TextFormatting.WHITE + "powered by a nearby Screen Controller.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_is_a_modular_screen_as_such_it_doesn_t"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

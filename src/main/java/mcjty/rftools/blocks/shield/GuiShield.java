@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static mcjty.rftools.blocks.shield.ShieldTEBase.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
     public static final int SHIELD_WIDTH = 256;
@@ -117,22 +121,22 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
                 .setLayoutHint(12, 10, 154, 124).addChildren(filterList, filterSlider)
                 .setFilledBackground(0xff9e9e9e);
 
-        Button applyCamo = new Button(mc, this).setChannel("camo").setText("Set").setTooltips("Set the camouflage block").
+        Button applyCamo = new Button(mc, this).setChannel("camo").setText(I18n.format("gui.rftools.common.set")).setTooltips(GuiLoc.lines("gui.rftools.common.set_the_camouflage_block")).
                 setLayoutHint(46, 142, 30, 16);
         colorSelector = new ColorSelector(mc, this)
                 .setName("color")
-                .setTooltips("Color for the shield")
+                .setTooltips(GuiLoc.lines("gui.rftools.common.color_for_the_shield"))
                 .setLayoutHint(25, 177, 30, 16);
 
-        ToggleButton light = new ToggleButton(mc, this).setName("light").setCheckMarker(true).setText("L").setTooltips("If pressed, light is blocked", "by the shield")
+        ToggleButton light = new ToggleButton(mc, this).setName("light").setCheckMarker(true).setText("L").setTooltips(GuiLoc.lines("gui.rftools.common.if_pressed_light_is_blocked_by_the_shield"))
                 .setLayoutHint(56, 177, 23, 16);
 
-        player = new TextField(mc, this).setTooltips("Optional player name").setLayoutHint(170, 44, 80, 14);
+        player = new TextField(mc, this).setTooltips(GuiLoc.lines("gui.rftools.common.optional_player_name")).setLayoutHint(170, 44, 80, 14);
 
-        addFilter = new Button(mc, this).setChannel("addfilter").setText("Add").setTooltips("Add selected filter").setLayoutHint(4, 6, 36, 14);
-        delFilter = new Button(mc, this).setChannel("delfilter").setText("Del").setTooltips("Delete selected filter").setLayoutHint(39, 6, 36, 14);
-        upFilter = new Button(mc, this).setChannel("upfilter").setText("Up").setTooltips("Move filter up").setLayoutHint(4, 22, 36, 14);
-        downFilter = new Button(mc, this).setChannel("downfilter").setText("Down").setTooltips("Move filter down").setLayoutHint(39, 22, 36, 14);
+        addFilter = new Button(mc, this).setChannel("addfilter").setText(I18n.format("gui.rftools.common.add")).setTooltips(GuiLoc.lines("gui.rftools.common.add_selected_filter")).setLayoutHint(4, 6, 36, 14);
+        delFilter = new Button(mc, this).setChannel("delfilter").setText(I18n.format("gui.rftools.common.del")).setTooltips(GuiLoc.lines("gui.rftools.common.delete_selected_filter")).setLayoutHint(39, 6, 36, 14);
+        upFilter = new Button(mc, this).setChannel("upfilter").setText(I18n.format("gui.rftools.common.up")).setTooltips(GuiLoc.lines("gui.rftools.common.move_filter_up")).setLayoutHint(4, 22, 36, 14);
+        downFilter = new Button(mc, this).setChannel("downfilter").setText(I18n.format("gui.rftools.common.down")).setTooltips(GuiLoc.lines("gui.rftools.common.move_filter_down")).setLayoutHint(39, 22, 36, 14);
 
         Panel controlPanel = new Panel(mc, this).setLayout(new PositionalLayout()).setLayoutHint(170, 58, 80, 43)
                 .addChildren(addFilter, delFilter, upFilter, downFilter)
@@ -140,8 +144,8 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
                 .setFilledBackground(StyleConfig.colorListBackground);
 
         Label lootingBonus = new Label(mc, this).setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT)
-                .setText("Looting:");
-        lootingBonus.setTooltips("Insert dimensional shards", "for looting bonus")
+                .setText(I18n.format("gui.rftools.common.looting"));
+        lootingBonus.setTooltips(GuiLoc.lines("gui.rftools.common.insert_dimensional_shards_for_looting_bonus"))
                 .setLayoutHint(160, 118, 60, 18);
 
         Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChildren(energyBar,
@@ -228,9 +232,9 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
             if ("player".equals(filter.getFilterName())) {
                 PlayerFilter playerFilter = (PlayerFilter) filter;
                 if (playerFilter.getName() == null || playerFilter.getName().isEmpty()) {
-                    n = "players";
+                    n = I18n.format("gui.rftools.shield.players");
                 } else {
-                    n = "player " + playerFilter.getName();
+                    n = I18n.format("gui.rftools.shield.player_s", playerFilter.getName());
                 }
             } else {
                 n = filter.getFilterName();
@@ -319,18 +323,18 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
     }
 
     private ImageChoiceLabel initRedstoneMode() {
-        ImageChoiceLabel redstoneMode = new ImageChoiceLabel(mc, this).
+        ImageChoiceLabel redstoneMode = new LocImageChoiceLabel(mc, this).
                 setName("redstone").
-                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), "Redstone mode:\nIgnored", iconGuiElements, 0, 0).
-                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), "Redstone mode:\nOff to activate", iconGuiElements, 16, 0).
-                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), "Redstone mode:\nOn to activate", iconGuiElements, 32, 0);
+                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_ignored"), iconGuiElements, 0, 0).
+                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_off_to_activate"), iconGuiElements, 16, 0).
+                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_on_to_activate"), iconGuiElements, 32, 0);
         redstoneMode.setLayoutHint(62, 200, 16, 16);
         redstoneMode.setCurrentChoice(tileEntity.getRSMode().ordinal());
         return redstoneMode;
     }
 
     private void initVisibilityMode() {
-        visibilityOptions = new ChoiceLabel(mc, this)
+        visibilityOptions = new LocChoiceLabel(mc, this)
                 .setName("visibility")
                 .setLayoutHint(25, 161, 54, 14);
         for (ShieldRenderingMode m : ShieldRenderingMode.values()) {
@@ -340,40 +344,40 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
             visibilityOptions.addChoices(m.getDescription());
         }
         if (ShieldConfiguration.allowInvisibleShield.get()) {
-            visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_INVISIBLE.getDescription(), "Shield is completely invisible");
+            visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_INVISIBLE.getDescription(), GuiLoc.lines("gui.rftools.common.shield_is_completely_invisible"));
         }
-        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_SHIELD.getDescription(), "Default shield texture");
-        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_TRANSP.getDescription(), "Transparent shield texture");
-        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_SOLID.getDescription(), "Solid shield texture");
-        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_MIMIC.getDescription(), "Use the texture from the supplied block");
+        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_SHIELD.getDescription(), GuiLoc.lines("gui.rftools.common.default_shield_texture"));
+        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_TRANSP.getDescription(), GuiLoc.lines("gui.rftools.common.transparent_shield_texture"));
+        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_SOLID.getDescription(), GuiLoc.lines("gui.rftools.common.solid_shield_texture"));
+        visibilityOptions.setChoiceTooltip(ShieldRenderingMode.MODE_MIMIC.getDescription(), GuiLoc.lines("gui.rftools.common.use_the_texture_from_the_supplied_block"));
     }
 
     private void initActionOptions() {
-        actionOptions = new ChoiceLabel(mc, this).setLayoutHint(170, 12, 80, 14);
+        actionOptions = new LocChoiceLabel(mc, this).setLayoutHint(170, 12, 80, 14);
         actionOptions.addChoices(ACTION_PASS, ACTION_SOLID, ACTION_DAMAGE, ACTION_SOLIDDAMAGE);
-        actionOptions.setChoiceTooltip(ACTION_PASS, "Entity that matches this filter", "can pass through");
-        actionOptions.setChoiceTooltip(ACTION_SOLID, "Entity that matches this filter", "cannot pass");
-        actionOptions.setChoiceTooltip(ACTION_DAMAGE, "Entity that matches this filter", "can pass but gets damage");
-        actionOptions.setChoiceTooltip(ACTION_SOLIDDAMAGE, "Entity that matches this filter", "cannot pass and gets damage");
+        actionOptions.setChoiceTooltip(ACTION_PASS, GuiLoc.lines("gui.rftools.common.entity_that_matches_this_filter_can_pass_2"));
+        actionOptions.setChoiceTooltip(ACTION_SOLID, GuiLoc.lines("gui.rftools.common.entity_that_matches_this_filter_cannot_pass_2"));
+        actionOptions.setChoiceTooltip(ACTION_DAMAGE, GuiLoc.lines("gui.rftools.common.entity_that_matches_this_filter_can_pass"));
+        actionOptions.setChoiceTooltip(ACTION_SOLIDDAMAGE, GuiLoc.lines("gui.rftools.common.entity_that_matches_this_filter_cannot_pass"));
     }
 
     private void initTypeOptions() {
-        typeOptions = new ChoiceLabel(mc, this).setLayoutHint(170, 28, 80, 14);
+        typeOptions = new LocChoiceLabel(mc, this).setLayoutHint(170, 28, 80, 14);
         typeOptions.addChoices("All", "Passive", "Hostile", "Item", "Player");
-        typeOptions.setChoiceTooltip("All", "Matches everything");
-        typeOptions.setChoiceTooltip("Passive", "Matches passive mobs");
-        typeOptions.setChoiceTooltip("Hostile", "Matches hostile mobs");
-        typeOptions.setChoiceTooltip("Item", "Matches items");
-        typeOptions.setChoiceTooltip("Player", "Matches players", "(optionally named)");
+        typeOptions.setChoiceTooltip("All", GuiLoc.lines("gui.rftools.common.matches_everything"));
+        typeOptions.setChoiceTooltip("Passive", GuiLoc.lines("gui.rftools.common.matches_passive_mobs"));
+        typeOptions.setChoiceTooltip("Hostile", GuiLoc.lines("gui.rftools.common.matches_hostile_mobs"));
+        typeOptions.setChoiceTooltip("Item", GuiLoc.lines("gui.rftools.common.matches_items"));
+        typeOptions.setChoiceTooltip("Player", GuiLoc.lines("gui.rftools.common.matches_players_optionally_named"));
     }
 
     private void initDamageType() {
-        damageType = new ChoiceLabel(mc, this)
+        damageType = new LocChoiceLabel(mc, this)
                 .setName("damage")
                 .setLayoutHint(170, 102, 80, 14);
         damageType.addChoices(DAMAGETYPE_GENERIC, DAMAGETYPE_PLAYER);
-        damageType.setChoiceTooltip(DAMAGETYPE_GENERIC, "Generic damage type");
-        damageType.setChoiceTooltip(DAMAGETYPE_PLAYER, "Damage as done by a player");
+        damageType.setChoiceTooltip(DAMAGETYPE_GENERIC, GuiLoc.lines("gui.rftools.common.generic_damage_type"));
+        damageType.setChoiceTooltip(DAMAGETYPE_PLAYER, GuiLoc.lines("gui.rftools.common.damage_as_done_by_a_player"));
     }
 
     private void applyCamoToShield() {
@@ -399,9 +403,9 @@ public class GuiShield extends GenericGuiContainer<ShieldTEBase> {
         upFilter.setEnabled(sel > 0 && cnt > 0);
         downFilter.setEnabled(sel < cnt-1 && sel != -1 && cnt > 0);
         if (sel == -1) {
-            addFilter.setText("Add");
+            addFilter.setText(I18n.format("gui.rftools.common.add"));
         } else {
-            addFilter.setText("Ins");
+            addFilter.setText(I18n.format("gui.rftools.ins"));
         }
         player.setEnabled("Player".equals(typeOptions.getCurrentChoice()));
     }

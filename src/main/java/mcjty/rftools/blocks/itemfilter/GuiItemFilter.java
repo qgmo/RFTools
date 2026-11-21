@@ -16,6 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import java.awt.*;
 
 import static mcjty.rftools.blocks.itemfilter.ItemFilterTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiItemFilter extends GenericGuiContainer<ItemFilterTileEntity> {
     public static final int ITEMFILTER_WIDTH = 195;
@@ -45,10 +47,10 @@ public class GuiItemFilter extends GenericGuiContainer<ItemFilterTileEntity> {
         for (EnumFacing direction : EnumFacing.VALUES) {
             final int side = direction.ordinal();
             for (int slot = 0; slot < ItemFilterTileEntity.BUFFER_SIZE ; slot++) {
-                ImageChoiceLabel choiceLabel = new ImageChoiceLabel(mc, this).setLayoutHint(new PositionalLayout.PositionalHint(25 + slot * 18, 4 + side * 13, 12, 12)).
-                        addChoice("0", "Disabled", iconGuiElements, 160, 0).
-                        addChoice("1", "Input", iconGuiElements, 96, 16).
-                        addChoice("2", "Output", iconGuiElements, 80, 16);
+                ImageChoiceLabel choiceLabel = new LocImageChoiceLabel(mc, this).setLayoutHint(new PositionalLayout.PositionalHint(25 + slot * 18, 4 + side * 13, 12, 12)).
+                        addChoice("0", I18n.format("gui.rftools.common.disabled"), iconGuiElements, 160, 0).
+                        addChoice("1", I18n.format("gui.rftools.input"), iconGuiElements, 96, 16).
+                        addChoice("2", I18n.format("gui.rftools.output"), iconGuiElements, 80, 16);
                 bits[side * ItemFilterTileEntity.BUFFER_SIZE + slot] = choiceLabel;
                 if ((inputMode[side] & (1<<slot)) != 0) {
                     choiceLabel.setCurrentChoice(1);

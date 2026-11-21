@@ -13,6 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class RegenerationPlusEModuleItem extends GenericRFToolsItem implements EnvModuleProvider {
 
@@ -25,9 +28,8 @@ public class RegenerationPlusEModuleItem extends GenericRFToolsItem implements E
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add("This module gives regeneration III bonus when");
-        list.add("used in the environmental controller.");
-        list.add(TextFormatting.GREEN + "Uses " + EnvironmentalConfiguration.REGENERATIONPLUS_RFPERTICK.get() + " RF/tick (per cubic block)");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_gives_regeneration_iii_bonus"));
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick_per_cubic_block", EnvironmentalConfiguration.REGENERATIONPLUS_RFPERTICK.get()));
     }
 
     @Override

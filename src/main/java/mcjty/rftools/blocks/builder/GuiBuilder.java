@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import static mcjty.rftools.blocks.builder.BuilderTileEntity.*;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.client.resources.I18n;
 
 public class GuiBuilder extends GenericGuiContainer<BuilderTileEntity> {
 
@@ -33,6 +35,7 @@ public class GuiBuilder extends GenericGuiContainer<BuilderTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/builder.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();
@@ -100,7 +103,7 @@ public class GuiBuilder extends GenericGuiContainer<BuilderTileEntity> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         int cury = getCurrentLevelClientSide();
-        currentLevel.setText("Y: " + (cury == -1 ? "stop" : cury));
+        currentLevel.setText(I18n.format("gui.rftools.y_s", (cury == -1 ? I18n.format("gui.rftools.stop") : cury)));
 
         ItemStack card = tileEntity.getStackInSlot(SLOT_TAB);
         if (card.isEmpty()) {

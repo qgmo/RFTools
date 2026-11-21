@@ -1,3 +1,5 @@
+#PARSE_ESCAPES
+
 # Achievements
 achievement.firstTeleport=世界移动了！
 achievement.firstTeleport.desc=传送到一个新的位置
@@ -18,6 +20,29 @@ achievement.shieldSafety.desc=激活护盾
 achievement.allTheItems=存储杂物！
 achievement.allTheItems.desc=放置一台模块化存储器
 
+advancements.rftools.builder.title=建造机
+advancements.rftools.builder.description=建筑工人鲍勃！
+advancements.rftools.general.title=RF工具
+advancements.rftools.general.description=开启RF工具！
+advancements.rftools.hardpower.title=高级能源！
+advancements.rftools.hardpower.description=合成一个末影发电机
+advancements.rftools.clearvision.title=视野清晰了！
+advancements.rftools.clearvision.description=放置一个模块化屏幕
+advancements.rftools.specialores.title=异国矿工！
+advancements.rftools.specialores.description=挖到空间碎片
+advancements.rftools.goingup.title=上升！
+advancements.rftools.goingup.description=做一台电梯并往上走（或者往下？）
+advancements.rftools.storepower.title=存储所有的能量！
+advancements.rftools.storepower.description=放置一个能量单元
+advancements.rftools.shieldsafety.title=现在感觉安全吗？
+advancements.rftools.shieldsafety.description=激活护盾
+advancements.rftools.alltheitems.title=存储物品！
+advancements.rftools.alltheitems.description=放置一个模块化存储器
+
+
+advancements.rftools.firstteleport.title=世界移动了！
+advancements.rftools.firstteleport.description=传送到一个新的位置
+
 # Items
 item.network_monitor.name=RF网络监视仪
 item.teleport_probe.name=传送调试仪
@@ -30,7 +55,7 @@ item.shard_wand.name=空间碎片杖
 item.orphaning_card.name=弃权卡
 item.security_card.name=安全卡
 item.infused_diamond.name=充能钻石
-item.infused_enderpearl.name=Infused Enderpearl
+item.infused_enderpearl.name=蕴魔末影珍珠
 item.text_module.name=文本模块
 item.energy_module.name=能量模块
 item.energyplus_module.name=能量+模块
@@ -55,22 +80,22 @@ item.storage_module2.name=终级储存舱
 item.storage_module6.name=远程存储模块
 item.storage_module_tablet.name=手持式存储模块
 item.filter_module.name=存储过滤模块
-item.oredict_module.name=矿物辞典模块
-item.generic_module.name=泛型模块
+item.oredict_module.name=矿物词典存储模块
+item.generic_module.name=泛型存储模块
 item.powercell_card.name=能量单元卡
 item.modifier_module.name=改良模块
 item.space_chamber_card.name=空间仓卡
 item.shape_card.name=塑形卡片
-item.shape_card1.name=塑形卡片 （清空）
-item.shape_card2.name=塑形卡片 （采掘）
-item.shape_card3.name=塑形卡片 （精准采掘）
-item.shape_card4.name=塑形卡片 （时运采掘）
-item.shape_card5.name=塑形卡片 （清理采掘）
-item.shape_card6.name=塑形卡片 （清理精准采掘）
-item.shape_card7.name=塑形卡片 （清理时运采掘）
-item.shape_card8.name=塑形卡片 （泵）
-item.shape_card9.name=塑形卡片 （清理泵）
-item.shape_card10.name=塑形卡片 （放置流体）
+item.shape_card1.name=塑形卡片（清空）
+item.shape_card2.name=塑形卡片（采掘）
+item.shape_card3.name=塑形卡片（精准采掘）
+item.shape_card4.name=塑形卡片（时运采掘）
+item.shape_card5.name=塑形卡片（清理采掘）
+item.shape_card6.name=塑形卡片（清理精准采掘）
+item.shape_card7.name=塑形卡片（清理时运采掘）
+item.shape_card8.name=塑形卡片（泵）
+item.shape_card9.name=塑形卡片（清理泵）
+item.shape_card10.name=塑形卡片（放置流体）
 
 item.regeneration_module.name=再生模块
 item.regenerationplus_module.name=再生+模块
@@ -95,14 +120,14 @@ item.luck_module.name=幸运模块
 item.noteleport_module.name=反瞬移模块
 
 item.syringe.name=注射器
-item.peace_essence.name=和平元素
+item.peace_essence.name=和平要素
 item.dimensional_shard.name=空间碎片
 
 # Blocks
 tile.rftools.coalgenerator.name=燃煤发电机
-tile.rftools.crafter1.name=自动合成机<一级>
-tile.rftools.crafter2.name=自动合成机<二级>
-tile.rftools.crafter3.name=自动合成机<三级>
+tile.rftools.crafter1.name=自动合成机（一阶）
+tile.rftools.crafter2.name=自动合成机（二阶）
+tile.rftools.crafter3.name=自动合成机（三阶）
 tile.rftools.elevator.name=电梯
 tile.rftools.relay.name=能量中继器
 tile.rftools.item_filter.name=物品过滤器
@@ -117,13 +142,15 @@ tile.rftools.matter_transmitter.name=物质传输器
 tile.rftools.matter_receiver.name=物质接收器
 tile.rftools.dialing_device.name=传送控制器
 tile.rftools.simple_dialer.name=简易传送控制器
-tile.rftools.booster.name=Booster效应器
+tile.rftools.booster.name=加成器
 tile.rftools.destination_analyzer.name=目标分析仪
 tile.rftools.matter_booster.name=物质助推器
 tile.rftools.endergenic.name=末影能发电机
 tile.rftools.pearl_injector.name=末影珍珠填充器
 tile.rftools.sequencer_block.name=音序器
 tile.rftools.wire_block.name=线缆
+tile.rftools.analog_block.name=模拟器
+tile.rftools.digit_block.name=数码器
 tile.rftools.counter_block.name=计数器
 tile.rftools.invchecker_block.name=物品检查器
 tile.rftools.sensor_block.name=传感器
@@ -138,7 +165,7 @@ tile.rftools.creative_screen.name=创造模式屏幕
 tile.rftools.screen_hitblock.name=屏幕
 tile.rftools.screen_controller.name=屏幕控制器
 tile.rftools.environmental_controller.name=环境控制器
-tile.rftools.spawner.name=刷怪笼
+tile.rftools.spawner.name=刷怪箱
 tile.rftools.matter_beamer.name=物质投影仪
 tile.rftools.block_protector.name=方块保护器
 tile.rftools.modular_storage.name=模块化存储器
@@ -146,7 +173,7 @@ tile.rftools.remote_storage.name=远程存储器
 tile.rftools.security_manager.name=权限管理器
 tile.rftools.dimensional_shard_ore.name=空间碎片矿石
 tile.rftools.builder.name=建造机
-tile.rftools.composer.name=Composer
+tile.rftools.composer.name=构建器
 tile.rftools.projector.name=映射仪
 tile.rftools.scanner.name=扫描器
 tile.rftools.remote_scanner.name=远程扫描器
@@ -159,10 +186,10 @@ tile.rftools.powercell_simple.name=简单能量单元
 tile.rftools.powercell_advanced.name=高级能量单元
 tile.rftools.powercell_creative.name=创造模式能量单元
 tile.rftools.shield_template_block.name=护盾支架
-tile.rftools.shield_block1.name=护盾投射仪<一层>
-tile.rftools.shield_block2.name=护盾投射仪<二层>
-tile.rftools.shield_block3.name=护盾投射仪<三层>
-tile.rftools.shield_block4.name=护盾投射仪<四层>
+tile.rftools.shield_block1.name=护盾投射仪（一阶）
+tile.rftools.shield_block2.name=护盾投射仪（二阶）
+tile.rftools.shield_block3.name=护盾投射仪（三阶）
+tile.rftools.shield_block4.name=护盾投射仪（四阶）
 tile.rftools.invisible_shield_block.name=隐形护盾方块
 tile.rftools.notick_invisible_shield_block.name=隐形护盾方块
 tile.rftools.solid_shield_block.name=护盾方块
@@ -171,11 +198,1023 @@ tile.rftools.camo_shield_block.name=迷彩护盾方块
 tile.rftools.notick_camo_shield_block.name=迷彩护盾方块
 
 # Creative Tabs
-# itemGroup.RfTools=RF工具
+itemGroup.RfTools=RF工具
 
 # Keys
-key.categories.rftools=RFTools
+key.categories.rftools=RF工具
 key.porterNextDestination=下一个传送终点
 key.porterPrevDestination=上一个传送终点
 key.debugDumpNBTItem=导出手持物品的NBT
 key.debugDumpNBTBlock=导出被选择方块的NBT
+
+# Messages
+message.rftools.shiftmessage=<按住Shift>
+message.rftools.coalgenerator=\
+    @f这台机器用煤炭或木炭发电\n\
+    @f（%s RF/t）\n\
+    @e注入加成：发电量更高，\n\
+    @e且单份燃料燃烧更久
+message.rftools.booster=\
+    @f这个方块会给正站在它上方\n\
+    @f的实体一个临时效果\n\
+    @e注入加成：降低耗电
+message.rftools.infuser=\
+    @f用这台机器可以通过多种方式\n\
+    @f改良 RFTools 里的大多数其他机器，\n\
+    @f需要消耗空间碎片。\n\
+    @e注入加成：降低耗电
+message.rftools.itemfilter=\
+    @a内容：%s 组\n\
+    @f这个方块可以把物品从任意一面\n\
+    @f导向任意另一面，用来做采石场、\n\
+    @f林场、刷怪塔等的物品过滤器
+message.rftools.security_manager=\
+    @a内容：%s 组\n\
+    @f这个方块用来管理你的安全卡
+message.rftools.builder=\
+    @f这个方块可以采掘区域、抽取流体、\n\
+    @f移动/复制/交换结构、收集物品和经验、\n\
+    @f移动实体、建造结构等等\n\
+    @e注入加成：降低耗电并\n\
+    @e提高速度
+message.rftools.elevator=\
+    @f这台机器需要放在某一层，并朝向\n\
+    @f移动平台所在的方向。\n\
+    @f只有最底层的电梯需要供电\n\
+    @e注入加成：降低耗电
+message.rftools.rf_monitor=\
+    @f这个装置监视相邻机器里的 RF 量\n\
+    @f（在界面中选择机器）。当能量高于\n\
+    @f或低于某个值时，它还可以\n\
+    @f发出红石信号
+message.rftools.liquid_monitor=\
+    @f这个装置监视相邻机器里的流体量\n\
+    @f（在界面中选择机器）。当流体高于\n\
+    @f或低于某个值时，它还可以\n\
+    @f发出红石信号
+message.rftools.relay=\
+    @f这个装置可以（根据红石信号）\n\
+    @f限制通过它的 RF 量。用它可以在\n\
+    @f电力不足时降低（甚至停止）\n\
+    @f一些机器的运转
+message.rftools.composer=\
+    @f这个方块可以把其他塑形卡片\n\
+    @f组合起来，做出更复杂的\n\
+    @f供建造机或护盾使用的\n\
+    @f塑形卡片
+message.rftools.locator=\
+    @f把这个方块放在扫描器上面，\n\
+    @f可以让扫描器耗电定位\n\
+    @f实体和机器
+message.rftools.projector=\
+    @f这个方块可以把塑形卡片的\n\
+    @f内容像全息影像一样投影出来
+message.rftools.scanner=\
+    @2扫描 ID：%s\n\
+    @f这个方块可以扫描一片区域，并链接到\n\
+    @f供建造机或护盾使用的塑形卡片。\n\
+    @f得到的塑形卡片也可以\n\
+    @f用在构建器中
+message.rftools.remote_scanner=\
+    @2扫描 ID：%s\n\
+    @f这个方块可以扫描一片区域，并链接到\n\
+    @f供建造机或护盾使用的塑形卡片。\n\
+    @f得到的塑形卡片也可以\n\
+    @f用在构建器中\n\
+    @6这个版本可以通过位于它上方、\n\
+    @6已拨号的物质传输器\n\
+    @6进行扫描
+message.rftools.spawner=\
+    @f这个方块可以生成生物。它需要对应种类\n\
+    @f的注射器、RF 电力，以及\n\
+    @f充能物质束\n\
+    @e注入加成：降低耗电
+message.rftools.environmental_controller=\
+    @a范围：半径 %s（%s 到 %s 之间）\n\
+    @f用各种模块控制你周围的环境，\n\
+    @f比如再生、速度等等\n\
+    @e注入加成：降低耗电
+message.rftools.endergenic=\
+    @f用末影珍珠发电。至少需要两台\n\
+    @f发电机才能工作，而且搭建比较复杂，\n\
+    @f时机非常关键\n\
+    @e注入加成：提高发电量，\n\
+    @e并减少持有珍珠时的能量损耗
+message.rftools.pearl_injector=\
+    @a内容：%s 组\n\
+    @f收到红石信号时，会向相邻的\n\
+    @f末影能发电机注入一颗末影珍珠
+message.rftools.wire=\
+    @f这个逻辑方块只是一根\n\
+    @f没有延迟的红石线
+message.rftools.timer=\
+    @a延迟：%s\n\
+    @f这个逻辑方块在一段时间后发出红石脉冲，\n\
+    @f如果在此之前收到红石脉冲，\n\
+    @f则不会发出
+message.rftools.digit=\
+    @f这个逻辑方块只是一个数码管，\n\
+    @f显示红石输入的强度
+message.rftools.analog=\
+    @f这个逻辑方块可以对\n\
+    @f模拟红石信号进行运算
+message.rftools.sensor=\
+    @f这个逻辑方块会根据它前方的\n\
+    @f各种情况输出红石信号，比如方块放置、\n\
+    @f作物生长阶段、实体数量等等
+message.rftools.invchecker=\
+    @f当物品栏格子里的物品数量超过\n\
+    @f某个值时，这个逻辑方块会输出红石信号
+message.rftools.threelogic=\
+    @f这个逻辑方块可以对三个输入\n\
+    @f进行各种逻辑运算
+message.rftools.counter=\
+    @a计数目标：%s\n\
+    @a当前值：%s\n\
+    @f这个逻辑方块对红石脉冲计数，\n\
+    @f达到指定数量时发出信号
+message.rftools.sequencer=\
+    @a延迟：%s\n\
+    @a模式：%s\n\
+    @a位数：%s\n\
+    @f这个逻辑方块按你在界面中设定的\n\
+    @f图案依次发出一串红石信号
+
+# GUI texts, tooltips and messages (added by the translation of the hard coded texts)
+# Choices (the english ids are also used in the code; the translation is only shown)
+gui.rftools.choice.copy=复制
+gui.rftools.choice.move=移动
+gui.rftools.choice.swap=交换
+gui.rftools.choice.back=返回
+gui.rftools.choice.collect=收集
+gui.rftools.choice.off=关
+gui.rftools.choice.on=开
+gui.rftools.choice.all=全部
+gui.rftools.choice.keep=保留
+gui.rftools.choice.ext=外部
+gui.rftools.choice.int=内部
+gui.rftools.choice.extc=外部+
+gui.rftools.choice.lost_pearl=丢失
+gui.rftools.choice.pearl_fired=发射
+gui.rftools.choice.pearl_arrived=到达
+gui.rftools.choice.bl=黑
+gui.rftools.choice.wl=白
+gui.rftools.choice.mobs=生物
+gui.rftools.choice.host=敌对
+gui.rftools.choice.pass=通过
+gui.rftools.choice.ignore=忽略
+gui.rftools.choice.match=匹配
+gui.rftools.choice.use=使用
+gui.rftools.choice.area_1=范围 1
+gui.rftools.choice.area_3=范围 3
+gui.rftools.choice.area_5=范围 5
+gui.rftools.choice.area_3x3=范围 3x3
+gui.rftools.choice.area_5x5=范围 5x5
+gui.rftools.choice.area_7x7=范围 7x7
+gui.rftools.choice.block=方块
+gui.rftools.choice.fluid=流体
+gui.rftools.choice.growth=生长
+gui.rftools.choice.entities=实体
+gui.rftools.choice.players=玩家
+gui.rftools.choice.hostile=敌对
+gui.rftools.choice.passive=被动
+gui.rftools.choice.one=任一
+gui.rftools.choice.once1=单次1
+gui.rftools.choice.once2=单次2
+gui.rftools.choice.loop1=循环1
+gui.rftools.choice.loop2=循环2
+gui.rftools.choice.loop3=循环3
+gui.rftools.choice.loop4=循环4
+gui.rftools.choice.step=步进
+gui.rftools.choice.invisible=隐形
+gui.rftools.choice.shield=护盾
+gui.rftools.choice.mimic=拟态
+gui.rftools.choice.transp=透明
+gui.rftools.choice.solid=实心
+gui.rftools.choice.generic=一般
+gui.rftools.choice.player=玩家
+gui.rftools.choice.item=物品
+gui.rftools.choice.hollow=空心
+gui.rftools.choice.damage=伤害
+gui.rftools.choice.soldmg=实心+伤害
+gui.rftools.choice.public=公开
+gui.rftools.choice.private=私有
+gui.rftools.choice.none=无
+gui.rftools.choice.x=X
+gui.rftools.choice.y=Y
+gui.rftools.choice.z=Z
+gui.rftools.choice.server=服务端
+gui.rftools.choice.client=客户端
+gui.rftools.choice.default=默认
+gui.rftools.choice.truetype=TrueType
+gui.rftools.choice.vanilla=原版
+gui.rftools.choice.left=左
+gui.rftools.choice.center=居中
+gui.rftools.choice.right=右
+gui.rftools.choice.full=完整
+gui.rftools.choice.compact=紧凑
+gui.rftools.choice.commas=逗号
+gui.rftools.choice.less=低于
+gui.rftools.choice.more=高于
+gui.rftools.choice.slot=格子
+gui.rftools.choice.ore=矿石
+gui.rftools.choice.liquid=液体
+gui.rftools.choice.te=方块实体
+gui.rftools.choice.void=销毁
+gui.rftools.choice.disabled=禁用
+gui.rftools.choice.input=输入
+gui.rftools.choice.output=输出
+gui.rftools.choice.routable=可路由
+gui.rftools.choice.box=长方体
+gui.rftools.choice.top_dome=上半球
+gui.rftools.choice.bottom_dome=下半球
+gui.rftools.choice.sphere=球体
+gui.rftools.choice.cylinder=圆柱体
+gui.rftools.choice.capped_cylinder=封顶圆柱体
+gui.rftools.choice.prism=棱柱
+gui.rftools.choice.torus=圆环
+gui.rftools.choice.heart=心形
+gui.rftools.choice.cone=圆锥体
+gui.rftools.choice.composition=组合
+gui.rftools.choice.scan=扫描
+gui.rftools.choice.ofs=偏移
+gui.rftools.choice.rot=旋转
+gui.rftools.choice.scl=缩放
+gui.rftools.choice.scn=扫描
+gui.rftools.choice.gr_plus=灰+
+gui.rftools.choice.gr_minus=灰-
+gui.rftools.choice.mode.pass=被动
+
+# Texts of the screen modules and descriptions (the english text is the identification)
+gui.rftools.en.add_union_this_shape_to_the_previous_one=把这个形状与前一个形状\n合并（并集）
+gui.rftools.en.subtract_difference_this_shape_from_the_previous_one=从前一个形状中\n减去这个形状（差集）
+gui.rftools.en.intersect_this_shape_with_the_previous_one=取这个形状与前一个形状\n的交集
+gui.rftools.en.do_nothing=什么也不做
+gui.rftools.en.turn_projection_on=开启投影
+gui.rftools.en.turn_projection_off=关闭投影
+gui.rftools.en.perform_a_refresh_of_the_scan_pulse_only=刷新扫描结果（仅脉冲）
+gui.rftools.en.gradually_move_the_offset_of_the_scan_to_the_destination_value=逐渐把扫描结果的偏移\n移动到目标值
+gui.rftools.en.gradually_rotate_the_angle_of_the_scan_to_the_destination_value=逐渐把扫描结果的角度\n旋转到目标值
+gui.rftools.en.gradually_scale_the_scan_to_the_destination_value=逐渐把扫描结果的缩放\n调整到目标值
+gui.rftools.en.turn_on_grayscale_mode=开启灰度模式
+gui.rftools.en.turn_off_grayscale_mode=关闭灰度模式
+gui.rftools.en.sort_on_count=按数量排序
+gui.rftools.en.sort_on_generic_type=按通用类型排序
+gui.rftools.en.sort_on_mod=按模组排序
+gui.rftools.en.sort_on_name=按名称排序
+gui.rftools.en.sort_on_ore_type=按矿物类型排序
+gui.rftools.en.this_item_can_be_configured_as_a_shape_you_can_then_use_it_in_the_shield_projector_to_make_a_shield_of_that_shape_or_in_the_builder_to_actually_build_the_shape=这个物品可以配置成一个形状，\n之后可以用在护盾投射仪中生成该形状的护盾，\n或者用在建造机中建造该形状
+gui.rftools.en.this_item_will_cause_the_builder_to_void_all_blocks_in_the_configured_space=这个物品会让建造机销毁\n配置区域内的所有方块。
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space_and_replace_them_with_s=这个物品会让建造机采掘\n配置区域内的所有方块，\n并替换为%s。
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space_and_replace_them_with_s_blocks_are_harvested_with_silk_touch=这个物品会让建造机采掘\n配置区域内的所有方块，\n并替换为%s。\n采掘时带有精准采集
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space_and_replace_them_with_s_blocks_are_harvested_with_fortune=这个物品会让建造机采掘\n配置区域内的所有方块，\n并替换为%s。\n采掘时带有时运
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space=这个物品会让建造机采掘\n配置区域内的所有方块
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space_blocks_are_harvested_with_silk_touch=这个物品会让建造机采掘\n配置区域内的所有方块。\n采掘时带有精准采集
+gui.rftools.en.this_item_will_cause_the_builder_to_quarry_all_blocks_in_the_configured_space_blocks_are_harvested_with_fortune=这个物品会让建造机采掘\n配置区域内的所有方块。\n采掘时带有时运
+gui.rftools.en.this_item_will_cause_the_builder_to_collect_all_liquids_in_the_configured_space_the_liquid_will_be_replaced_with_s=这个物品会让建造机收集\n配置区域内的所有流体。\n流体会被替换为%s。
+gui.rftools.en.this_item_will_cause_the_builder_to_collect_all_liquids_in_the_configured_space_the_liquid_will_be_removed_from_the_world=这个物品会让建造机收集\n配置区域内的所有流体。\n流体会从世界中移除
+gui.rftools.en.this_item_will_cause_the_builder_to_place_liquids_from_an_tank_on_top_bottom_into_the_world=这个物品会让建造机把上方/下方\n储罐中的流体放置到世界中。
+gui.rftools.en.label=标签：
+gui.rftools.en.label_text=标签文字
+gui.rftools.en.label_color=标签颜色
+gui.rftools.en.button=按钮：
+gui.rftools.en.button_text=按钮文字
+gui.rftools.en.button_color=按钮颜色
+gui.rftools.en.toggle=切换
+gui.rftools.en.toggle_button_mode=切换按钮模式
+gui.rftools.en.label_alignment=标签对齐方式
+gui.rftools.en.large=大
+gui.rftools.en.large_or_small_font=大字体或小字体
+gui.rftools.en.contents_of_this_module_is=这个模块的内容
+gui.rftools.en.controlled_with_a_computer=由计算机控制。
+gui.rftools.en.only_works_with_opencomputers=仅适用于 OpenComputers。
+gui.rftools.en.tag=标签：
+gui.rftools.en.tag_used_by_lua_to_identify_module=Lua 用来识别模块的标签
+gui.rftools.en.l=标：
+gui.rftools.en.color_for_the_label=标签的颜色
+gui.rftools.en.c=数：
+gui.rftools.en.color_for_the_counter=计数的颜色
+gui.rftools.en.block=方块：
+gui.rftools.en.ore_dict=矿物词典
+gui.rftools.en.if_enabled_use_ore_dictionary_to_match_items=启用后使用矿物词典\n来匹配物品
+gui.rftools.en.current_level_button_color=当前楼层按钮的颜色
+gui.rftools.en.vertical=纵向
+gui.rftools.en.order_the_buttons_vertically=按钮纵向排列
+gui.rftools.en.larger_buttons=更大的按钮
+gui.rftools.en.lights=指示灯
+gui.rftools.en.use_buttons_resembling_lights=使用类似指示灯的按钮
+gui.rftools.en.start_1=从 1 开始
+gui.rftools.en.start_numbering_at_1_instead_of_0=编号从 1 开始，而不是 0
+gui.rftools.en.level_0_name=0 层名称
+gui.rftools.en.level_1_name=1 层名称
+gui.rftools.en.level_2_name=2 层名称
+gui.rftools.en.level_3_name=3 层名称
+gui.rftools.en.level_4_name=4 层名称
+gui.rftools.en.level_5_name=5 层名称
+gui.rftools.en.level_6_name=6 层名称
+gui.rftools.en.level_7_name=7 层名称
+gui.rftools.en.rf_plus=RF+：
+gui.rftools.en.color_for_the_rf_text=RF 文字的颜色
+gui.rftools.en.rf_minus=RF-：
+gui.rftools.en.color_for_the_negative_rf_tick_ratio=负值（RF/刻）\n的颜色
+gui.rftools.en.bar=条
+gui.rftools.en.toggle_visibility_of_the_energy_bar=切换能量条\n是否显示
+gui.rftools.en.mb_plus=mb+：
+gui.rftools.en.color_for_the_mb_text=mb 文字的颜色
+gui.rftools.en.mb_minus=mb-：
+gui.rftools.en.color_for_the_negative_mb_tick_ratio=负值（mb/刻）\n的颜色
+gui.rftools.en.toggle_visibility_of_the_fluid_bar=切换流体条\n是否显示
+gui.rftools.en.slot_1=格子 1：
+gui.rftools.en.slot_index_to_show=要显示的格子编号
+gui.rftools.en.slot_2=格子 2：
+gui.rftools.en.slot_3=格子 3：
+gui.rftools.en.slot_4=格子 4：
+gui.rftools.en.txt=文字：
+gui.rftools.en.color_for_the_text=文字的颜色
+gui.rftools.en.yes=是：
+gui.rftools.en.positive_text=肯定时的文字
+gui.rftools.en.color_for_the_positive_text=肯定时文字的颜色
+gui.rftools.en.no=否：
+gui.rftools.en.negative_text=否定时的文字
+gui.rftools.en.color_for_the_negative_text=否定时文字的颜色
+gui.rftools.en.analog_mode=模拟模式
+gui.rftools.en.whether_to_show_the_exact_level=是否显示确切的强度
+gui.rftools.en.starred=星标
+gui.rftools.en.if_enabled_only_count_items_in_starred_inventories_mark_inventories_in_storage_scanner=启用后只统计带“星标”\n的物品栏中的物品\n（在存储检测器中标记物品栏）
+gui.rftools.en.text=文字：
+gui.rftools.en.text_to_show=要显示的文字
+gui.rftools.en.text_alignment=文字对齐方式
+gui.rftools.en.not_set=<未设置>
+gui.rftools.en.unreachable=<无法到达>
+
+# GUI
+gui.rftools.common.redstone_mode_ignored=红石模式：\n忽略红石信号
+gui.rftools.common.redstone_mode_off_to_activate=红石模式：\n无红石信号时激活
+gui.rftools.common.redstone_mode_on_to_activate=红石模式：\n有红石信号时激活
+gui.rftools.builder.mode.tip=设置建造模式
+gui.rftools.builder.mode.copy.tip=从空间仓复制到这里\n材料放在上方或下方的箱子里
+gui.rftools.builder.mode.move.tip=从空间仓移动到这里
+gui.rftools.builder.mode.swap.tip=与空间仓中的内容互换
+gui.rftools.builder.mode.back.tip=从这里移回空间仓
+gui.rftools.builder.mode.collect.tip=收集空间仓中的物品\n物品会进入上方或下方的箱子
+gui.rftools.builder.silent.tip=移动方块时\n不播放放置/破坏声音
+gui.rftools.builder.silent.off.tip=移动方块时有声音
+gui.rftools.builder.silent.on.tip=方块声音已静音
+gui.rftools.builder.support.tip=移动时使用支撑方块。\n适用于流体、沙砾等
+gui.rftools.builder.support.off.tip=支撑/预览模式已关闭
+gui.rftools.builder.support.on.tip=支撑/预览模式已开启
+gui.rftools.builder.entities.tip=移动实体
+gui.rftools.builder.entities.off.tip=不移动实体
+gui.rftools.builder.entities.on.tip=移动实体
+gui.rftools.builder.loop.tip=循环模式
+gui.rftools.builder.loop.off.tip=只运行一次然后停止
+gui.rftools.builder.loop.on.tip=有红石信号时持续运行
+gui.rftools.builder.wait.tip=等待模式
+gui.rftools.builder.wait.off.tip=无法执行操作时\n不在当前位置等待
+gui.rftools.builder.wait.on.tip=无法执行操作时\n在当前位置等待
+gui.rftools.builder.hilight.tip=高亮模式
+gui.rftools.builder.hilight.off.tip=不高亮
+gui.rftools.builder.hilight.on.tip=高亮显示建造机\n正在处理的位置
+gui.rftools.builder.rotate.tip=设置水平旋转角度
+gui.rftools.common.set_the_anchor_where_you_want=设置锚点，决定方块\n放置在建造机前方的\n哪个位置
+gui.rftools.common.builder_at_south_west_corner=建造机位于西南角
+gui.rftools.common.builder_at_south_east_corner=建造机位于东南角
+gui.rftools.common.builder_at_north_west_corner=建造机位于西北角
+gui.rftools.common.builder_at_north_east_corner=建造机位于东北角
+gui.rftools.common.click_to_open_the_card_gui=点击打开卡片界面
+gui.rftools.builder.level.text=Y：停止
+gui.rftools.builder.level.tip=建造机当前所在的层\n§e点击重新开始！
+gui.rftools.counter.label.text=计数目标：
+gui.rftools.counter.counter.tip=设置计数目标（脉冲数）
+gui.rftools.counter.label.text_2=当前值：
+gui.rftools.counter.current.tip=设置当前值\n（达到计数目标时触发）
+gui.rftools.crafter.keep.all.tip=输入格中的所有物品都会被消耗\n§a（更改后请点击“应用”）
+gui.rftools.crafter.keep.keep.tip=每个物品格中保留一个物品\n§a（更改后请点击“应用”）
+gui.rftools.crafter.internal.tip=“内部”会把合成结果\n放进物品栏，\n而不是输出缓冲区
+gui.rftools.crafter.internal.ext.tip=合成结果\n会进入输出缓冲区\n§a（更改后请点击“应用”）
+gui.rftools.crafter.internal.int.tip=合成结果\n会留在输入缓冲区\n§a（更改后请点击“应用”）
+gui.rftools.crafter.internal.extc.tip=合成结果会进入输出缓冲区，\n但剩余物品（如桶）\n会留在输入缓冲区\n§a（更改后请点击“应用”）
+gui.rftools.crafter.apply.text=应用
+gui.rftools.crafter.apply.tip=点击把配方\n应用到自动合成机
+gui.rftools.crafter.speed.slow.tip=速度模式：\n慢
+gui.rftools.crafter.speed.fast.tip=速度模式：\n快
+gui.rftools.crafter.remember_the_current_items_in.tip=记住内部和外部\n缓冲区中的\n当前物品
+gui.rftools.crafter.forget_the_remembered_layout.tip=忘记已记住的布局
+gui.rftools.common.name=名称：
+gui.rftools.elevator.name.tip=设置这一层的名称
+gui.rftools.endergenic.label.text=最近 5 秒的平均值：
+gui.rftools.endergenic.label.text_2=收益：
+gui.rftools.endergenic.label.text_3=损失：
+gui.rftools.endergenic.label.text_4=发射：
+gui.rftools.endergenic.label.text_5=机会：
+gui.rftools.endermonitor.label.text=模式：
+gui.rftools.endermonitor.mode.lost_pearl.tip=末影珍珠丢失时\n发出红石脉冲
+gui.rftools.endermonitor.mode.pearl_fired.tip=末影珍珠发射时\n发出红石脉冲
+gui.rftools.endermonitor.mode.pearl_arrived.tip=末影珍珠到达时\n发出红石脉冲
+gui.rftools.environmental.label.text=半径：
+gui.rftools.environmental.label.text_2=高度：
+gui.rftools.environmental.mode.bl.tip=上面列表中的玩家\n不会受到效果影响
+gui.rftools.environmental.mode.wl.tip=上面列表中的玩家\n会受到效果影响
+gui.rftools.environmental.mode.mobs.tip=影响敌对和被动生物\n（耗电更多）
+gui.rftools.environmental.mode.host.tip=影响敌对生物\n（耗电更多）
+gui.rftools.environmental.mode.pass.tip=影响被动生物\n（耗电更多）
+gui.rftools.environmental.mode.all.tip=影响所有生物和玩家\n（耗电更多）
+gui.rftools.environmental.add.tip=把玩家添加到列表
+gui.rftools.environmental.del.tip=从列表中移除所选玩家
+gui.rftools.invchecker.label.text=格子：
+gui.rftools.invchecker.slot.tip=设置格子编号
+gui.rftools.common.amount=数量：
+gui.rftools.common.set_the_amount_of_items_in_slot=设置格子中的物品数量
+gui.rftools.invchecker.label.text_3=元数据：
+gui.rftools.invchecker.meta.ignore.tip=忽略物品的元数据/损坏值
+gui.rftools.invchecker.meta.match.tip=物品的元数据/损坏值必须匹配
+gui.rftools.common.oredict=矿物词典：
+gui.rftools.common.ingore_ore_dictionary=忽略矿物词典
+gui.rftools.common.use_ore_dictionary_matching=使用矿物词典匹配
+gui.rftools.redstone_receiver.analog.text=模拟模式
+gui.rftools.redstone_receiver.analog.tip=输出与输入相同的\n信号强度，而不是\n总是 15 或 0
+gui.rftools.common.add=添加
+gui.rftools.common.add_a_player_to_the_access_list=把玩家添加到访问列表
+gui.rftools.common.del=删除
+gui.rftools.common.remove_the_selected_player_from_the_access=从访问列表中\n移除所选玩家
+gui.rftools.common.black_or_whitelist_mode=黑名单或白名单模式
+gui.rftools.common.whitelist_players=白名单玩家
+gui.rftools.common.blacklist_players=黑名单玩家
+gui.rftools.sensor.label.text=类型：
+gui.rftools.sensor.area.area_1.tip=传感器前方 1 格
+gui.rftools.sensor.area.area_3.tip=传感器前方 3 格
+gui.rftools.sensor.area.area_5.tip=传感器前方 5 格
+gui.rftools.sensor.area.area_3x3.tip=传感器前方 3x3 格
+gui.rftools.sensor.area.area_5x5.tip=传感器前方 5x5 格
+gui.rftools.sensor.area.area_7x7.tip=传感器前方 7x7 格
+gui.rftools.sensor.label.text_2=范围：
+gui.rftools.sensor.type.block.tip=检测是否存在\n某种方块
+gui.rftools.sensor.type.fluid.tip=检测是否存在\n某种流体
+gui.rftools.sensor.type.growth.tip=检测作物的\n生长百分比
+gui.rftools.sensor.type.entities.tip=统计实体数量
+gui.rftools.sensor.type.players.tip=统计玩家数量
+gui.rftools.sensor.type.hostile.tip=统计敌对生物数量
+gui.rftools.sensor.type.passive.tip=统计被动生物数量
+gui.rftools.sensor.label.text_3=组：
+gui.rftools.sensor.group.one.tip=检测到至少一个\n即视为匹配
+gui.rftools.sensor.group.all.tip=范围内所有方块\n都必须匹配
+gui.rftools.sensor.label.text_4=数值：
+gui.rftools.sensor.number.tip=设置与传感器类型相关的数值
+gui.rftools.common.disabled=已禁用
+gui.rftools.common.enabled=已启用
+gui.rftools.common.clear=清空
+gui.rftools.sequencer.clear_the_grid.tip=清空网格
+gui.rftools.common.flip=翻转
+gui.rftools.sequencer.invert_all_values_in_the_grid.tip=反转网格中的所有值
+gui.rftools.sequencer.label.text=结束于：
+gui.rftools.sequencer.mode.once1.tip=收到红石信号时，\n循环一次。\n忽略之后的脉冲
+gui.rftools.sequencer.mode.once2.tip=收到红石信号时，\n循环一次。\n有新脉冲到来时重新开始
+gui.rftools.sequencer.mode.loop1.tip=一直循环。\n忽略红石信号
+gui.rftools.sequencer.mode.loop2.tip=一直循环。\n收到红石脉冲时重新开始
+gui.rftools.sequencer.mode.loop3.tip=有红石信号时循环。\n从当前步骤继续
+gui.rftools.sequencer.mode.loop4.tip=有红石信号时循环。\n信号消失后重新开始
+gui.rftools.sequencer.mode.step.tip=每收到一个红石脉冲\n前进一步
+gui.rftools.common.delay=延迟：
+gui.rftools.sequencer.label.text_2=序列长度：
+gui.rftools.common.shield_is_completely_invisible=护盾完全不可见
+gui.rftools.common.default_shield_texture=默认的护盾材质
+gui.rftools.common.use_the_texture_from_the_supplied_block=使用所放入方块的材质
+gui.rftools.common.transparent_shield_texture=透明的护盾材质
+gui.rftools.common.solid_shield_texture=实心的护盾材质
+gui.rftools.common.set=设置
+gui.rftools.common.set_the_camouflage_block=设置伪装方块
+gui.rftools.common.entity_that_matches_this_filter_can_pass_2=符合此过滤器的实体\n可以穿过
+gui.rftools.common.entity_that_matches_this_filter_cannot_pass_2=符合此过滤器的实体\n无法穿过
+gui.rftools.common.entity_that_matches_this_filter_can_pass=符合此过滤器的实体\n可以穿过但会受到伤害
+gui.rftools.common.entity_that_matches_this_filter_cannot_pass=符合此过滤器的实体\n无法穿过并会受到伤害
+gui.rftools.common.matches_everything=匹配所有实体
+gui.rftools.common.matches_passive_mobs=匹配被动生物
+gui.rftools.common.matches_hostile_mobs=匹配敌对生物
+gui.rftools.common.matches_items=匹配物品
+gui.rftools.common.matches_players_optionally_named=匹配玩家\n（可指定名字）
+gui.rftools.common.optional_player_name=玩家名字（可选）
+gui.rftools.common.add_selected_filter=添加所选过滤器
+gui.rftools.common.delete_selected_filter=删除所选过滤器
+gui.rftools.common.up=上移
+gui.rftools.common.move_filter_up=上移过滤器
+gui.rftools.common.down=下移
+gui.rftools.common.move_filter_down=下移过滤器
+gui.rftools.common.generic_damage_type=一般伤害
+gui.rftools.common.damage_as_done_by_a_player=玩家造成的伤害
+gui.rftools.common.color_for_the_shield=护盾的颜色
+gui.rftools.common.looting=抢夺：
+gui.rftools.common.insert_dimensional_shards_for_looting_bonus=放入空间碎片\n以获得抢夺加成
+gui.rftools.common.if_pressed_light_is_blocked_by_the_shield=按下后，护盾\n会阻挡光线
+gui.rftools.common.emit_redstone_signal=发出红石信号
+gui.rftools.common.don_t_emit_redstone_signal=不发出红石信号
+gui.rftools.common.keep_previous_redstone_signal=保持之前的红石信号
+gui.rftools.timer.delay.tip=设置延迟（单位：刻）\n（20 刻为一秒）
+gui.rftools.timer.pauses.text=红石激活时暂停
+gui.rftools.craft_one=合成 1 个
+gui.rftools.craft_four=合成 4 个
+gui.rftools.craft_eight=合成 8 个
+gui.rftools.craft_a_stack=合成一组
+gui.rftools.store=存入
+gui.rftools.store_the_current_recipe=存入当前配方
+gui.rftools.no_target_set=未设置目标
+gui.rftools.filter_based_on_ore_dictionary=根据矿物词典过滤
+gui.rftools.filter_ignoring_damage=过滤时忽略损坏值
+gui.rftools.filter_ignoring_nbt=过滤时忽略 NBT
+gui.rftools.filter_ignoring_mod=过滤时忽略模组
+gui.rftools.not_movable=无法移动！
+gui.rftools.dim=尺寸：
+gui.rftools.offset=偏移：
+gui.rftools.void=销毁：
+gui.rftools.void_stone=销毁石头
+gui.rftools.void_cobble=销毁圆石
+gui.rftools.void_dirt=销毁泥土
+gui.rftools.void_gravel=销毁沙砾
+gui.rftools.void_sand=销毁沙子
+gui.rftools.void_netherrack=销毁下界岩
+gui.rftools.void_end_stone=销毁末地石
+gui.rftools.enable_ore_dictionary_matching=启用矿物词典匹配
+gui.rftools.oredict=矿物词典
+gui.rftools.rf_tick=RF/刻
+gui.rftools.filter=筛选：
+gui.rftools.switch_between_client_and_server_information=在客户端和服务端\n信息之间切换
+gui.rftools.metadata_for_this_block=此方块的元数据
+gui.rftools.use_this_name_to_identify_this_receiver_in=用这个名字在\n传送控制器中\n识别此接收器
+gui.rftools.everyone_can_dial_to_this_receiver=所有人都可以拨号到这个接收器
+gui.rftools.only_people_in_the_access_list_below_can=只有下方访问列表中的人\n可以拨号到这个接收器
+gui.rftools.common.access=访问：
+gui.rftools.use_this_name_to_identify_this_transmitter=用这个名字在\n传送控制器中\n识别此传输器
+gui.rftools.everyone_can_access_this_transmitter_and=所有人都可以使用这个传输器\n并更改拨号目的地
+gui.rftools.only_people_in_the_access_list_below_can_2=只有下方访问列表中的人\n可以使用这个传输器
+gui.rftools.hide=隐藏
+gui.rftools.hide_the_teleportation_beam=隐藏传送光束
+gui.rftools.dial=拨号
+gui.rftools.start_a_connection_between_the_selected=在所选传输器\n和所选接收器\n之间建立连接
+gui.rftools.dial_once=单次拨号
+gui.rftools.dial_a_connection_for_a_single_teleport=建立一次性连接，\n只传送一次
+gui.rftools.interrupt=中断
+gui.rftools.interrupt_a_connection_for_the_selected=中断所选传输器\n的连接
+gui.rftools.check=检查
+gui.rftools.check_the_status_of_the_selected_receiver=检查所选接收器\n的状态
+gui.rftools.check_the_status_of_the_selected_receiver_2=检查所选接收器\n的状态\n（需要相邻的分析仪！）
+gui.rftools.enable_axis_rendering_in_the_preview=在预览中\n显示坐标轴
+gui.rftools.enable_preview_of_the_outer_bounds=预览外部边界
+gui.rftools.show_a_visual_scanline_wherever_the_preview=预览更新时\n显示一条扫描线
+gui.rftools.filter_2=筛选
+gui.rftools.beacon=信标
+gui.rftools.common.scan=扫描
+gui.rftools.angle=角度
+gui.rftools.scale=缩放
+gui.rftools.offset_2=偏移
+gui.rftools.auto=自动
+gui.rftools.automatic_client_side_rotation=客户端自动旋转
+gui.rftools.sl=线
+gui.rftools.enable_disable_visual_scanlines_when_the=启用/禁用刷新扫描时\n的可视扫描线
+gui.rftools.snd=声
+gui.rftools.enable_disable_sound_during_visual_scan=启用/禁用可视扫描\n时的声音
+gui.rftools.gray=灰
+gui.rftools.enable_disable_grayscale_mode=启用/禁用灰度模式
+gui.rftools.none=无
+gui.rftools.set_all_sides_to_none=把所有面设为“无”
+gui.rftools.in=入
+gui.rftools.set_all_sides_to_accept_energy=把所有面设为\n接收能量
+gui.rftools.out=出
+gui.rftools.set_all_sides_to_send_energy=把所有面设为\n输出能量
+gui.rftools.stats=统计
+gui.rftools.power_statistics_press_to_clear=能量统计。点击清除：
+gui.rftools.link=链接：
+gui.rftools.link_a_powercard_to_card_on_the_left=把能量单元卡链接到\n左边的卡
+gui.rftools.redstone_signal_off=无红石信号
+gui.rftools.redstone_signal_on=有红石信号
+gui.rftools.ins=插入
+gui.rftools.all_inventories_are_considered=会考虑所有物品栏
+gui.rftools.only_routable_inventories_are_considered=只考虑可路由的物品栏
+gui.rftools.routable=可路由：
+gui.rftools.cycle_to_the_next_storage_module=切换到下一个存储模块
+gui.rftools.name_based_filter_for_items=按名称过滤物品
+gui.rftools.control_how_items_are_shown_in_the_view=控制物品在视图中\n的显示方式
+gui.rftools.control_how_items_are_sorted_in_the_view=控制物品在视图中\n的排序方式
+gui.rftools.if_enabled_it_will_show_groups_based_on=启用后会根据\n排序条件显示分组
+gui.rftools.amount_of_stacks_maximum_amount=组数 / 最大组数
+gui.rftools.compact_equal_stacks=合并相同的物品组
+gui.rftools.empty=（空）
+gui.rftools.common.control_when_a_redstone_signal_should_be=控制何时\n发出红石信号
+gui.rftools.common.alarm_level=警报等级
+gui.rftools.double_click_to_edit_this_recipe=双击编辑此配方
+gui.rftools.toggle_wide_storage_list=切换宽存储列表
+gui.rftools.move_inventory_up=上移物品栏
+gui.rftools.move_inventory_to_the_top=移到最上面
+gui.rftools.move_inventory_down=下移物品栏
+gui.rftools.move_inventory_to_the_bottom=移到最下面
+gui.rftools.remove_inventory_from_list=从列表中移除物品栏
+gui.rftools.do_a_scan_of_all_storage_units_connected=扫描所有连接到\n已激活 XNet 频道的\n存储单元
+gui.rftools.do_a_scan_of_all_storage_units_in_radius=扫描半径内的\n所有存储单元\n半径填“xnet”则\n只限 XNet
+gui.rftools.do_a_scan_of_all_storage_units_in_radius_2=扫描半径内的\n所有存储单元
+gui.rftools.search=搜索：
+gui.rftools.radius_of_scan=扫描半径
+gui.rftools.open_the_gui_for_this_module=打开此模块\n的界面
+gui.rftools.bright=亮
+gui.rftools.toggle_full_brightness=切换最大亮度
+gui.rftools.font=字体：
+gui.rftools.set_truetype_font_mode_for_the_screen=设置屏幕使用的\nTrueType 字体模式
+gui.rftools.find_all_nearby_screens_and_connect_to_them=寻找附近所有屏幕\n并连接
+gui.rftools.detach=断开
+gui.rftools.detach_from_all_screens=与所有屏幕断开
+gui.rftools.full_format_3123555=完整格式：3123555
+gui.rftools.compact_format_3_1m=紧凑格式：3.1M
+gui.rftools.comma_format_3_123_555=逗号格式：3,123,555
+gui.rftools.no_text_is_shown=不显示文字
+gui.rftools.blacklist_items=黑名单物品
+gui.rftools.whitelist_items=白名单物品
+gui.rftools.oredict_matching_off=矿物词典匹配：关
+gui.rftools.oredict_matching_on=矿物词典匹配：开
+gui.rftools.ignore_damage=忽略损坏值
+gui.rftools.damage_must_match=损坏值必须匹配
+gui.rftools.ignore_nbt=忽略 NBT
+gui.rftools.nbt_must_match=NBT 必须匹配
+gui.rftools.don_t_match_on_mod=不按模组匹配
+gui.rftools.only_mod_must_match=只需模组匹配
+gui.rftools.unfavorited_receiver=未收藏的接收器
+gui.rftools.favorited_receiver=已收藏的接收器
+gui.rftools.not_favorited=未收藏
+gui.rftools.favorited=已收藏
+gui.rftools.side_set_to_output_mode=此面设为输出模式
+gui.rftools.side_set_to_input_mode=此面设为输入模式
+gui.rftools.cross_dimension_access_disabled=已禁用跨维度访问
+gui.rftools.cross_dimension_access_enabled=已启用跨维度访问
+gui.rftools.items_are_shown_in_a_list_view=物品以列表显示
+gui.rftools.items_are_shown_in_columns=物品以多列显示
+gui.rftools.items_are_shown_with_icons=物品以图标显示
+gui.rftools.don_t_show_groups=不显示分组
+gui.rftools.show_groups=显示分组
+gui.rftools.input=输入
+gui.rftools.output=输出
+gui.rftools.export_to_current_container=导出到当前容器
+gui.rftools.export_to_first_routable_container=导出到第一个可路由的容器
+gui.rftools.not_routable=不可路由
+gui.rftools.routable_2=可路由
+gui.rftools.y_s=Y：%s
+gui.rftools.s_rf_tick=%s RF/刻
+gui.rftools.s_pearls=%s 颗末影珍珠
+gui.rftools.s_times=%s 次
+gui.rftools.power_statistics_press_to_clear_inserted_s=能量统计。点击清除：\n输入：%s\n输出：%s
+gui.rftools.amount_of_rf_to_input_output_when_redstone=红石为 %s 时\n输入/输出的 RF 量
+gui.rftools.s_connected_screens=已连接 %s 个屏幕
+gui.rftools.rf_per_scan_every_s_ticks=每次扫描消耗的 RF（每 %s 刻）：
+gui.rftools.s_rf=%s RF
+gui.rftools.off_s=偏移：%s
+gui.rftools.dim_s=维度：%s
+gui.rftools.srf=%s RF
+gui.rftools.all_routable_inventories=§a所有可路由的物品栏
+gui.rftools.block_at_s_name_s_doubleclick_to_highlight=§a方块位置：§f%s\n§a名称：§f%s\n（双击高亮显示）
+gui.rftools.the_name_of_the_destination_receiver_s_s=目标接收器\n的名称：\n%s (%s)
+gui.rftools.the_name_of_the_destination_dimension_s=目标维度\n的名称：\n%s
+gui.rftools.start_a_connection_between_the_selected_2=在所选传输器\n和所选接收器\n之间建立连接。\n距离：%s
+gui.rftools.dial_a_connection_for_a_single_teleport_2=建立一次性连接，\n只传送一次。\n距离：%s
+gui.rftools.move_cost_s_rf=移动消耗 %s RF
+gui.rftools.total_cost_blocks_s_rf=方块总消耗：%s RF
+gui.rftools.total_cost_entities_s_rf=实体总消耗：%s RF
+gui.rftools.blocks_s=方块数：++%s
+gui.rftools.blocks_s_2=方块数：%s
+gui.rftools.loc_name_s=本地化名称：%s
+gui.rftools.unloc_name_s=未本地化名称：%s
+gui.rftools.block_name_s=方块名称：%s
+gui.rftools.class_s=类：%s
+gui.rftools.id_s=ID %s
+gui.rftools.stop=停止
+gui.rftools.side.down=下
+gui.rftools.side.up=上
+gui.rftools.side.back=后
+gui.rftools.side.front=前
+gui.rftools.side.left=左
+gui.rftools.side.right=右
+gui.rftools.side.internal=内部（null）
+gui.rftools.dial.dialing_device_power_low=传送控制器电力不足！
+gui.rftools.dial.matter_receiver_power_low=物质接收器电力不足！
+gui.rftools.dial.destination_dimension_power_low=目标维度电力不足！
+gui.rftools.dial.no_access_to_transmitter=无权访问传输器！
+gui.rftools.dial.no_access_to_receiver=无权访问接收器！
+gui.rftools.dial.invalid_destination=无效的目的地！
+gui.rftools.dial.invalid_source=无效的来源！
+gui.rftools.dial.receiver_blocked=接收器被阻挡！
+gui.rftools.dial.transmitter_blocked=传输器被阻挡！
+gui.rftools.dial.invalid_transmitter=无效的传输器！
+gui.rftools.dial.interrupted=已中断！
+gui.rftools.dial.dial_ok=拨号成功！
+gui.rftools.dimension_id=ID %s
+gui.rftools.composer.view_help=按住鼠标左键拖动来旋转\n按住 Shift 拖动左键来平移\n滚动鼠标滚轮来缩放\n点击鼠标中键重置旋转
+gui.rftools.shield.player_s=玩家 %s
+gui.rftools.shield.players=玩家
+gui.rftools.all_routable=所有可路由的
+gui.rftools.no_recipe=<无配方>
+gui.rftools.recipe_placeholder=<配方>
+gui.rftools.count_s=数量 %s
+gui.rftools.show_the_amount_of=显示 %s 的数量
+gui.rftools.show_the_average_tick=显示 %s 的每刻\n平均增减量
+gui.rftools.show_the_amount_of_as_a_percentage=以百分比显示\n%s 的数量
+
+# Tooltips
+tooltip.rftools.id_s=§aID：%s
+tooltip.rftools.use_the_smart_wrench_with_this_block_to=§f用智能扳手点击这个方块来选择\n§f其他方块，保护它们免受爆炸\n§f等破坏。
+tooltip.rftools.infusing_bonus_reduced_power_consumption=§e注入加成：降低耗电。
+tooltip.rftools.channel_s=§a频道：%s
+tooltip.rftools.this_block_is_one_of_the_eight_corners_of=§f这个方块是你想要复制/移动到别处的\n§f一块空间区域的八个角之一
+tooltip.rftools.contents_s_stacks=§a内容：%s 组
+tooltip.rftools.recipes_s_recipes=§a配方：%s 个
+tooltip.rftools.this_machine_can_handle_up_to_s_recipes=§f这台机器最多可以同时处理 %s 个配方，
+tooltip.rftools.at_once_and_allows_recipes_to_use_the=§f并且允许配方使用前面步骤的\n§f合成结果。
+tooltip.rftools.mode_s=§a模式：%s
+tooltip.rftools.this_logic_block_sends_redstone_signals=§f这个逻辑方块发送来自已链接发信器的\n§f红石信号。右键点击发信器\n§f（或其他接收器）即可链接
+tooltip.rftools.this_logic_block_accepts_redstone_signals=§f这个逻辑方块接收红石信号，\n§f并以无线方式发送给已链接的接收器。\n§f放置后会创建一个频道，或者右键点击\n§f接收器/发信器来使用它的频道
+tooltip.rftools.energy_s=§e能量：%s
+tooltip.rftools.this_block_can_store_power_s_rf=§f这个方块可以存储能量（%s RF），
+tooltip.rftools.optionally_in_a_big_multi_dimensional=§f也可以组成大型的多维度结构
+tooltip.rftools.infusing_bonus_reduced_long_distance_power=§e注入加成：降低远距离取电的\n§e损耗，并提高每刻 RF 输出
+tooltip.rftools.huge_screen=§9巨型屏幕。
+tooltip.rftools.large_screen=§9大型屏幕。
+tooltip.rftools.transparent_screen=§9透明屏幕。
+tooltip.rftools.this_is_a_modular_screen_as_such_it_doesn_t=§f这是一块模块化屏幕，本身不会显示任何东西。\n§f你必须插入模块来决定显示的内容。\n§f这块屏幕不能直接供电，必须由附近的\n§f屏幕控制器远程供电。
+tooltip.rftools.before_screens_can_work_they_need_to_get=§f屏幕要工作，需要从这个控制器获取电力。\n§f即使屏幕里的模块都不耗电，\n§f也需要有控制器。\n§f只要在范围内，一个控制器可以\n§f为多块屏幕供电。
+tooltip.rftools.infusing_bonus_increased_range_for_screens=§e注入加成：增大屏幕的供电范围。
+tooltip.rftools.sneak_right_click_on_an_rftools_machine_to=§f潜行右键点击 RFTools 机器来清除\n§f它的所有者。只能对自己拥有的方块这样做\n§f（管理员除外）
+tooltip.rftools.channel_s_s=§e频道：%s（%s）
+tooltip.rftools.channel_is_not_set=§e未设置频道！
+tooltip.rftools.manage_security_channels_in_the_security=§f在权限管理器中管理安全频道，\n§f并把这张卡链接到一个频道。潜行右键点击\n§f方块，把频道链接到该方块。\n§f如果想把方块上的频道复制到卡上，\n§f可以用未链接的卡右键点击该方块
+tooltip.rftools.supports_s_blocks=§a最多支持 %s 个方块
+tooltip.rftools.this_machine_forms_a_shield_out_of_adjacent=§f这台机器用相邻的护盾支架\n§f形成护盾。它可以按生物类型过滤，\n§f并做出各种效果（伤害、实心等）\n§f用智能扳手可以给护盾添加部分
+tooltip.rftools.note_block_mimic_is_not_implemented_yet=§c注意：方块拟态尚未实现！
+tooltip.rftools.infusing_bonus_reduced_power_consumption_2=§e注入加成：降低耗电，\n§e并提高伤害。
+tooltip.rftools.this_block_converts_matter_into_a_beam_of=§f这个方块把物质转换成能量束，\n§f然后把能量束发送给相连的刷怪箱。\n§f用扳手连接。
+tooltip.rftools.infusing_bonus_reduced_power_usage=§e注入加成：降低耗电，\n§e提高速度，减少所需物质
+tooltip.rftools.this_block_can_be_retrofitted_with_a=§f这个方块可以用存储控制模块改装，\n§f这样你就能统计存储中的物品数量
+tooltip.rftools.this_modular_storage_system_can_store_a_lot=§f这个模块化存储系统可以存储大量物品，\n§f并支持方便的搜索和过滤。\n§f必须先插入存储模块物品\n§f才能使用
+tooltip.rftools.make_storage_modules_remotely_available=§f让存储模块可以被远程访问。\n§f需要消耗能量。
+tooltip.rftools.infusing_bonus_reduced_power_consumption_3=§e注入加成：降低耗电
+tooltip.rftools.this_terminal_can_be_retrofitted_with_a=§f这个终端可以用存储控制模块改装，\n§f这样你就能访问\n§f存储检测器
+tooltip.rftools.click_full_stack_shift_click_single_item=§a点击：§f整组\n§aShift + 点击：§f单个物品
+tooltip.rftools.this_machine_will_scan_all_nearby=§f这台机器会扫描附近所有的物品栏，\n§f并以列表形式显示。之后你可以在所有\n§f这些物品栏中搜索物品。
+tooltip.rftools.with_the_dialing_device_you_can_dial_up_any=§f用传送控制器可以把任何附近的\n§f物质传输器“拨号”到我的世界中\n§f任意一个物质接收器。需要电力。\n§f如果这个方块旁边有目标分析仪，\n§f你还可以检查目的地的电力\n§f是否足以安全传送。
+tooltip.rftools.if_you_place_this_block_anywhere_in_the=§f把这个方块放在世界的任何地方，\n§f就可以用传送控制器拨号到它。\n§f传送到这个方块之前，请确保给它供电！
+tooltip.rftools.name_s=§a名称：%s
+tooltip.rftools.dialed_to_s=§e[已拨号到 %s]
+tooltip.rftools.once=§e[单次]
+tooltip.rftools.if_you_place_this_block_near_a_dialing=§f把这个方块放在传送控制器附近，\n§f就可以把它拨号到物质接收器。请确保\n§f给它提供足够的电力！\n§f在这个方块旁边放一个目标分析仪\n§f可以检查目的地状态（红色为差，绿色为良好，\n§f黄色为未知）。\n§f在这个方块旁边放一个物质助推器\n§f可以传送到没有电的接收器。
+tooltip.rftools.infusing_bonus_reduced_power_consumption_4=§e注入加成：降低耗电，\n§e并加快传送速度。
+tooltip.rftools.transmitter_at_s_s_s_dim_s=§a传输器位置：%s,%s,%s（维度 %s）
+tooltip.rftools.receiver_s=§a接收器：%s
+tooltip.rftools.dial_once_mode_enabled=§a已启用单次拨号模式
+tooltip.rftools.when_this_block_gets_a_redstone_signal_it=§f这个方块收到红石信号时，\n§f会拨号或中断一个传输器。
+tooltip.rftools.this_essence_item_is_the_main_ingredient=§f这个精华物品是在维度工作台里\n§f制作和平维度片段的主要材料。\n§f不过获得这种精华有些困难。
+tooltip.rftools.mob_s=§9生物：%s
+tooltip.rftools.essence_level_s=§9精华等级：%s%%
+tooltip.rftools.use_this_to_extract_essence_from_mobs=§f用它从生物身上提取精华
+tooltip.rftools.disabled_in_config=§c已在配置中禁用！
+tooltip.rftools.shape_s_s=§a形状 %s（%s）
+tooltip.rftools.dimension_s=§a尺寸 %s
+tooltip.rftools.offset_s=§a偏移 %s
+tooltip.rftools.formulas_s=§2公式：%s
+tooltip.rftools.scan_id_s=§2扫描 ID：%s
+tooltip.rftools.sneak_right_click_on_builder_to_start_mark=§e潜行右键点击建造机来开始标记模式\n§e然后右键点击来标记想要区域的两个角
+tooltip.rftools.max_area_sx_sx_s=§a最大区域：%sx%sx%s
+tooltip.rftools.base_cost_s_rf_t_per_block=§a基础消耗：每个方块 %s RF/t
+tooltip.rftools.channel_s_2=§e频道：%s
+tooltip.rftools.sneak_right_click_on_a_space_chamber=§f潜行右键点击空间控制方块\n§f来设置这张卡的频道。\n§f在空中右键点击可以查看\n§f区域内容的概览。\n§f把它放进建造机，就可以复制/移动\n§f已链接的区域
+tooltip.rftools.final_cost_depends_on_infusion_level=§a（最终消耗取决于注入等级）
+tooltip.rftools.this_module_gives_blindness_when_used_in=在环境控制器中使用时，\n这个模块会给予失明效果。
+tooltip.rftools.uses_s_rf_tick_per_cubic_block=§a消耗 %s RF/刻（每立方格）
+tooltip.rftools.this_module_only_works_on_mobs_see_config=§c这个模块只对生物有效（见配置）
+tooltip.rftools.this_module_gives_feather_falling_bonus=在环境控制器中使用时，\n这个模块会提供摔落保护加成。
+tooltip.rftools.damage_will_be_half_the_normal_value=§6伤害会减半。
+tooltip.rftools.damage_will_be_reduced_to_zero=§6伤害会降为零。
+tooltip.rftools.this_module_gives_creative_type_flying=在环境控制器中使用时，\n这个模块会提供类似创造模式的飞行能力。
+tooltip.rftools.this_module_gives_glowing_enchantment_when=在环境控制器中使用时，\n这个模块会给予发光效果。
+tooltip.rftools.this_module_gives_haste_bonus_when_used_in=在环境控制器中使用时，\n这个模块会提供急迫加成。
+tooltip.rftools.this_module_gives_haste_iii_bonus_when_used=在环境控制器中使用时，\n这个模块会提供急迫 III 加成。
+tooltip.rftools.this_module_gives_luck_bonus_when_used_in=在环境控制器中使用时，\n这个模块会提供幸运加成。
+tooltip.rftools.this_module_gives_night_vision_bonus_when=在环境控制器中使用时，\n这个模块会提供夜视加成。
+tooltip.rftools.this_module_prevents_enderman_from=在环境控制器中使用时，\n这个模块会阻止末影人传送。
+tooltip.rftools.this_module_prevents_hostile_mob_spawning=在环境控制器中使用时，\n这个模块会阻止敌对生物生成。
+tooltip.rftools.this_module_gives_poison_when_used_in_the=在环境控制器中使用时，\n这个模块会给予中毒效果。
+tooltip.rftools.this_module_gives_regeneration_bonus_when=在环境控制器中使用时，\n这个模块会提供生命恢复加成。
+tooltip.rftools.this_module_gives_regeneration_iii_bonus=在环境控制器中使用时，\n这个模块会提供生命恢复 III 加成。
+tooltip.rftools.this_module_gives_saturation_bonus_when=在环境控制器中使用时，\n这个模块会提供饱和加成。
+tooltip.rftools.this_module_gives_saturation_iii_bonus_when=在环境控制器中使用时，\n这个模块会提供饱和 III 加成。
+tooltip.rftools.this_module_gives_slowness_when_used_in_the=在环境控制器中使用时，\n这个模块会给予缓慢效果。
+tooltip.rftools.this_module_gives_speed_bonus_when_used_in=在环境控制器中使用时，\n这个模块会提供速度加成。
+tooltip.rftools.this_module_gives_speed_iii_bonus_when_used=在环境控制器中使用时，\n这个模块会提供速度 III 加成。
+tooltip.rftools.this_module_gives_water_breathing_bonus=在环境控制器中使用时，\n这个模块会提供水下呼吸加成。
+tooltip.rftools.this_module_gives_weakness_when_used_in_the=在环境控制器中使用时，\n这个模块会给予虚弱效果。
+tooltip.rftools.rftools_basic_manual=RFTools 基础说明书
+tooltip.rftools.rftools_shape_manual_the_builder_shield=RFTools 塑形说明书\n建造机、护盾、塑形卡片、\n扫描器、映射仪、构建器\n和定位器
+tooltip.rftools.this_module_can_be_used_by_the_area_scanner=§f区域扫描器可以使用这个模块\n§f来修改扫描输出
+tooltip.rftools.use_to_connect_a_powercell_multiblock=§f用于连接多方块的能量单元
+tooltip.rftools.unlinked=§e[未链接]
+tooltip.rftools.link_id_s=§a链接 ID：%s
+tooltip.rftools.uses_s_rf_tick=§a消耗 %s RF/刻
+tooltip.rftools.label_s=§e标签：%s
+tooltip.rftools.sneak_right_click_on_a_redstone_receiver_to=§f潜行右键点击红石信号接收器，\n§f为这个模块创建一个频道，同时\n§f设置给接收器。你也可以对发信器\n§f或已设置的接收器使用，\n§f把频道复制到按钮上
+tooltip.rftools.monitoring_s_at_s_s_s=§e监视：%s（位置 %s,%s,%s）
+tooltip.rftools.sneak_right_click_on_a_counter_to_set_the=§e潜行右键点击计数器\n§e来设置这个计数器模块的目标
+tooltip.rftools.sneak_right_click_on_a_storage_scanner_to=§e潜行右键点击存储检测器\n§e来设置这个清空模块的目标
+tooltip.rftools.this_screen_module_allows_you_to_dump_a_lot=§f这个屏幕模块可以让你通过存储检测器\n§f一次清空大量物品
+tooltip.rftools.monitoring_s_at_s=§e监视：%s（位置 %s）
+tooltip.rftools.elevator_s_at_s_s_s=§e电梯：%s（位置 %s,%s,%s）
+tooltip.rftools.sneak_right_click_on_an_elevator_block_to=§e潜行右键点击电梯方块\n§e来设置这个模块的目标
+tooltip.rftools.sneak_right_click_on_a_machine_to_set_the=§e潜行右键点击机器\n§e来设置这个能量模块的目标
+tooltip.rftools.dimension_s_2=§e维度：%s
+tooltip.rftools.sneak_right_click_on_a_tank_to_set_the=§e潜行右键点击储罐\n§e来设置这个流体模块的目标
+tooltip.rftools.sneak_right_click_on_an_inventory_to_set=§e潜行右键点击物品栏\n§e来设置这个存储模块的目标
+tooltip.rftools.sneak_right_click_on_a_supported_machine_to=§e潜行右键点击受支持的机器\n§e来设置这个模块的目标
+tooltip.rftools.block_at_s_s_s=§e方块位置：%s,%s,%s
+tooltip.rftools.sneak_right_click_on_a_redstone_transmitter=§f潜行右键点击红石信号发信器或\n§f接收器来设置这个模块的频道。\n§f或者潜行右键点击任意方块的侧面，\n§f监视该侧的红石输出
+tooltip.rftools.sneak_right_click_on_a_storage_scanner_to_2=§e潜行右键点击存储检测器\n§e来设置这个存储模块的目标
+tooltip.rftools.this_screen_module_allows_you_to_monitor_9=§f这个屏幕模块可以让你通过存储检测器\n§f监视 9 种不同的物品。\n§f这个模块还可以与手持式存储模块合成，\n§f用于远程访问由存储检测器\n§f控制的系统
+tooltip.rftools.text_s=§e文字：%s
+tooltip.rftools.block_s_at_dimension_s=§a方块：%s（维度 %s）
+tooltip.rftools.right_click_on_air_to_change_mode=§f在空中右键点击来切换模式。
+tooltip.rftools.use_as_a_normal_wrench_sneak_right_click_to=§f作为普通扳手使用：\n§f    潜行右键点击来拾取机器。\n§f    右键点击来旋转机器。
+tooltip.rftools.use_as_a_block_selector_sneak_right_click=§f作为方块选择器使用：\n§f    潜行右键点击来选择主方块。\n§f    右键点击来把方块与主方块关联。
+tooltip.rftools.this_module_extends_the_modular_storage=§f这个模块为模块化存储器\n§f增加按通用类型整理物品的功能
+tooltip.rftools.this_module_extends_the_modular_storage_2=§f这个模块为模块化存储器\n§f增加与矿物词典相关的功能
+tooltip.rftools.this_filter_module_is_for_the_modular=§f这个过滤模块用于模块化存储器、\n§f建造机或区域扫描器。\n§f它可以让方块只接受\n§f特定种类的物品
+tooltip.rftools.sneak_right_click_on_an_inventory_to=§e潜行右键点击物品栏\n§e来根据其内容配置过滤器
+tooltip.rftools.this_storage_module_is_for_the_modular=§f这个存储模块用于模块化存储器。
+tooltip.rftools.this_module_supports_a_remote_inventory=§f这个模块支持远程物品栏。\n§f链接到远程存储器中的另一个存储模块。
+tooltip.rftools.this_module_supports_s_stacks=§f这个模块支持 %s 组物品
+tooltip.rftools.remote_id_s=§a远程 ID：%s
+tooltip.rftools.unlinked_2=§e未链接
+tooltip.rftools.contents_id_s=§a内容 ID：%s
+tooltip.rftools.contents_s_s_stacks=§a内容：%s/%s 组
+tooltip.rftools.energy_s_rf=§9能量：%s RF
+tooltip.rftools.storage_scanner_module_installed=§e已安装存储检测器模块！
+tooltip.rftools.no_storage_module_installed=§e未安装存储模块！
+tooltip.rftools.this_rf_charged_tablet_can_hold_a_storage=这个 RF 充能平板可以装入一个存储模块，\n让持有者操作该模块（远程或普通）\n中的内容。\n你也可以把它和存储控制模块合成，\n用来远程访问存储检测器
+tooltip.rftools.target_s=§9目标：%s
+tooltip.rftools.no_target_set_sneak_right_click_on_receiver=§c未设置目标！潜行右键点击接收器来设置。
+tooltip.rftools.this_rf_charged_item_allows_you_to_teleport=这个 RF 充能物品可以让你传送到\n之前设置的物质接收器。潜行右键点击\n接收器来设置目的地。\n右键点击来传送。
+tooltip.rftools.s_modules=§9%s 个模块
+tooltip.rftools.final_cost_depends_on_infusion_level_and_block_hardness=§a（最终消耗取决于注入等级和方块硬度）
+tooltip.rftools.name_s_id_s=§a名称：%s，ID：%s
+tooltip.rftools.filter_mode_blacklist=§9模式：黑名单
+tooltip.rftools.filter_mode_whitelist=§9模式：白名单
+tooltip.rftools.filter_oredict=，矿物词典
+tooltip.rftools.filter_damage=，损坏值
+tooltip.rftools.filter_nbt=，NBT
+tooltip.rftools.filter_mod=，模组
+
+# Chat messages
+msg.rftools.module_is_not_linked_to_redstone_channel=§c模块未链接到红石频道！
+msg.rftools.module_is_not_linked_to_storage_scanner=§c模块未链接到存储检测器！
+msg.rftools.module_is_not_linked_to_elevator=§c模块未链接到电梯！
+msg.rftools.storage_scanner_out_of_range=§e存储检测器超出范围！
+msg.rftools.storage_scanner_is_missing=§e存储检测器不见了！
+msg.rftools.removed_module=已取出模块
+msg.rftools.not_enough_power_to_insert_items=§c电力不足，无法放入物品！
+msg.rftools.there_are_no_routable_inventories=§c没有可路由的物品栏！
+msg.rftools.not_enough_power_to_request_items=§c电力不足，无法请求物品！
+msg.rftools.parameter_is_not_a_valid_boolean=§c参数不是有效的布尔值！
+msg.rftools.parameter_is_not_a_valid_integer=§c参数不是有效的整数！
+msg.rftools.parameter_is_not_a_valid_real_number=§c参数不是有效的实数！
+msg.rftools.rftools_debug_mode_enabled=§eRFTools 调试模式已开启！
+msg.rftools.rftools_debug_mode_disabled=§eRFTools 调试模式已关闭！
+msg.rftools.several_parameters_are_missing=§c缺少多个参数！
+msg.rftools.too_many_parameters=§c参数过多！
+msg.rftools.could_not_load_font=§c无法加载字体！
+msg.rftools.receiver_dimension_s_location_s=    接收器：维度=%s，位置=%s
+msg.rftools.missing_filename=§c缺少文件名！
+msg.rftools.this_command_only_works_as_a_player=§c这个命令只能由玩家执行！
+msg.rftools.you_need_to_hold_a_shapecard_in_your_hand=§c你需要手持一张塑形卡片！
+msg.rftools.current_buffbar_location_s_s=§e当前状态效果栏位置：%s,%s
+msg.rftools.current_gui_style_s=§e当前界面样式：%s
+msg.rftools.unknown_style_options_s=§c未知的样式！可选：%s
+msg.rftools.unknown_rftools_command_s=§c未知的 RFTools 命令：%s
+msg.rftools.command_is_not_allowed=§c不允许使用该命令！
+msg.rftools.no_storage_tablet_in_inventory=§c物品栏中没有手持式存储模块！
+msg.rftools.no_storage_module_in_tablet=§c手持式存储模块中没有存储模块！
+msg.rftools.no_room_in_inventory_for_block=§c物品栏中没有空间放置方块！
+msg.rftools.storage_scanner_is_out_of_range=§c存储检测器超出范围！
+msg.rftools.storage_module_is_not_linked_to_a_storage=§c存储模块未链接到存储检测器！
+msg.rftools.invalid_filename_s_cannot_be_a_path=§c无效的文件名“%s”！不能是路径！
+msg.rftools.cannot_write_to_file_s=§c无法写入文件“%s”！
+msg.rftools.saved_shape_to_file_s=§a已把形状保存到文件“%s”
+msg.rftools.to_load_a_file_into_this_card_you_need_a=§c要把文件加载到这张卡中，你需要一张已链接的“扫描”类型卡片！
+msg.rftools.this_card_is_not_linked_to_scan_data=§c这张卡片未链接到扫描数据！
+msg.rftools.this_does_not_appear_to_be_a_valid=§c这似乎不是有效的塑形卡片文件！
+msg.rftools.could_not_find_block_s=§e找不到方块“%s”！
+msg.rftools.cannot_read_from_file_s=§c无法读取文件“%s”！
+msg.rftools.file_s_is_too_short=§c文件“%s”太短了！
+msg.rftools.file_s_contains_invalid_entries=§c文件“%s”包含无效的条目！
+msg.rftools.loaded_shape_from_file_s=§a已从文件“%s”加载形状
+msg.rftools.stored_inventory_contents_in_filter=§a已把物品栏的内容存入过滤器
+msg.rftools.added_s_to_the_filter=§a已把 %s 添加到过滤器！
+msg.rftools.target_s=§a目标：§f%s
+msg.rftools.scan_s_invalid=§e扫描：§f%s§c   无效
+msg.rftools.scan_s_dim_s_s_s_size_s_bytes=§e扫描：§f%s§e   尺寸：§f%s,%s,%s§e   大小：§f%s 字节
+msg.rftools.you_have_no_permission_to_use_this_block=§c你没有权限使用这个方块！
+msg.rftools.selected_block=§e已选择方块
+msg.rftools.cleared_selected_block=§e已清除所选方块
+msg.rftools.block_out_of_range_of_the_block_protector=§c方块超出了方块保护器的范围！
+msg.rftools.not_a_valid_chamber_shape=§c不是有效的空间仓形状！
+msg.rftools.chamber_is_too_small=§c空间仓太小了！
+msg.rftools.chamber_succesfully_created=§f空间仓创建成功！
+msg.rftools.select_another_endergenic_generator_as=请选择另一台末影能发电机作为目标
+msg.rftools.select_another_endergenic_generator_as_2=请选择另一台末影能发电机作为目标（当前距离 %s）
+msg.rftools.distance_is_too_far_maximum_4=距离太远（最大为 4）
+msg.rftools.destination_is_set_distance_s_ticks=已设置目标（距离 %s 刻）
+msg.rftools.channel_set_to_s=§e频道已设为 %s！
+msg.rftools.block_s_s_s=方块：%s（%s）：%s
+msg.rftools.this_block_has_no_owner=§c这个方块没有所有者！
+msg.rftools.cleared_owner=已清除所有者！
+msg.rftools.you_cannot_clear_ownership_of_a_block_you=§c你不能清除不属于你的方块的所有权！
+msg.rftools.onwership_is_not_supported_on_this_block=§c这个方块不支持所有权！
+msg.rftools.this_security_card_is_not_setup_correctly=§c这张安全卡设置不正确！
+msg.rftools.copied_security_channel_from_block_to_card=§c已把方块上的安全频道复制到卡上！
+msg.rftools.you_cannot_change_security_settings_of_a=§c你不能更改不属于你的方块的安全设置！
+msg.rftools.security_is_not_supported_on_this_block=§c这个方块不支持安全设置！
+msg.rftools.security_settings_cleared_from_block=已清除方块上的安全设置！
+msg.rftools.security_settings_applied_on_block=已把安全设置应用到方块上！
+msg.rftools.shield_is_not_composed_nothing_happens=§e护盾尚未成形，什么也没有发生！
+msg.rftools.this_template_is_too_far_to_connect_to_the=§e这个护盾支架离护盾太远，无法连接！
+msg.rftools.you_cannot_add_template_blocks_to_a_shaped=§e不能给塑形护盾（使用了塑形卡片）添加护盾支架！
+msg.rftools.the_selected_shield_can_t_do_anything_with=§e所选的护盾无法对这个方块做任何事！
+msg.rftools.select_a_spawner_as_destination=请选择一个刷怪箱作为目标
+msg.rftools.destination_cleared=已清除目标！
+msg.rftools.destination_distance_is_too_far=目标距离太远！
+msg.rftools.destination_set=已设置目标！
+msg.rftools.the_inventory_is_now_highlighted=该物品栏已高亮显示
+msg.rftools.receiver_is_too_far_to_hilight=接收器太远，无法高亮显示！
+msg.rftools.the_receiver_is_now_highlighted=该接收器已高亮显示
+msg.rftools.the_destination_vanished_aborting=目的地消失了！已中止。
+msg.rftools.missing_destination=缺少目的地！
+msg.rftools.power_failure_during_transit=传送途中电力故障！
+msg.rftools.teleportation_was_interrupted=传送被中断了！
+msg.rftools.not_enough_power_to_start_the_teleport=电力不足，无法开始传送！
+msg.rftools.start_teleportation=开始传送……
+msg.rftools.something_is_wrong_with_the_destination=目的地出了点问题！
+msg.rftools.enabled_dial_once_mode=已启用“单次拨号”模式
+msg.rftools.disabled_dial_once_mode=已禁用“单次拨号”模式
+msg.rftools.you_have_no_access_to_this_matter=§c你无权访问这个物质传输器！
+msg.rftools.you_have_no_access_to_the_matter_receiver=§c你无权访问这个物质接收器！
+msg.rftools.receiver_set=§e已设置接收器！
+msg.rftools.transmitter_set=§e已设置传输器！
+msg.rftools.you_have_no_access_to_this_matter_receiver=§c你无权访问这个物质接收器！
+msg.rftools.whoosh=嗖！
+msg.rftools.something_went_wrong_with_the_destination=目的地出了点问题！
+msg.rftools.the_matter_receiver_has_run_out_of_power=物质接收器的电力耗尽了！
+msg.rftools.the_matter_receiver_is_getting_very_low_on=物质接收器的电力非常低了！
+msg.rftools.the_matter_receiver_is_getting_low_on_power=物质接收器的电力偏低！
+msg.rftools.teleportation_in_the_same_dimension_is_not=不允许在同一维度内传送！
+msg.rftools.teleportation_to_that_dimension_is_not=不允许传送到那个维度！
+msg.rftools.teleportation_from_this_dimension_is_not=不允许从这个维度传送出去！
+msg.rftools.this_remote_storage_module_is_not_linked=§e这个远程存储模块未链接！
+msg.rftools.mob_s=§9生物：%s
+msg.rftools.essence_level_s=§9精华等级：%s%%
+msg.rftools.now_select_the_first_corner=§a现在选择第一个角
+msg.rftools.you_can_only_do_this_on_a_builder=§c只能对建造机这样做！
+msg.rftools.the_builder_is_in_another_dimension=§c建造机在另一个维度！
+msg.rftools.cleared_area_selection_mode=§c已退出区域选择模式！
+msg.rftools.now_select_the_second_corner=§a现在选择第二个角
+msg.rftools.new_settings_copied_to_the_shape_card=§a新设置已复制到塑形卡片！
+msg.rftools.card_is_set_to_channel_s=卡片已设为频道“%s”
+msg.rftools.card_is_not_linked=§e卡片未链接！
+msg.rftools.maximized_infusion_level=已把注入等级设为最大！
+msg.rftools.cleared_infusion_level=已清除注入等级！
+msg.rftools.this_block_doesn_t_have_the_right_tile=这个方块没有合适的方块实体！
+msg.rftools.this_block_is_not_infusable=这个方块不能注入！
+msg.rftools.the_block_is_now_highlighted=该方块已高亮显示
+msg.rftools.counter_module_is_set_to_block_s=计数器模块已设为方块“%s”
+msg.rftools.counter_module_is_cleared=已清除计数器模块的设置
+msg.rftools.storage_module_is_set_to_block_s=存储模块已设为方块“%s”
+msg.rftools.storage_module_is_cleared=已清除存储模块的设置
+msg.rftools.elevator_module_is_set_to_block_s=电梯模块已设为方块“%s”
+msg.rftools.elevator_module_is_cleared=已清除电梯模块的设置
+msg.rftools.energy_module_is_set_to_block_s=能量模块已设为方块“%s”
+msg.rftools.energy_module_is_cleared=已清除能量模块的设置
+msg.rftools.fluid_module_is_set_to_block_s=流体模块已设为方块“%s”
+msg.rftools.fluid_module_is_cleared=已清除流体模块的设置
+msg.rftools.this_is_not_a_valid_inventory=§c这不是有效的物品栏！
+msg.rftools.inventory_module_is_set_to_block_s=存储模块已设为方块“%s”
+msg.rftools.inventory_module_is_cleared=已清除存储模块的设置
+msg.rftools.machine_information_module_is_set_to_block_s=机器信息模块已设为方块“%s”
+msg.rftools.machine_information_module_is_cleared=已清除机器信息模块的设置
+msg.rftools.redstone_module_is_set_to_s=红石模块已设为 %s
+msg.rftools.redstone_module_is_set_to_channel_s=红石模块已设为频道“%s”
+msg.rftools.redstone_module_is_cleared=已清除红石模块的设置
+msg.rftools.smart_wrench_is_now_in_s_mode=§e智能扳手现在处于%s模式。
+msg.rftools.the_selected_block_is_in_another_dimension=§c所选方块在另一个维度！
+msg.rftools.place_this_module_in_a_storage_module=§e把这个模块放进手持式存储模块来访问内容
+msg.rftools.this_tablet_contains_no_storage_module=§e这个手持式存储模块里没有存储模块！
+msg.rftools.not_enough_energy_to_open_the_contents=§e能量不足，无法打开内容！
+msg.rftools.remote_storage_it_not_available_out_of=§e远程存储器不可用（没电或超出范围）！
+msg.rftools.receiver_s_was_already_added_to_the_charged=§e接收器 %s 已经添加到充能传送器了。
+msg.rftools.receiver_s_is_added_to_the_charged_porter=接收器 %s 已添加到充能传送器。
+msg.rftools.charged_porter_has_no_free_targets=§e充能传送器没有空闲的目标位了！
+msg.rftools.something_went_wrong_the_target_has=§c出错了！目标已经消失！
+msg.rftools.the_charged_porter_has_no_target=§c充能传送器没有目标。
+msg.rftools.already_teleporting=§c正在传送中！
+msg.rftools.not_enough_energy_to_start_the_teleportation=§c能量不足，无法开始传送！
+msg.rftools.start_teleportation_2=§e开始传送！
+msg.rftools.you_have_no_access_to_target_this_receiver=§c你无权把这个接收器设为目标！
+msg.rftools.charged_porter_target_is_set_to_s=充能传送器的目标已设为 %s。
+msg.rftools.charged_porter_is_cleared=已清除充能传送器的设置。
+msg.rftools.not_enough_power_to_move_the_elevator_platform=电力不足，无法移动电梯平台！
+msg.rftools.the_block_in_front_of_the_elevator_platform_could_not=电梯平台前方的方块无法移动！

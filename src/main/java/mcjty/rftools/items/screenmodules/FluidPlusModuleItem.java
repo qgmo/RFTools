@@ -26,6 +26,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class FluidPlusModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -68,11 +72,11 @@ public class FluidPlusModuleItem extends GenericRFToolsItem implements IModulePr
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.FLUIDPLUS_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.FLUIDPLUS_RFPERTICK.get()));
         boolean hasTarget = false;
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Label: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.label_s", tagCompound.getString("text")));
             if (tagCompound.hasKey("monitorx")) {
                 int dim;
                 if (tagCompound.hasKey("monitordim")) {
@@ -85,14 +89,13 @@ public class FluidPlusModuleItem extends GenericRFToolsItem implements IModulePr
                 int monitory = tagCompound.getInteger("monitory");
                 int monitorz = tagCompound.getInteger("monitorz");
                 String monitorname = tagCompound.getString("monitorname");
-                list.add(TextFormatting.YELLOW + "Monitoring: " + monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")");
-                list.add(TextFormatting.YELLOW + "Dimension: " + dim);
+                list.add(I18n.format("tooltip.rftools.monitoring_s_at_s_s_s", monitorname, monitorx, monitory, monitorz));
+                list.add(I18n.format("tooltip.rftools.dimension_s_2", dim));
                 hasTarget = true;
             }
         }
         if (!hasTarget) {
-            list.add(TextFormatting.YELLOW + "Sneak right-click on a tank to set the");
-            list.add(TextFormatting.YELLOW + "target for this fluid module");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_tank_to_set_the"));
         }
     }
 
@@ -117,7 +120,7 @@ public class FluidPlusModuleItem extends GenericRFToolsItem implements IModulePr
             }
             tagCompound.setString("monitorname", name);
             if (world.isRemote) {
-                Logging.message(player, "Fluid module is set to block '" + name + "'");
+                Msg.message(player, "msg.rftools.fluid_module_is_set_to_block_s", name);
             }
         } else {
             tagCompound.removeTag("monitordim");
@@ -126,7 +129,7 @@ public class FluidPlusModuleItem extends GenericRFToolsItem implements IModulePr
             tagCompound.removeTag("monitorz");
             tagCompound.removeTag("monitorname");
             if (world.isRemote) {
-                Logging.message(player, "Fluid module is cleared");
+                Msg.message(player, "msg.rftools.fluid_module_is_cleared");
             }
         }
         stack.setTagCompound(tagCompound);

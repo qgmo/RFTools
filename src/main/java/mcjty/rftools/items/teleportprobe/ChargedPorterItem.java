@@ -29,6 +29,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem, INBTPreservingIngredient {
 
@@ -88,7 +92,7 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
                 int target = tagCompound.getInteger("target");
                 GlobalCoordinate coordinate = destinations.getCoordinateForId(target);
                 if (coordinate == null) {
-                    Logging.message(player, TextFormatting.RED + "Something went wrong! The target has disappeared!");
+                    Msg.message(player, "msg.rftools.something_went_wrong_the_target_has");
                     TeleportationTools.applyEffectForSeverity(player, 3, false);
                     return;
                 }
@@ -168,14 +172,14 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
         NBTTagCompound tagCompound = stack.getTagCompound();
         if (tagCompound == null || (!tagCompound.hasKey("target")) || tagCompound.getInteger("target") == -1) {
             if (world.isRemote) {
-                Logging.message(player, TextFormatting.RED + "The charged porter has no target.");
+                Msg.message(player, "msg.rftools.the_charged_porter_has_no_target");
             }
             return;
         }
 
         if (!world.isRemote) {
             if (tagCompound.hasKey("tpTimer")) {
-                Logging.message(player, TextFormatting.RED + "Already teleporting!");
+                Msg.message(player, "msg.rftools.already_teleporting");
                 return;
             }
 
@@ -193,7 +197,7 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
             TeleportDestinations destinations = TeleportDestinations.getDestinations(world);
             GlobalCoordinate coordinate = destinations.getCoordinateForId(target);
             if (coordinate == null) {
-                Logging.message(player, TextFormatting.RED + "Something went wrong! The target has disappeared!");
+                Msg.message(player, "msg.rftools.something_went_wrong_the_target_has");
                 TeleportationTools.applyEffectForSeverity(player, 3, false);
                 return;
             }
@@ -208,7 +212,7 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
             cost *= 1.5f;
             long energy = getEnergyStoredL(stack);
             if (cost > energy) {
-                Logging.message(player, TextFormatting.RED + "Not enough energy to start the teleportation!");
+                Msg.message(player, "msg.rftools.not_enough_energy_to_start_the_teleportation");
                 return;
             }
             extractEnergyNoMax(stack, cost, false);
@@ -219,7 +223,7 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
 //                porterProperties.startTeleport(target, ticks);
 //            }
             tagCompound.setInteger("tpTimer", ticks);
-            Logging.message(player, TextFormatting.YELLOW + "Start teleportation!");
+            Msg.message(player, "msg.rftools.start_teleportation_2");
         }
     }
 
@@ -233,7 +237,7 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
         if (te instanceof MatterReceiverTileEntity) {
             MatterReceiverTileEntity matterReceiverTileEntity = (MatterReceiverTileEntity) te;
             if (!matterReceiverTileEntity.checkAccess(player.getName())) {
-                Logging.message(player, TextFormatting.RED + "You have no access to target this receiver!");
+                Msg.message(player, "msg.rftools.you_have_no_access_to_target_this_receiver");
                 return;
             }
             id = matterReceiverTileEntity.getId();
@@ -249,14 +253,14 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
 
     protected void selectOnReceiver(EntityPlayer player, World world, NBTTagCompound tagCompound, int id) {
         if (world.isRemote) {
-            Logging.message(player, "Charged porter target is set to " + id + ".");
+            Msg.message(player, "msg.rftools.charged_porter_target_is_set_to_s", id);
         }
         tagCompound.setInteger("target", id);
     }
 
     protected void selectOnThinAir(EntityPlayer player, World world, NBTTagCompound tagCompound, ItemStack stack) {
         if (world.isRemote) {
-            Logging.message(player, "Charged porter is cleared.");
+            Msg.message(player, "msg.rftools.charged_porter_is_cleared");
         }
         tagCompound.removeTag("target");
     }
@@ -266,20 +270,17 @@ public class ChargedPorterItem extends GenericRFToolsItem implements IEnergyItem
         super.addInformation(itemStack, player, list, whatIsThis);
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.BLUE + "Energy: " + tagCompound.getInteger("Energy") + " RF");
+            list.add(I18n.format("tooltip.rftools.energy_s_rf", tagCompound.getInteger("Energy")));
             if (tagCompound.hasKey("target")) {
-                list.add(TextFormatting.BLUE + "Target: " + tagCompound.getInteger("target"));
+                list.add(I18n.format("tooltip.rftools.target_s", tagCompound.getInteger("target")));
             } else {
-                list.add(TextFormatting.RED + "No target set! Sneak-Right click on receiver to set.");
+                list.add(I18n.format("tooltip.rftools.no_target_set_sneak_right_click_on_receiver"));
             }
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add("This RF/charged item allows you to teleport to a");
-            list.add("previously set matter receiver. Sneak-right click");
-            list.add("on a receiver to set the destination.");
-            list.add("Right click to perform the teleport.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_rf_charged_item_allows_you_to_teleport"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

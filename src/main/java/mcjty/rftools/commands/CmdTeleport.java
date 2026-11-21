@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CmdTeleport extends AbstractRfToolsCommand {
     @Override
@@ -30,7 +31,7 @@ public class CmdTeleport extends AbstractRfToolsCommand {
     @Override
     public void execute(ICommandSender sender, String[] args) {
         if (args.length < 5) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Several parameters are missing!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.several_parameters_are_missing");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -38,7 +39,7 @@ public class CmdTeleport extends AbstractRfToolsCommand {
             }
             return;
         } else if (args.length > 5) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Too many parameters!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.too_many_parameters");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

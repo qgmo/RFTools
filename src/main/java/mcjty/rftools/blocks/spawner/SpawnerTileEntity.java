@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
+import mcjty.rftools.varia.Msg;
 
 //import net.minecraft.entity.monster.SkeletonType;
 
@@ -340,11 +341,11 @@ public class SpawnerTileEntity extends GenericEnergyReceiverTileEntity implement
 
         double d = new Vec3d(coord).distanceTo(new Vec3d(getPos()));
         if (d > SpawnerConfiguration.maxBeamDistance) {
-            Logging.message(player, "Destination distance is too far!");
+            Msg.message(player, "msg.rftools.destination_distance_is_too_far");
         } else if (tileEntity instanceof MatterBeamerTileEntity) {
             MatterBeamerTileEntity matterBeamerTileEntity = (MatterBeamerTileEntity) tileEntity;
             matterBeamerTileEntity.setDestination(getPos());
-            Logging.message(player, "Destination set!");
+            Msg.message(player, "msg.rftools.destination_set");
         }
 
         RFTools.instance.clientInfo.setSelectedTE(null);

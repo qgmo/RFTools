@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static mcjty.rftools.items.storage.StorageModuleTabletItem.META_FOR_SCANNER;
+import net.minecraft.util.text.TextComponentTranslation;
+import mcjty.rftools.varia.Msg;
 
 public class FindBlockAction implements IWheelAction {
 
@@ -75,19 +77,19 @@ public class FindBlockAction implements IWheelAction {
                 }
             }
             if (storage.isEmpty()) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "No storage tablet in inventory!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.no_storage_tablet_in_inventory"), false);
                 return;
             }
 
             NBTTagCompound tagCompound = storage.getTagCompound();
             if (tagCompound == null || !tagCompound.hasKey("childDamage")) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "No storage module in tablet!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.no_storage_module_in_tablet"), false);
                 return;
             }
 
             int firstEmptyStack = player.inventory.getFirstEmptyStack();
             if (firstEmptyStack < 0) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "No room in inventory for block!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.no_room_in_inventory_for_block"), false);
                 return;
             }
 
@@ -103,7 +105,7 @@ public class FindBlockAction implements IWheelAction {
                     BlockPos mpos = new BlockPos(monitorx, monitory, monitorz);
                     WorldServer w = DimensionManager.getWorld(monitordim);
                     if (w == null || !WorldTools.chunkLoaded(w, mpos)) {
-                        player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Storage scanner is out of range!"), false);
+                        player.sendStatusMessage(new TextComponentTranslation("msg.rftools.storage_scanner_is_out_of_range"), false);
                     } else {
                         TileEntity te = w.getTileEntity(mpos);
                         if (te instanceof StorageScannerTileEntity) {
@@ -115,11 +117,11 @@ public class FindBlockAction implements IWheelAction {
                         }
                     }
                 } else {
-                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Storage module is not linked to a storage scanner!"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("msg.rftools.storage_module_is_not_linked_to_a_storage"), false);
                 }
             } else if (moduleDamage == StorageModuleItem.STORAGE_REMOTE) {
                 if (!tagCompound.hasKey("id")) {
-                    Logging.message(player, TextFormatting.YELLOW + "This remote storage module is not linked!");
+                    Msg.message(player, "msg.rftools.this_remote_storage_module_is_not_linked");
                 } else {
                     RemoteStorageItemInventory storageInv = new RemoteStorageItemInventory(player, storage);
                     for (int i = 0 ; i < storageInv.getSizeInventory() ; i++) {

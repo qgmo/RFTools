@@ -13,6 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class BlindnessEModuleItem extends GenericRFToolsItem implements EnvModuleProvider {
 
@@ -25,11 +28,10 @@ public class BlindnessEModuleItem extends GenericRFToolsItem implements EnvModul
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add("This module gives blindness when");
-        list.add("used in the environmental controller.");
-        list.add(TextFormatting.GREEN + "Uses " + EnvironmentalConfiguration.BLINDNESS_RFPERTICK.get() + " RF/tick (per cubic block)");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_gives_blindness_when_used_in"));
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick_per_cubic_block", EnvironmentalConfiguration.BLINDNESS_RFPERTICK.get()));
         if (!EnvironmentalConfiguration.blindnessAvailable.get()) {
-            list.add(TextFormatting.RED + "This module only works on mobs (see config)");
+            list.add(I18n.format("tooltip.rftools.this_module_only_works_on_mobs_see_config"));
         }
     }
 

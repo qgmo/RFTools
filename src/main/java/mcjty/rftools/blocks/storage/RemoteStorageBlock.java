@@ -15,6 +15,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class RemoteStorageBlock extends GenericRFToolsBlock<RemoteStorageTileEntity, RemoteStorageContainer> implements Infusable {
 
@@ -39,11 +42,10 @@ public class RemoteStorageBlock extends GenericRFToolsBlock<RemoteStorageTileEnt
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Make storage modules remotely available.");
-            list.add(TextFormatting.WHITE + "Requires energy to do this.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.make_storage_modules_remotely_available"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_reduced_power_consumption_3"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 }

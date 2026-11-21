@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 public class ModifierItem extends GenericRFToolsItem {
 
@@ -189,10 +191,9 @@ public class ModifierItem extends GenericRFToolsItem {
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This module can be used by the area scanner to");
-            list.add(TextFormatting.WHITE + "modify the scanned output");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_can_be_used_by_the_area_scanner"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

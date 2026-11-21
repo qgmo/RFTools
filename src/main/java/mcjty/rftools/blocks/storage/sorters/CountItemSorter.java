@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Comparator;
+import net.minecraft.client.resources.I18n;
 
 public class CountItemSorter implements ItemSorter {
     @Override
@@ -40,7 +41,6 @@ public class CountItemSorter implements ItemSorter {
 
     @Override
     public String getGroupName(Pair<ItemStack, Integer> object) {
-        return "Count " +
-                object.getKey().getCount();
+        return I18n.format("gui.rftools.count_s", object.getKey().getCount());
     }
 }

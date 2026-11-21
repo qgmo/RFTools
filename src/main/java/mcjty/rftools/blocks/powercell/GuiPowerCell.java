@@ -14,6 +14,8 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.Rectangle;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiPowerCell extends GenericGuiContainer<PowerCellTileEntity> {
     public static final int POWERCELL_WIDTH = 180;
@@ -42,24 +44,24 @@ public class GuiPowerCell extends GenericGuiContainer<PowerCellTileEntity> {
 
         Button allNone = new Button(mc, this)
                 .setName("allnone")
-                .setText("None").setTooltips("Set all sides to 'none'")
+                .setText(I18n.format("gui.rftools.none")).setTooltips(GuiLoc.lines("gui.rftools.set_all_sides_to_none"))
                 .setLayoutHint(140, 10, 32, 15);
         Button allInput = new Button(mc, this)
                 .setName("allinput")
-                .setText("In").setTooltips("Set all sides to", "accept energy")
+                .setText(I18n.format("gui.rftools.in")).setTooltips(GuiLoc.lines("gui.rftools.set_all_sides_to_accept_energy"))
                 .setLayoutHint(140, 27, 32, 15);
         Button allOutput = new Button(mc, this)
                 .setName("alloutput")
-                .setText("Out").setTooltips("Set all sides to", "send energy")
+                .setText(I18n.format("gui.rftools.out")).setTooltips(GuiLoc.lines("gui.rftools.set_all_sides_to_send_energy"))
                 .setLayoutHint(140, 44, 32, 15);
 
         stats = new Button(mc, this)
                 .setName("clearstats")
-                .setText("Stats").setTooltips("Power statistics. Press to clear:")
+                .setText(I18n.format("gui.rftools.stats")).setTooltips(GuiLoc.lines("gui.rftools.power_statistics_press_to_clear"))
                 .setLayoutHint(100, 10, 32, 15);
 
         Label label = new Label(mc, this);
-        label.setText("Link:").setTooltips("Link a powercard to card", "on the left").setLayoutHint(26, 30, 40, 18);
+        label.setText(I18n.format("gui.rftools.link")).setTooltips(GuiLoc.lines("gui.rftools.link_a_powercard_to_card_on_the_left")).setLayoutHint(26, 30, 40, 18);
 
         Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout())
                 .addChildren(energyBar, allNone, allInput, allOutput, label, stats);
@@ -89,7 +91,7 @@ public class GuiPowerCell extends GenericGuiContainer<PowerCellTileEntity> {
 
         requestRF();
 
-        stats.setTooltips("Power statistics. Press to clear:", "Inserted: " + PowerCellTileEntity.tooltipInserted, "Extracted: " + PowerCellTileEntity.tooltipExtracted);
+        stats.setTooltips(GuiLoc.lines("gui.rftools.power_statistics_press_to_clear_inserted_s", PowerCellTileEntity.tooltipInserted, PowerCellTileEntity.tooltipExtracted));
 
         int maxValue = (PowerCellTileEntity.tooltipBlocks - PowerCellTileEntity.tooltipAdvancedBlocks - PowerCellTileEntity.tooltipSimpleBlocks) * PowerCellConfiguration.rfPerNormalCell.get();
         maxValue += PowerCellTileEntity.tooltipAdvancedBlocks * PowerCellConfiguration.rfPerNormalCell.get() * PowerCellConfiguration.advancedFactor.get();

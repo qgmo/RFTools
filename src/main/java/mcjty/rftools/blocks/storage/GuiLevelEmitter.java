@@ -13,6 +13,9 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 
 public class GuiLevelEmitter extends GenericGuiContainer<LevelEmitterTileEntity> {
@@ -40,36 +43,36 @@ public class GuiLevelEmitter extends GenericGuiContainer<LevelEmitterTileEntity>
 
         Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout());
 
-        mcjty.lib.gui.widgets.TextField amountField = new mcjty.lib.gui.widgets.TextField(mc, this).setTooltips("Set the amount of items in slot")
+        mcjty.lib.gui.widgets.TextField amountField = new mcjty.lib.gui.widgets.TextField(mc, this).setTooltips(GuiLoc.lines("gui.rftools.common.set_the_amount_of_items_in_slot"))
                 .setName("amount")
                 .setLayoutHint(60, 3, 80, 14);
 
-        ChoiceLabel starredLabel = new ChoiceLabel(mc, this)
+        ChoiceLabel starredLabel = new LocChoiceLabel(mc, this)
                 .setName("starred")
                 .addChoices(NOTSTARRED, STARRED)
-                .setChoiceTooltip(NOTSTARRED, "All inventories are considered")
-                .setChoiceTooltip(STARRED, "Only routable inventories are considered");
+                .setChoiceTooltip(NOTSTARRED, GuiLoc.lines("gui.rftools.all_inventories_are_considered"))
+                .setChoiceTooltip(STARRED, GuiLoc.lines("gui.rftools.only_routable_inventories_are_considered"));
         starredLabel.setLayoutHint(60, 19, 80, 14);
         starredLabel.setChoice(tileEntity.isStarred() ? STARRED : NOTSTARRED);
 
-        ChoiceLabel oreDictLabel = new ChoiceLabel(mc, this)
+        ChoiceLabel oreDictLabel = new LocChoiceLabel(mc, this)
                 .setName("oredict")
                 .addChoices(OREDICT_IGNORE, OREDICT_USE)
-                .setChoiceTooltip(OREDICT_IGNORE, "Ingore ore dictionary")
-                .setChoiceTooltip(OREDICT_USE, "Use ore dictionary matching");
+                .setChoiceTooltip(OREDICT_IGNORE, GuiLoc.lines("gui.rftools.common.ingore_ore_dictionary"))
+                .setChoiceTooltip(OREDICT_USE, GuiLoc.lines("gui.rftools.common.use_ore_dictionary_matching"));
         oreDictLabel.setLayoutHint(60, 35, 80, 14);
         oreDictLabel.setChoice(tileEntity.isOreDict() ? OREDICT_USE : OREDICT_IGNORE);
 
         toplevel
-                .addChild(new Label(mc, this).setText("Amount:")
+                .addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.amount"))
                         .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
                         .setLayoutHint(10, 3, 50, 14))
                 .addChild(amountField)
-                .addChild(new Label(mc, this).setText("Routable:")
+                .addChild(new Label(mc, this).setText(I18n.format("gui.rftools.routable"))
                         .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
                         .setLayoutHint(10, 19, 50, 14))
                 .addChild(starredLabel)
-                .addChild(new Label(mc, this).setText("Oredict:")
+                .addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.oredict"))
                         .setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
                         .setLayoutHint(10, 35, 50, 14))
                 .addChild(oreDictLabel);

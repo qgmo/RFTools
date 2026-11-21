@@ -14,6 +14,7 @@ import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 
 import java.awt.Rectangle;
+import net.minecraft.client.resources.I18n;
 
 public class GuiAdvancedPorter extends GuiItemScreen {
 
@@ -62,13 +63,13 @@ public class GuiAdvancedPorter extends GuiItemScreen {
     private Panel createPanel(final TextField destination, final int i) {
         return new Panel(mc, this).setLayout(new HorizontalLayout())
                     .addChild(destination)
-                    .addChild(new Button(mc, this).setText("Set").setDesiredWidth(30).setDesiredHeight(16).addButtonEvent(parent -> {
+                    .addChild(new Button(mc, this).setText(I18n.format("gui.rftools.common.set")).setDesiredWidth(30).setDesiredHeight(16).addButtonEvent(parent -> {
                         if (targets[i] != -1) {
                             RFToolsMessages.sendToServer(CommandHandler.CMD_SET_TARGET, TypedMap.builder().put(CommandHandler.PARAM_TARGET, targets[i]));
                             target = targets[i];
                         }
                     }))
-                    .addChild(new Button(mc, this).setText("Clear").setDesiredWidth(40).setDesiredHeight(16).addButtonEvent(parent -> {
+                    .addChild(new Button(mc, this).setText(I18n.format("gui.rftools.common.clear")).setDesiredWidth(40).setDesiredHeight(16).addButtonEvent(parent -> {
                         if (targets[i] != -1 && targets[i] == target) {
                             target = -1;
                         }
@@ -84,7 +85,7 @@ public class GuiAdvancedPorter extends GuiItemScreen {
     private void setTarget(int i) {
         panels[i].setFilledBackground(-1);
         if (targets[i] == -1) {
-            destinations[i].setText("No target set");
+            destinations[i].setText(I18n.format("gui.rftools.no_target_set"));
         } else {
             destinations[i].setText(targets[i] + ": " + names[i]);
             if (targets[i] == target) {

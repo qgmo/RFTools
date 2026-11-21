@@ -26,6 +26,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class RedstoneModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -75,24 +79,21 @@ public class RedstoneModuleItem extends GenericRFToolsItem implements IModulePro
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.REDSTONE_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.REDSTONE_RFPERTICK.get()));
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Label: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.label_s", tagCompound.getString("text")));
             int channel = tagCompound.getInteger("channel");
             if (channel != -1) {
-                list.add(TextFormatting.YELLOW + "Channel: " + channel);
+                list.add(I18n.format("tooltip.rftools.channel_s_2", channel));
             } else if (tagCompound.hasKey("monitorx")) {
                 int mx = tagCompound.getInteger("monitorx");
                 int my = tagCompound.getInteger("monitory");
                 int mz = tagCompound.getInteger("monitorz");
-                list.add(TextFormatting.YELLOW + "Block at: " + mx + "," + my + "," + mz);
+                list.add(I18n.format("tooltip.rftools.block_at_s_s_s", mx, my, mz));
             }
         }
-        list.add(TextFormatting.WHITE + "Sneak right-click on a redstone transmitter or");
-        list.add(TextFormatting.WHITE + "receiver to set the channel for this module.");
-        list.add(TextFormatting.WHITE + "Or else sneak right-click on the side of any");
-        list.add(TextFormatting.WHITE + "block to monitor the redstone output on that side");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_redstone_transmitter"));
     }
 
     @Override
@@ -119,7 +120,7 @@ public class RedstoneModuleItem extends GenericRFToolsItem implements IModulePro
             tagCompound.setInteger("monitory", pos.getY());
             tagCompound.setInteger("monitorz", pos.getZ());
             tagCompound.setInteger("monitorside", facing.ordinal());
-            Logging.message(player, "Redstone module is set to " + pos);
+            Msg.message(player, "msg.rftools.redstone_module_is_set_to_s", pos);
 
             return EnumActionResult.SUCCESS;
         }
@@ -132,10 +133,10 @@ public class RedstoneModuleItem extends GenericRFToolsItem implements IModulePro
 
         if (channel != -1) {
             tagCompound.setInteger("channel", channel);
-            Logging.message(player, "Redstone module is set to channel '" + channel + "'");
+            Msg.message(player, "msg.rftools.redstone_module_is_set_to_channel_s", channel);
         } else {
             tagCompound.removeTag("channel");
-            Logging.message(player, "Redstone module is cleared");
+            Msg.message(player, "msg.rftools.redstone_module_is_cleared");
         }
         return EnumActionResult.SUCCESS;
     }

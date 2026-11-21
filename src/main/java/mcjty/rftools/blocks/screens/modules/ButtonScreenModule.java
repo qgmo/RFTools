@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ButtonScreenModule implements IScreenModule<IModuleDataBoolean> {
     private String line = "";
@@ -63,7 +64,7 @@ public class ButtonScreenModule implements IScreenModule<IModuleDataBoolean> {
                 }
             } else {
                 if (player != null) {
-                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Module is not linked to redstone channel!"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("msg.rftools.module_is_not_linked_to_redstone_channel"), false);
                 }
             }
         }

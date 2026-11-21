@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
+import net.minecraft.client.resources.I18n;
 
 public class GuiDevelopersDelight extends GuiScreen {
 
@@ -105,8 +108,8 @@ public class GuiDevelopersDelight extends GuiScreen {
         ToggleButton tab1Button = createToggleButton("Block");
         ToggleButton tab2Button = createToggleButton("TE");
         ToggleButton tab3Button = createToggleButton("NBT");
-        clientServerMode = new ChoiceLabel(mc, this).setDesiredWidth(60).addChoices("Server", "Client").setChoice("Server").addChoiceEvent((parent, newChoice) -> requestNewLists()).setDesiredHeight(16).setTooltips("Switch between client", "and server information");
-        metaData = new TextField(mc, this).setDesiredHeight(14).setTooltips("Metadata for this block");
+        clientServerMode = new LocChoiceLabel(mc, this).setDesiredWidth(60).addChoices("Server", "Client").setChoice("Server").addChoiceEvent((parent, newChoice) -> requestNewLists()).setDesiredHeight(16).setTooltips(GuiLoc.lines("gui.rftools.switch_between_client_and_server_information"));
+        metaData = new TextField(mc, this).setDesiredHeight(14).setTooltips(GuiLoc.lines("gui.rftools.metadata_for_this_block"));
 
         Panel buttonPanel = new Panel(mc, this).setLayout(new VerticalLayout()).setDesiredWidth(62)
                 .addChildren(tab1Button, tab2Button, tab3Button, new Label(mc, this).setDynamic(true), clientServerMode, metaData, new Label(mc, this).setDynamic(true));
@@ -185,12 +188,12 @@ public class GuiDevelopersDelight extends GuiScreen {
         IBlockState state = Minecraft.getMinecraft().world.getBlockState(selected);
         Block block = state.getBlock();
 
-        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText("Loc Name: " + block.getLocalizedName()).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
-        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText("Unloc Name: " + block.getUnlocalizedName()).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
-        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText("Block Name: " + Block.REGISTRY.getNameForObject(block)).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(I18n.format("gui.rftools.loc_name_s", block.getLocalizedName())).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(I18n.format("gui.rftools.unloc_name_s", block.getUnlocalizedName())).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+        blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(I18n.format("gui.rftools.block_name_s", Block.REGISTRY.getNameForObject(block))).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
 
         for (String c : blockClasses) {
-            blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText("Class: " + c).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+            blockClassList.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(I18n.format("gui.rftools.class_s", c)).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
         }
 
         teClassList.removeChildren();

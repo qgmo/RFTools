@@ -26,6 +26,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class ElevatorButtonModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -68,7 +72,7 @@ public class ElevatorButtonModuleItem extends GenericRFToolsItem implements IMod
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.ELEVATOR_BUTTON_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.ELEVATOR_BUTTON_RFPERTICK.get()));
         boolean hasTarget = false;
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
@@ -77,13 +81,12 @@ public class ElevatorButtonModuleItem extends GenericRFToolsItem implements IMod
                 int monitory = tagCompound.getInteger("elevatory");
                 int monitorz = tagCompound.getInteger("elevatorz");
                 String monitorname = tagCompound.getString("elevatorname");
-                list.add(TextFormatting.YELLOW + "Elevator: " + monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")");
+                list.add(I18n.format("tooltip.rftools.elevator_s_at_s_s_s", monitorname, monitorx, monitory, monitorz));
                 hasTarget = true;
             }
         }
         if (!hasTarget) {
-            list.add(TextFormatting.YELLOW + "Sneak right-click on an elevator block to set the");
-            list.add(TextFormatting.YELLOW + "target for this module");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_an_elevator_block_to"));
         }
     }
 
@@ -108,7 +111,7 @@ public class ElevatorButtonModuleItem extends GenericRFToolsItem implements IMod
             }
             tagCompound.setString("elevatorname", name);
             if (world.isRemote) {
-                Logging.message(player, "Elevator module is set to block '" + name + "'");
+                Msg.message(player, "msg.rftools.elevator_module_is_set_to_block_s", name);
             }
         } else {
             tagCompound.removeTag("elevatordim");
@@ -117,7 +120,7 @@ public class ElevatorButtonModuleItem extends GenericRFToolsItem implements IMod
             tagCompound.removeTag("elevatorz");
             tagCompound.removeTag("elevatorname");
             if (world.isRemote) {
-                Logging.message(player, "Elevator module is cleared");
+                Msg.message(player, "msg.rftools.elevator_module_is_cleared");
             }
         }
         stack.setTagCompound(tagCompound);

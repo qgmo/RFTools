@@ -33,7 +33,6 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiProxy implements IGuiHandler {
 
-    public static final String SHIFT_MESSAGE = "<Press Shift>";
     /**
      * This is used to keep track of GUIs that we make
      */

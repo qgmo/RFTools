@@ -26,6 +26,7 @@ import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 
 public class GuiSpawner extends GenericGuiContainer<SpawnerTileEntity> {
@@ -93,7 +94,7 @@ public class GuiSpawner extends GenericGuiContainer<SpawnerTileEntity> {
         if (mobId != null) {
             String mobName = SyringeItem.getMobName(stack);
             name.setText(mobName);
-            rfTick.setText(SpawnerConfiguration.mobSpawnRf.get(mobId) + "RF");
+            rfTick.setText(I18n.format("gui.rftools.srf", SpawnerConfiguration.mobSpawnRf.get(mobId)));
             int i = 0;
             List<SpawnerConfiguration.MobSpawnAmount> list = SpawnerConfiguration.mobSpawnAmounts.get(mobId);
             if (list != null) {

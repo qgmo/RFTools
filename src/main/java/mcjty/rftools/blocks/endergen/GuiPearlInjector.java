@@ -7,6 +7,7 @@ import mcjty.rftools.RFTools;
 import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiPearlInjector extends GenericGuiContainer<PearlInjectorTileEntity> {
 
@@ -17,6 +18,7 @@ public class GuiPearlInjector extends GenericGuiContainer<PearlInjectorTileEntit
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/pearl_injector.gui"));
+        GuiLoc.localize(window);
         super.initGui();
     }
 }

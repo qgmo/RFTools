@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 public class TextModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -32,10 +33,10 @@ public class TextModuleItem extends GenericRFToolsItem implements IModuleProvide
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.TEXT_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.TEXT_RFPERTICK.get()));
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Text: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.text_s", tagCompound.getString("text")));
         }
     }
 

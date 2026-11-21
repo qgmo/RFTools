@@ -26,6 +26,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class MachineInformationModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -83,23 +87,22 @@ public class MachineInformationModuleItem extends GenericRFToolsItem implements 
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.MACHINEINFO_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.MACHINEINFO_RFPERTICK.get()));
         boolean hasTarget = false;
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
-            list.add(TextFormatting.YELLOW + "Label: " + tagCompound.getString("text"));
+            list.add(I18n.format("tooltip.rftools.label_s", tagCompound.getString("text")));
             if (tagCompound.hasKey("monitorx")) {
                 int monitorx = tagCompound.getInteger("monitorx");
                 int monitory = tagCompound.getInteger("monitory");
                 int monitorz = tagCompound.getInteger("monitorz");
                 String monitorname = tagCompound.getString("monitorname");
-                list.add(TextFormatting.YELLOW + "Monitoring: " + monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")");
+                list.add(I18n.format("tooltip.rftools.monitoring_s_at_s_s_s", monitorname, monitorx, monitory, monitorz));
                 hasTarget = true;
             }
         }
         if (!hasTarget) {
-            list.add(TextFormatting.YELLOW + "Sneak right-click on a supported machine");
-            list.add(TextFormatting.YELLOW + "to set the target for this module");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_supported_machine_to"));
         }
     }
 
@@ -124,7 +127,7 @@ public class MachineInformationModuleItem extends GenericRFToolsItem implements 
             }
             tagCompound.setString("monitorname", name);
             if (world.isRemote) {
-                Logging.message(player, "Machine Information module is set to block '" + name + "'");
+                Msg.message(player, "msg.rftools.machine_information_module_is_set_to_block_s", name);
             }
         } else {
             tagCompound.removeTag("monitordim");
@@ -133,7 +136,7 @@ public class MachineInformationModuleItem extends GenericRFToolsItem implements 
             tagCompound.removeTag("monitorz");
             tagCompound.removeTag("monitorname");
             if (world.isRemote) {
-                Logging.message(player, "Machine Information module is cleared");
+                Msg.message(player, "msg.rftools.machine_information_module_is_cleared");
             }
         }
         stack.setTagCompound(tagCompound);

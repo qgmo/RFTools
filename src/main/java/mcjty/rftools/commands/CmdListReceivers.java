@@ -9,6 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 import java.util.Collection;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CmdListReceivers extends AbstractRfToolsCommand {
     @Override
@@ -38,7 +39,7 @@ public class CmdListReceivers extends AbstractRfToolsCommand {
         Collection<TeleportDestinationClientInfo> validDestinations = destinations.getValidDestinations(sender.getEntityWorld(), null);
         for (TeleportDestinationClientInfo clientInfo : validDestinations) {
             int id = clientInfo.getDimension();
-            ITextComponent component = new TextComponentString("    Receiver: dimension=" + id + ", location=" + BlockPosTools.toString(clientInfo.getCoordinate()));
+            ITextComponent component = new TextComponentTranslation("msg.rftools.receiver_dimension_s_location_s", id, BlockPosTools.toString(clientInfo.getCoordinate()));
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

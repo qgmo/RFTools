@@ -15,25 +15,25 @@ window {
 
     panel('','positional') {
         bg1('rftools:textures/gui/invchecker.png')
-        label('','Slot:') {
+        label('','gui.rftools.invchecker.label.text') {
             hint(10,3,50,14)
             horizalign('ALIGN_LEFT')
         }
         textfield('slot') {
             channel('slot')
             hint(60,3,80,14)
-            tooltips('Set the slot index')
+            tooltips('gui.rftools.invchecker.slot.tip')
         }
-        label('','Amount:') {
+        label('','gui.rftools.common.amount') {
             hint(10,19,50,14)
             horizalign('ALIGN_LEFT')
         }
         textfield('amount') {
             channel('amount')
             hint(60,19,80,14)
-            tooltips('Set the amount of items in slot')
+            tooltips('gui.rftools.common.set_the_amount_of_items_in_slot')
         }
-        label('','Meta:') {
+        label('','gui.rftools.invchecker.label.text_3') {
             hint(10,35,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -42,14 +42,14 @@ window {
             hint(60,35,80,14)
             choices {
                 choice('Ignore') {
-                    tooltips('Ignore meta/damage on item')
+                    tooltips('gui.rftools.invchecker.meta.ignore.tip')
                 }
                 choice('Match') {
-                    tooltips('Meta/damage on item must match')
+                    tooltips('gui.rftools.invchecker.meta.match.tip')
                 }
             }
         }
-        label('','Oredict:') {
+        label('','gui.rftools.common.oredict') {
             hint(10,51,50,14)
             horizalign('ALIGN_LEFT')
         }
@@ -58,10 +58,10 @@ window {
             hint(60,51,80,14)
             choices {
                 choice('Ignore') {
-                    tooltips('Ingore ore dictionary')
+                    tooltips('gui.rftools.common.ingore_ore_dictionary')
                 }
                 choice('Use') {
-                    tooltips('Use ore dictionary matching')
+                    tooltips('gui.rftools.common.use_ore_dictionary_matching')
                 }
             }
         }

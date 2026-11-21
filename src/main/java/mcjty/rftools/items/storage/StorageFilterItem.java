@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Set;
 
 import static mcjty.rftools.items.storage.StorageFilterContainer.FILTER_SLOTS;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class StorageFilterItem extends GenericRFToolsItem {
 
@@ -43,30 +47,26 @@ public class StorageFilterItem extends GenericRFToolsItem {
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             String blackListMode = tagCompound.getString("blacklistMode");
-            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
+            String modeLine = I18n.format("Black".equals(blackListMode) ? "tooltip.rftools.filter_mode_blacklist" : "tooltip.rftools.filter_mode_whitelist");
             if (tagCompound.getBoolean("oredictMode")) {
-                modeLine += ", Oredict";
+                modeLine += I18n.format("tooltip.rftools.filter_oredict");
             }
             if (tagCompound.getBoolean("damageMode")) {
-                modeLine += ", Damage";
+                modeLine += I18n.format("tooltip.rftools.filter_damage");
             }
             if (tagCompound.getBoolean("nbtMode")) {
-                modeLine += ", NBT";
+                modeLine += I18n.format("tooltip.rftools.filter_nbt");
             }
             if (tagCompound.getBoolean("modMode")) {
-                modeLine += ", Mod";
+                modeLine += I18n.format("tooltip.rftools.filter_mod");
             }
-            list.add(TextFormatting.BLUE + modeLine);
+            list.add(modeLine);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This filter module is for the Modular Storage block,");
-            list.add(TextFormatting.WHITE + "the Builder or the Area Scanner.");
-            list.add(TextFormatting.WHITE + "This module can make sure the block only accepts");
-            list.add(TextFormatting.WHITE + "certain types of items");
-            list.add(TextFormatting.YELLOW + "Sneak-right click on an inventory to");
-            list.add(TextFormatting.YELLOW + "configure the filter based on contents");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_filter_module_is_for_the_modular"));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_an_inventory_to"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -84,7 +84,7 @@ public class StorageFilterItem extends GenericRFToolsItem {
                         stack.setTagCompound(new NBTTagCompound());
                     }
                     StorageFilterInventory.convertItemsToNBT(stack.getTagCompound(), stacks);
-                    playerIn.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + "Stored inventory contents in filter"), false);
+                    playerIn.sendStatusMessage(new TextComponentTranslation("msg.rftools.stored_inventory_contents_in_filter"), false);
                 } else {
                     IBlockState state = worldIn.getBlockState(pos);
                     ItemStack blockStack = state.getBlock().getItem(worldIn, pos, state);
@@ -102,7 +102,7 @@ public class StorageFilterItem extends GenericRFToolsItem {
                         for (int i = 0 ; i < FILTER_SLOTS ; i++) {
                             if (stacks.get(i).isEmpty()) {
                                 stacks.set(i, blockStack);
-                                playerIn.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + "Added " + blockStack.getDisplayName() + " to the filter!"), false);
+                                playerIn.sendStatusMessage(new TextComponentTranslation("msg.rftools.added_s_to_the_filter", blockStack.getDisplayName()), false);
                                 StorageFilterInventory.convertItemsToNBT(stack.getTagCompound(), stacks);
                                 break;
                             }

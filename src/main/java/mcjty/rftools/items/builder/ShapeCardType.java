@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
 
 public enum ShapeCardType {
     CARD_UNKNOWN(-2),          // Not known yet
@@ -59,14 +61,14 @@ public enum ShapeCardType {
             () -> (int) (BuilderConfiguration.builderRfPerQuarry.get() * BuilderConfiguration.silkquarryShapeCardFactor.get()),
             "This item will cause the builder to quarry",
             "all blocks in the configured space and replace",
-            "them with " + getDirtOrCobbleName() + ".",
+            "them with %s.",
             "Blocks are harvested with silk touch"),
 
     CARD_QUARRY_FORTUNE(4, "quarry_fortune", true, false, true, BuilderTileEntity::quarryBlock, "    Fortune quarry",
             () -> (int) (BuilderConfiguration.builderRfPerQuarry.get() * BuilderConfiguration.fortunequarryShapeCardFactor.get()),
             "This item will cause the builder to quarry",
             "all blocks in the configured space and replace",
-            "them with " + getDirtOrCobbleName() + ".",
+            "them with %s.",
             "Blocks are harvested with fortune"),
 
     CARD_QUARRY_CLEAR(5, "quarry_clear", true, true, false, BuilderTileEntity::quarryBlock, "    Normal quarry",
@@ -90,7 +92,7 @@ public enum ShapeCardType {
             () -> BuilderConfiguration.builderRfPerLiquid.get(),
             "This item will cause the builder to collect",
             "all liquids in the configured space.",
-            "The liquid will be replaced with " + getDirtOrCobbleName() + "."),
+            "The liquid will be replaced with %s."),
 
     CARD_PUMP_CLEAR(9, "pump_clear", false, true, false, BuilderTileEntity::pumpBlock, "    Pump",
             () -> BuilderConfiguration.builderRfPerLiquid.get(),
@@ -148,7 +150,7 @@ public enum ShapeCardType {
         this.rfNeeded = rfNeeded;
         this.singleBlockHandler = singleBlockHandler;
         this.hudLogEntry = hudLogEntry;
-        this.information = Arrays.stream(information).map(TextFormatting.WHITE.toString()::concat).collect(Collectors.toList());
+        this.information = Arrays.asList(information);
     }
 
     public int getDamage() {
@@ -185,10 +187,15 @@ public enum ShapeCardType {
     }
 
     public void addInformation(List<String> list) {
-        list.addAll(information);
-        list.add(TextFormatting.GREEN + "Max area: " + BuilderConfiguration.maxBuilderDimension.get() + "x" + Math.min(256, BuilderConfiguration.maxBuilderDimension.get()) + "x" + BuilderConfiguration.maxBuilderDimension.get());
-        list.add(TextFormatting.GREEN + "Base cost: " + rfNeeded.get() + " RF/t per block");
-        list.add(TextFormatting.GREEN + (this == CARD_SHAPE ? "(final cost depends on infusion level)" : "(final cost depends on infusion level and block hardness)"));
+        if (!information.isEmpty()) {
+            // The description is looked up with the English text as identification. %s is the replacement block
+            for (String line : GuiLoc.engLines(information.toArray(new String[0]))) {
+                list.add(TextFormatting.WHITE + line.replace("%s", getDirtOrCobbleName()));
+            }
+        }
+        list.add(I18n.format("tooltip.rftools.max_area_sx_sx_s", BuilderConfiguration.maxBuilderDimension.get(), Math.min(256, BuilderConfiguration.maxBuilderDimension.get()), BuilderConfiguration.maxBuilderDimension.get()));
+        list.add(I18n.format("tooltip.rftools.base_cost_s_rf_t_per_block", rfNeeded.get()));
+        list.add(I18n.format(this == CARD_SHAPE ? "tooltip.rftools.final_cost_depends_on_infusion_level" : "tooltip.rftools.final_cost_depends_on_infusion_level_and_block_hardness"));
     }
 
     public boolean handleSingleBlock(BuilderTileEntity te, int rfNeeded, BlockPos srcPos, IBlockState srcState, IBlockState pickState) {

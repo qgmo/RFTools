@@ -46,6 +46,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity implements DefaultSidedInventory, ITickable,
         CraftingGridProvider, JEIRecipeAcceptor, IStorageScanner {
@@ -232,11 +233,11 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
 
     public ItemStack injectStackFromScreen(ItemStack stack, EntityPlayer player) {
         if (getStoredPower() < StorageScannerConfiguration.rfPerInsert.get()) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Not enough power to insert items!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.not_enough_power_to_insert_items"), false);
             return stack;
         }
         if (!checkForRoutableInventories()) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "There are no routable inventories!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.there_are_no_routable_inventories"), false);
             return stack;
         }
         stack = injectStackInternal(stack, false, this::isInputFromScreen);
@@ -293,7 +294,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
             return;
         }
         if (getStoredPower() < StorageScannerConfiguration.rfPerRequest.get()) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Not enough power to request items!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.not_enough_power_to_request_items"), false);
             return;
         }
 

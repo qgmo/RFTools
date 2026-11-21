@@ -13,6 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class WaterBreathingEModuleItem extends GenericRFToolsItem implements EnvModuleProvider {
 
@@ -25,9 +28,8 @@ public class WaterBreathingEModuleItem extends GenericRFToolsItem implements Env
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add("This module gives water breathing bonus");
-        list.add("when used in the environmental controller.");
-        list.add(TextFormatting.GREEN + "Uses " + EnvironmentalConfiguration.WATERBREATHING_RFPERTICK.get() + " RF/tick (per cubic block)");
+        Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_gives_water_breathing_bonus"));
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick_per_cubic_block", EnvironmentalConfiguration.WATERBREATHING_RFPERTICK.get()));
     }
 
     @Override

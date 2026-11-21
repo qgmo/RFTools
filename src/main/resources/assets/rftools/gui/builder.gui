@@ -39,41 +39,41 @@
                     channel('mode')
                     hint(9,4,42,14)
                     enableon('validcard')
-                    tooltips('Set the building mode')
+                    tooltips('gui.rftools.builder.mode.tip')
                     choices {
                         choice('Copy') {
-                            tooltips('Copy from space chamber to here','Chest on top or below with materials')
+                            tooltips('gui.rftools.builder.mode.copy.tip')
                         }
                         choice('Move') {
-                            tooltips('Move from space chamber to here')
+                            tooltips('gui.rftools.builder.mode.move.tip')
                         }
                         choice('Swap') {
-                            tooltips('Swap space chamber contents with here')
+                            tooltips('gui.rftools.builder.mode.swap.tip')
                         }
                         choice('Back') {
-                            tooltips('Move back from here to space chamber')
+                            tooltips('gui.rftools.builder.mode.back.tip')
                         }
                         choice('Collect') {
-                            tooltips('Collect items in space chamber','Items will go to chest on top or below')
+                            tooltips('gui.rftools.builder.mode.collect.tip')
                         }
                     }
                 }
             imagechoicelabel('silent') {
                 channel('silent')
                 hint(4,18,17,17)
-                tooltips('Suppress the placement/breaking sound','when moving blocks')
+                tooltips('gui.rftools.builder.silent.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(176,48,256,256)
                 choices {
                     choice('off') {
                         uv(176,48)
-                        tooltips('Moving blocks make sound')
+                        tooltips('gui.rftools.builder.silent.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(160,48)
-                        tooltips('Block sounds are muted')
+                        tooltips('gui.rftools.builder.silent.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -81,19 +81,19 @@
             imagechoicelabel('support') {
                 channel('support')
                 hint(22,18,17,17)
-                tooltips('Use supporting blocks when moving.','Useful for liquids, gravel, ...')
+                tooltips('gui.rftools.builder.support.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(112,48,256,256)
                 choices {
                     choice('off') {
                         uv(112,48)
-                        tooltips('Support/preview mode disabled')
+                        tooltips('gui.rftools.builder.support.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(96,48)
-                        tooltips('Support/preview mode enabled')
+                        tooltips('gui.rftools.builder.support.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -101,19 +101,19 @@
             imagechoicelabel('entities') {
                 channel('entities')
                 hint(4,37,17,17)
-                tooltips('Move entities')
+                tooltips('gui.rftools.builder.entities.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(144,48,256,256)
                 choices {
                     choice('off') {
                         uv(144,48)
-                        tooltips('Entities are not moved')
+                        tooltips('gui.rftools.builder.entities.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(128,48)
-                        tooltips('Entities are moved')
+                        tooltips('gui.rftools.builder.entities.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -121,38 +121,38 @@
             imagechoicelabel('loop') {
                 channel('loop')
                 hint(22,37,17,17)
-                tooltips('Loop mode')
+                tooltips('gui.rftools.builder.loop.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(208,48,256,256)
                 choices {
                     choice('off') {
                         uv(208,48)
-                        tooltips('Do a single run and stop')
+                        tooltips('gui.rftools.builder.loop.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(192,48)
-                        tooltips('Keep running with redstone signal')
+                        tooltips('gui.rftools.builder.loop.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
             }
             imagechoicelabel('wait') {
                 hint(40,18,17,17)
-                tooltips('Wait mode')
+                tooltips('gui.rftools.builder.wait.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(96,80,256,256)
                 choices {
                     choice('off') {
                         uv(112,80)
-                        tooltips('Don\'t wait on a position if','the operation is not possible')
+                        tooltips('gui.rftools.builder.wait.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(96,80)
-                        tooltips('If the operation is not possible','wait on the current position')
+                        tooltips('gui.rftools.builder.wait.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -160,19 +160,19 @@
             imagechoicelabel('hilight') {
                 channel('hilight')
                 hint(40,37,17,17)
-                tooltips('Hilight mode')
+                tooltips('gui.rftools.builder.hilight.tip')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(144,80,256,256)
                 choices {
                     choice('off') {
                         uv(144,80)
-                        tooltips('No hilighting')
+                        tooltips('gui.rftools.builder.hilight.off.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(128,80)
-                        tooltips('Visually hilight the position','the Builder is working on')
+                        tooltips('gui.rftools.builder.hilight.on.tip')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -186,7 +186,7 @@
                 channel('rotate')
                 hint(4,4,36,14)
                 enableon('validcard')
-                tooltips('Set the horizontal rotation angle')
+                tooltips('gui.rftools.builder.rotate.tip')
                 choices {
                     choice('0')
                     choice('90')
@@ -197,19 +197,19 @@
             imagechoicelabel('anchor0') {
                 channel('anchor')
                 hint(4,37,17,17)
-                tooltips('Set the anchor where you want to','place the blocks in front of the','builder')
+                tooltips('gui.rftools.common.set_the_anchor_where_you_want')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(96,64,256,256)
                 choices {
                     choice('off') {
                         uv(112,64)
-                        tooltips('Builder at south west corner')
+                        tooltips('gui.rftools.common.builder_at_south_west_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(96,64)
-                        tooltips('Builder at south west corner')
+                        tooltips('gui.rftools.common.builder_at_south_west_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -217,19 +217,19 @@
             imagechoicelabel('anchor1') {
                 channel('anchor')
                 hint(23,37,17,17)
-                tooltips('Set the anchor where you want to','place the blocks in front of the','builder')
+                tooltips('gui.rftools.common.set_the_anchor_where_you_want')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(144,64,256,256)
                 choices {
                     choice('off') {
                         uv(144,64)
-                        tooltips('Builder at south east corner')
+                        tooltips('gui.rftools.common.builder_at_south_east_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(128,64)
-                        tooltips('Builder at south east corner')
+                        tooltips('gui.rftools.common.builder_at_south_east_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -237,19 +237,19 @@
             imagechoicelabel('anchor2') {
                 channel('anchor')
                 hint(4,18,17,17)
-                tooltips('Set the anchor where you want to','place the blocks in front of the','builder')
+                tooltips('gui.rftools.common.set_the_anchor_where_you_want')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(176,64,256,256)
                 choices {
                     choice('off') {
                         uv(176,64)
-                        tooltips('Builder at north west corner')
+                        tooltips('gui.rftools.common.builder_at_north_west_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(160,64)
-                        tooltips('Builder at north west corner')
+                        tooltips('gui.rftools.common.builder_at_north_west_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -257,19 +257,19 @@
             imagechoicelabel('anchor3') {
                 channel('anchor')
                 hint(23,18,17,17)
-                tooltips('Set the anchor where you want to','place the blocks in front of the','builder')
+                tooltips('gui.rftools.common.set_the_anchor_where_you_want')
                 border(true)
                 image('rftools:textures/gui/guielements.png')
                 dim(208,64,256,256)
                 choices {
                     choice('off') {
                         uv(208,64)
-                        tooltips('Builder at north east corner')
+                        tooltips('gui.rftools.common.builder_at_north_east_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('on') {
                         uv(192,64)
-                        tooltips('Builder at north east corner')
+                        tooltips('gui.rftools.common.builder_at_north_east_corner')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -278,12 +278,12 @@
         button('','?') {
             channel('cardgui')
             hint(83,12,13,12)
-            tooltips('Click to open the card gui')
+            tooltips('gui.rftools.common.click_to_open_the_card_gui')
         }
-        button('level','Y: stop') {
+        button('level','gui.rftools.builder.level.text') {
             channel('restart')
             hint(81,31,45,13)
-            tooltips('Current level the builder is at','�ePress to restart!')
+            tooltips('gui.rftools.builder.level.tip')
         }
         imagechoicelabel('redstone') {
             hint(106,46,16,16)
@@ -292,17 +292,17 @@
             choices {
                 choice('Ignored') {
                     uv(0,0)
-                    tooltips('Redstone mode:','Ignored')
+                    tooltips('gui.rftools.common.redstone_mode_ignored')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('Off') {
                     uv(16,0)
-                    tooltips('Redstone mode:','Off to activate')
+                    tooltips('gui.rftools.common.redstone_mode_off_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('On') {
                     uv(32,0)
-                    tooltips('Redstone mode:','On to activate')
+                    tooltips('gui.rftools.common.redstone_mode_on_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
             }

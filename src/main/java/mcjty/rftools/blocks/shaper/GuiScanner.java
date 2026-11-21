@@ -24,6 +24,8 @@ import org.lwjgl.input.Mouse;
 
 import java.awt.Rectangle;
 import java.io.IOException;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiScanner extends GenericGuiContainer<ScannerTileEntity> implements IShapeParentGui {
 
@@ -97,7 +99,7 @@ public class GuiScanner extends GenericGuiContainer<ScannerTileEntity> implement
 
         scanButton = new Button(mc, this)
                 .setName("scan")
-                .setText("Scan")
+                .setText(I18n.format("gui.rftools.common.scan"))
                 .setLayoutHint(5, 156, 40, 16);
         toplevel.addChild(scanButton);
 
@@ -116,10 +118,10 @@ public class GuiScanner extends GenericGuiContainer<ScannerTileEntity> implement
         toplevel.addChild(new Button(mc, this).setText("u").addButtonEvent(parent -> move(0, 1, 0)).setLayoutHint(45, 70, 16, 15));
         toplevel.addChild(new Button(mc, this).setText("U").addButtonEvent(parent -> move(0, 16, 0)).setLayoutHint(61, 70, 16, 15));
 
-        offsetLabel = new Label(mc, this).setText("Off: " + BlockPosTools.toString(tileEntity.getDataOffset())).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
+        offsetLabel = new Label(mc, this).setText(I18n.format("gui.rftools.off_s", BlockPosTools.toString(tileEntity.getDataOffset()))).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         offsetLabel.setLayoutHint(4, 90, 80, 14);
         toplevel.addChild(offsetLabel);
-        dimensionLabel = new Label(mc, this).setText("Dim: " + BlockPosTools.toString(tileEntity.getDataDim())).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
+        dimensionLabel = new Label(mc, this).setText(I18n.format("gui.rftools.dim_s", BlockPosTools.toString(tileEntity.getDataDim()))).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         dimensionLabel.setLayoutHint(4, 105, 80, 14);
         toplevel.addChild(dimensionLabel);
         progressLabel = new Label(mc, this).setText("");
@@ -141,11 +143,11 @@ public class GuiScanner extends GenericGuiContainer<ScannerTileEntity> implement
     }
 
     private ImageChoiceLabel initRedstoneMode() {
-        ImageChoiceLabel redstoneMode = new ImageChoiceLabel(mc, this).
+        ImageChoiceLabel redstoneMode = new LocImageChoiceLabel(mc, this).
                 setName("redstone").
-                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), "Redstone mode:\nIgnored", iconGuiElements, 0, 0).
-                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), "Redstone mode:\nOff to activate", iconGuiElements, 16, 0).
-                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), "Redstone mode:\nOn to activate", iconGuiElements, 32, 0);
+                addChoice(RedstoneMode.REDSTONE_IGNORED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_ignored"), iconGuiElements, 0, 0).
+                addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_off_to_activate"), iconGuiElements, 16, 0).
+                addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), I18n.format("gui.rftools.common.redstone_mode_on_to_activate"), iconGuiElements, 32, 0);
         redstoneMode.setLayoutHint(50, 156, 16, 16);
         return redstoneMode;
     }
@@ -198,8 +200,8 @@ public class GuiScanner extends GenericGuiContainer<ScannerTileEntity> implement
 
         getShapeRenderer().handleMouseWheel();
 
-        offsetLabel.setText("Off: " + BlockPosTools.toString(tileEntity.getDataOffset()));
-        dimensionLabel.setText("Dim: " + BlockPosTools.toString(tileEntity.getDataDim()));
+        offsetLabel.setText(I18n.format("gui.rftools.off_s", BlockPosTools.toString(tileEntity.getDataOffset())));
+        dimensionLabel.setText(I18n.format("gui.rftools.dim_s", BlockPosTools.toString(tileEntity.getDataDim())));
 
         drawWindow();
 

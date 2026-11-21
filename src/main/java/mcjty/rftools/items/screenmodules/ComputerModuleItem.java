@@ -14,6 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.resources.I18n;
 
 public class ComputerModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -55,7 +56,7 @@ public class ComputerModuleItem extends GenericRFToolsItem implements IModulePro
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.COMPUTER_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.COMPUTER_RFPERTICK.get()));
     }
 
 }

@@ -8,13 +8,13 @@ window {
             hint(146,25,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -24,13 +24,13 @@ window {
             hint(146,40,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -40,13 +40,13 @@ window {
             hint(146,55,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -56,13 +56,13 @@ window {
             hint(146,70,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -72,13 +72,13 @@ window {
             hint(146,85,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -88,13 +88,13 @@ window {
             hint(146,100,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -104,13 +104,13 @@ window {
             hint(146,115,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }
@@ -120,13 +120,13 @@ window {
             hint(146,130,-1,-1)
             choices {
                 choice('On') {
-                    tooltips('Emit redstone signal')
+                    tooltips('gui.rftools.common.emit_redstone_signal')
                 }
                 choice('Off') {
-                    tooltips('Don\'t emit redstone signal')
+                    tooltips('gui.rftools.common.don_t_emit_redstone_signal')
                 }
                 choice('Keep') {
-                    tooltips('Keep previous redstone signal')
+                    tooltips('gui.rftools.common.keep_previous_redstone_signal')
                 }
             }
         }

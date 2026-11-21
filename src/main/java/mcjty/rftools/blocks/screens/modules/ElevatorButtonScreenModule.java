@@ -24,6 +24,7 @@ import java.util.List;
 
 import static mcjty.rftools.blocks.screens.modulesclient.ElevatorButtonClientScreenModule.LARGESIZE;
 import static mcjty.rftools.blocks.screens.modulesclient.ElevatorButtonClientScreenModule.SMALLSIZE;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ElevatorButtonScreenModule implements IScreenModule<ElevatorButtonScreenModule.ModuleElevatorInfo> {
     protected int dim = 0;
@@ -147,7 +148,7 @@ public class ElevatorButtonScreenModule implements IScreenModule<ElevatorButtonS
     public void mouseClick(World world, int x, int y, boolean clicked, EntityPlayer player) {
         if (BlockPosTools.INVALID.equals(coordinate)) {
             if (player != null) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Module is not linked to elevator!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.module_is_not_linked_to_elevator"), false);
             }
             return;
         }

@@ -30,6 +30,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class DumpModuleItem extends GenericRFToolsItem implements IModuleProvider {
 
@@ -76,21 +80,19 @@ public class DumpModuleItem extends GenericRFToolsItem implements IModuleProvide
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.GREEN + "Uses " + ScreenConfiguration.DUMP_RFPERTICK.get() + " RF/tick");
+        list.add(I18n.format("tooltip.rftools.uses_s_rf_tick", ScreenConfiguration.DUMP_RFPERTICK.get()));
         boolean hasTarget = false;
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             hasTarget = addModuleInformation(list, itemStack);
         }
         if (!hasTarget) {
-            list.add(TextFormatting.YELLOW + "Sneak right-click on a storage scanner to set the");
-            list.add(TextFormatting.YELLOW + "target for this dump module");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_storage_scanner_to"));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This screen module allows you to dump");
-            list.add(TextFormatting.WHITE + "a lot of items through a storage scanner");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_screen_module_allows_you_to_dump_a_lot"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -98,12 +100,12 @@ public class DumpModuleItem extends GenericRFToolsItem implements IModuleProvide
         if (!stack.hasTagCompound()) {
             return false;
         }
-        list.add(TextFormatting.YELLOW + "Label: " + stack.getTagCompound().getString("text"));
+        list.add(I18n.format("tooltip.rftools.label_s", stack.getTagCompound().getString("text")));
 
         if (RFToolsTools.hasModuleTarget(stack)) {
             BlockPos pos = RFToolsTools.getPositionFromModule(stack);
             String monitorname = stack.getTagCompound().getString("monitorname");
-            list.add(TextFormatting.YELLOW + "Monitoring: " + monitorname + " (at " + BlockPosTools.toString(pos) + ")");
+            list.add(I18n.format("tooltip.rftools.monitoring_s_at_s", monitorname, BlockPosTools.toString(pos)));
             return true;
         }
         return false;
@@ -122,12 +124,12 @@ public class DumpModuleItem extends GenericRFToolsItem implements IModuleProvide
             }
             RFToolsTools.setPositionInModule(stack, world.provider.getDimension(), pos, name);
             if (world.isRemote) {
-                Logging.message(player, "Storage module is set to block '" + name + "'");
+                Msg.message(player, "msg.rftools.storage_module_is_set_to_block_s", name);
             }
         } else {
             RFToolsTools.clearPositionInModule(stack);
             if (world.isRemote) {
-                Logging.message(player, "Storage module is cleared");
+                Msg.message(player, "msg.rftools.storage_module_is_cleared");
             }
         }
         return EnumActionResult.SUCCESS;

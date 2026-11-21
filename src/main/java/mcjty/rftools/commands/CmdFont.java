@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CmdFont extends AbstractRfToolsCommand {
     @Override
@@ -30,7 +31,7 @@ public class CmdFont extends AbstractRfToolsCommand {
     @Override
     public void execute(ICommandSender sender, String[] args) {
         if (args.length < 3) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Several parameters are missing!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.several_parameters_are_missing");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -38,7 +39,7 @@ public class CmdFont extends AbstractRfToolsCommand {
             }
             return;
         } else if (args.length > 3) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Too many parameters!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.too_many_parameters");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -52,7 +53,7 @@ public class CmdFont extends AbstractRfToolsCommand {
 //        ScreenConfiguration.fontSize = fetchFloat(sender, args, 2, 40);
         TrueTypeFont font = FontLoader.createFont(new ResourceLocation(ScreenConfiguration.font.get()), (float) ScreenConfiguration.fontSize.get(), false);
         if (font == null) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Could not load font!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.could_not_load_font");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

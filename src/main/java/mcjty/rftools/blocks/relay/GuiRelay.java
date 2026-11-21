@@ -19,6 +19,9 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 public class GuiRelay extends GenericGuiContainer<RelayTileEntity> {
     public static final int RELAY_WIDTH = 255;
@@ -54,26 +57,26 @@ public class GuiRelay extends GenericGuiContainer<RelayTileEntity> {
 
     private Panel createRedstonePanel() {
         ImageLabel redstoneOff = new ImageLabel(mc, this).setImage(iconGuiElements, 16, 0);
-        redstoneOff.setDesiredWidth(16).setDesiredHeight(16).setTooltips("Redstone signal off").setLayoutHint(70, 0, 16, 16);
+        redstoneOff.setDesiredWidth(16).setDesiredHeight(16).setTooltips(GuiLoc.lines("gui.rftools.redstone_signal_off")).setLayoutHint(70, 0, 16, 16);
         ImageLabel redstoneOn = new ImageLabel(mc, this).setImage(iconGuiElements, 32, 0);
-        redstoneOn.setDesiredWidth(16).setDesiredHeight(16).setTooltips("Redstone signal on").setLayoutHint(190, 0, 16, 16);
+        redstoneOn.setDesiredWidth(16).setDesiredHeight(16).setTooltips(GuiLoc.lines("gui.rftools.redstone_signal_on")).setLayoutHint(190, 0, 16, 16);
         return new Panel(mc, this).setLayout(new PositionalLayout()).
                 addChildren(redstoneOff, redstoneOn);
     }
 
     private static final String[] tooltips = {
-            "Down",
-            "Up",
-            "Back",
-            "Front",
-            "Left",
-            "Right",
-            "Internal (null)"
+            "gui.rftools.side.down",
+            "gui.rftools.side.up",
+            "gui.rftools.side.back",
+            "gui.rftools.side.front",
+            "gui.rftools.side.left",
+            "gui.rftools.side.right",
+            "gui.rftools.side.internal"
     };
 
     private Panel createSidePanel(int side) {
         String labelText = String.valueOf(RelayTileEntity.DUNSWEI.charAt(side));
-        Label label = new Label(mc, this).setText(labelText).setTooltips(tooltips[side]);
+        Label label = new Label(mc, this).setText(labelText).setTooltips(I18n.format(tooltips[side]));
         label.setDesiredWidth(14).setDesiredHeight(14);
         return new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(1)).
                 addChild(label).
@@ -94,10 +97,10 @@ public class GuiRelay extends GenericGuiContainer<RelayTileEntity> {
             input = tileEntity.isInputModeOn(side);
         }
 
-        ImageChoiceLabel inputOutput = new ImageChoiceLabel(mc, this).
+        ImageChoiceLabel inputOutput = new LocImageChoiceLabel(mc, this).
                 setDesiredWidth(14).setDesiredHeight(14).
-                addChoice("Output", "Side set to output mode", iconGuiElements, 80, 16).
-                addChoice("Input", "Side set to input mode", iconGuiElements, 96, 16).
+                addChoice("Output", I18n.format("gui.rftools.side_set_to_output_mode"), iconGuiElements, 80, 16).
+                addChoice("Input", I18n.format("gui.rftools.side_set_to_input_mode"), iconGuiElements, 96, 16).
                 addChoiceEvent((parent, newChoice) -> changeSettings());
         String key = labelText + redstoneState;
         if (input) {
@@ -106,7 +109,7 @@ public class GuiRelay extends GenericGuiContainer<RelayTileEntity> {
             inputOutput.setCurrentChoice("Output");
         }
         inputOutputs.put(key, inputOutput);
-        TextField energyField = new TextField(mc, this).setTooltips("Amount of RF to input/output", "when redstone is " + redstoneState).
+        TextField energyField = new TextField(mc, this).setTooltips(GuiLoc.lines("gui.rftools.amount_of_rf_to_input_output_when_redstone", redstoneState)).
                 setDesiredWidth(42).setDesiredHeight(14).
                 addTextEvent((parent, newText) -> adjustEnergy((TextField) parent, 0));
         energyField.setText(String.valueOf(rf));

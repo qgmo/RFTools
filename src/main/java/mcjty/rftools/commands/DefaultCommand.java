@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class DefaultCommand implements ICommand {
     protected final Map<String,RfToolsCommand> commands = new HashMap<>();
@@ -91,7 +92,7 @@ public abstract class DefaultCommand implements ICommand {
             RfToolsCommand command = commands.get(args[0]);
             if (command == null) {
                 if (!world.isRemote) {
-                    ITextComponent component = new TextComponentString(TextFormatting.RED + "Unknown RfTools command: " + args[0]);
+                    ITextComponent component = new TextComponentTranslation("msg.rftools.unknown_rftools_command_s", args[0]);
                     if (sender instanceof EntityPlayer) {
                         ((EntityPlayer) sender).sendStatusMessage(component, false);
                     } else {
@@ -107,7 +108,7 @@ public abstract class DefaultCommand implements ICommand {
                 } else {
                     // Server-side.
                     if (!sender.canUseCommand(command.getPermissionLevel(), getName())) {
-                        ITextComponent component = new TextComponentString(TextFormatting.RED + "Command is not allowed!");
+                        ITextComponent component = new TextComponentTranslation("msg.rftools.command_is_not_allowed");
                         if (sender instanceof EntityPlayer) {
                             ((EntityPlayer) sender).sendStatusMessage(component, false);
                         } else {

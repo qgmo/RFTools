@@ -11,6 +11,7 @@ import mcjty.rftools.blocks.ModBlocks;
 import mcjty.rftools.blocks.screens.ScreenConfiguration;
 import mcjty.rftools.blocks.screens.ScreenSetup;
 import mcjty.rftools.blocks.shield.BakedModelLoader;
+import mcjty.rftools.client.GuiLoc;
 import mcjty.rftools.items.builder.GuiShapeCard;
 import mcjty.rftools.keys.KeyBindings;
 import mcjty.rftools.keys.KeyInputHandler;
@@ -42,6 +43,7 @@ public class ClientProxy extends DefaultClientProxy {
         OBJLoader.INSTANCE.addDomain(RFTools.MODID);
         ModelLoaderRegistry.registerLoader(new BakedModelLoader());
         ClientCommandHandler.registerCommands();
+        GuiLoc.registerWidgets();
     }
 
     @Override

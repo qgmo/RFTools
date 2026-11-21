@@ -23,6 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiRFMonitor extends GenericGuiContainer<RFMonitorBlockTileEntity> {
     private WidgetList list;
@@ -60,10 +62,10 @@ public class GuiRFMonitor extends GenericGuiContainer<RFMonitorBlockTileEntity> 
         Slider listSlider = new Slider(mc, this).setDesiredWidth(10).setVertical().setScrollableName("list");
         Panel listPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(3).setSpacing(1)).addChildren(list, listSlider);
 
-        alarmModeChoiceLabel = new ChoiceLabel(mc, this).addChoices(
+        alarmModeChoiceLabel = new LocChoiceLabel(mc, this).addChoices(
                 RFMonitorMode.MODE_OFF.getDescription(), RFMonitorMode.MODE_LESS.getDescription(), RFMonitorMode.MODE_MORE.getDescription()).
                 setDesiredWidth(60).setDesiredHeight(15).
-                setTooltips("Control when a redstone", "signal should be sent").
+                setTooltips(GuiLoc.lines("gui.rftools.common.control_when_a_redstone_signal_should_be")).
                 addChoiceEvent((parent, newChoice) -> changeAlarmMode(RFMonitorMode.getModeFromDescription(newChoice)));
         alarmModeChoiceLabel.setChoice(tileEntity.getAlarmMode().getDescription());
 
@@ -74,7 +76,7 @@ public class GuiRFMonitor extends GenericGuiContainer<RFMonitorBlockTileEntity> 
                 setDesiredHeight(15).
                 setHorizontal().
                 setMinimumKnobSize(15).
-                setTooltips("Alarm level").
+                setTooltips(GuiLoc.lines("gui.rftools.common.alarm_level")).
                 setScrollableName("alarm");
         Panel alarmPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChildren(alarmModeChoiceLabel, alarmSlider, alarmLabel).setDesiredHeight(20);
 

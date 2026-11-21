@@ -7,11 +7,11 @@ window {
             bgthickness(1)
             horizontal(true)
         }
-        label('','Averages over last 5 seconds:') {
+        label('','gui.rftools.endergenic.label.text') {
             horizalign('ALIGN_LEFT')
         }
         panel('','horizontal') {
-            label('','Gain:') {
+            label('','gui.rftools.endergenic.label.text_2') {
                 desired(70,-1)
             }
             textfield('lastrft') {
@@ -19,7 +19,7 @@ window {
             }
         }
         panel('','horizontal') {
-            label('','Lost:') {
+            label('','gui.rftools.endergenic.label.text_3') {
                 desired(70,-1)
             }
             textfield('lastlost') {
@@ -27,7 +27,7 @@ window {
             }
         }
         panel('','horizontal') {
-            label('','Launched:') {
+            label('','gui.rftools.endergenic.label.text_4') {
                 desired(70,-1)
             }
             textfield('lastlaunched') {
@@ -35,7 +35,7 @@ window {
             }
         }
         panel('','horizontal') {
-            label('','Chances:') {
+            label('','gui.rftools.endergenic.label.text_5') {
                 desired(70,-1)
             }
             textfield('lastopp') {

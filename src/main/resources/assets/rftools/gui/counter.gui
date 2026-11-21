@@ -7,15 +7,15 @@ window {
     panel('','vertical') {
         bgthickness(2)
         panel('','horizontal') {
-            label('','Counter:')
+            label('','gui.rftools.counter.label.text')
             textfield('counter') {
                 channel('counter')
-                tooltips('Set the counter in pulses')
+                tooltips('gui.rftools.counter.counter.tip')
             }
-            label('','Current:')
+            label('','gui.rftools.counter.label.text_2')
             textfield('current') {
                 channel('current')
-                tooltips('Set the current value','(fires when it reaches counter)')
+                tooltips('gui.rftools.counter.current.tip')
             }
         }
     }

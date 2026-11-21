@@ -22,6 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.varia.Msg;
 
 public class GuiNetworkMonitor extends GuiItemScreen {
     private static final int MONITOR_XSIZE = 356;
@@ -85,7 +87,7 @@ public class GuiNetworkMonitor extends GuiItemScreen {
         Slider listSlider = new Slider(mc, this).setDesiredWidth(11).setVertical().setScrollableName("list");
         Panel listPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setSpacing(1).setHorizontalMargin(3)).addChild(list).addChild(listSlider);
 
-        showRfPerTick = new ToggleButton(mc, this).setCheckMarker(true).setText("RF/tick").setDesiredWidth(80).addButtonEvent(parent -> previousRfMillis = 0).setDesiredHeight(14);
+        showRfPerTick = new ToggleButton(mc, this).setCheckMarker(true).setText(I18n.format("gui.rftools.rf_tick")).setDesiredWidth(80).addButtonEvent(parent -> previousRfMillis = 0).setDesiredHeight(14);
         filterTextField = new TextField(mc, this).setDesiredHeight(14).addTextEvent((parent, newText) -> {
             filter = filterTextField.getText();
             if (filter.trim().isEmpty()) {
@@ -93,7 +95,7 @@ public class GuiNetworkMonitor extends GuiItemScreen {
             }
             connectedBlocks = null;
         });
-        Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(showRfPerTick).addChild(new Label(mc, this).setText("Filter:")).addChild(filterTextField).setDesiredHeight(17);
+        Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(showRfPerTick).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.filter"))).addChild(filterTextField).setDesiredHeight(17);
 
         Panel toplevel = new Panel(mc, this).setFilledRectThickness(2).setLayout(new VerticalLayout().setVerticalMargin(3)).addChild(listPanel).addChild(buttonPanel);
         toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
@@ -109,7 +111,7 @@ public class GuiNetworkMonitor extends GuiItemScreen {
         }
         BlockPos c = indexToCoordinate.get(index);
         RFTools.instance.clientInfo.hilightBlock(c, System.currentTimeMillis()+1000* NetworkMonitorConfiguration.hilightTime.get());
-        Logging.message(mc.player, "The block is now highlighted");
+        Msg.message(mc.player, "msg.rftools.the_block_is_now_highlighted");
         Minecraft.getMinecraft().player.closeScreen();
     }
 

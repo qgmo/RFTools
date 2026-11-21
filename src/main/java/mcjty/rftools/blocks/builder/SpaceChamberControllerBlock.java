@@ -26,6 +26,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class SpaceChamberControllerBlock extends GenericRFToolsBlock<SpaceChamberControllerTileEntity, EmptyContainer> {
 
@@ -45,14 +48,13 @@ public class SpaceChamberControllerBlock extends GenericRFToolsBlock<SpaceChambe
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             int channel = tagCompound.getInteger("channel");
-            list.add(TextFormatting.GREEN + "Channel: " + channel);
+            list.add(I18n.format("tooltip.rftools.channel_s", channel));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This block is one of the eight corners of an");
-            list.add(TextFormatting.WHITE + "area of space you want to copy/move elsewhere");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_block_is_one_of_the_eight_corners_of"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

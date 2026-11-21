@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class DumpScreenModule implements IScreenModule<IModuleData> {
 
@@ -83,7 +84,7 @@ public class DumpScreenModule implements IScreenModule<IModuleData> {
             return;
         }
         if (BlockPosTools.INVALID.equals(coordinate)) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Module is not linked to storage scanner!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.module_is_not_linked_to_storage_scanner"), false);
             return;
         }
 

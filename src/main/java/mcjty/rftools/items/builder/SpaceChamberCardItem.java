@@ -23,6 +23,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class SpaceChamberCardItem extends GenericRFToolsItem {
 
@@ -46,21 +50,16 @@ public class SpaceChamberCardItem extends GenericRFToolsItem {
             channel = tagCompound.getInteger("channel");
         }
         if (channel != -1) {
-            list.add(TextFormatting.YELLOW + "Channel: " + channel);
+            list.add(I18n.format("tooltip.rftools.channel_s_2", channel));
         } else {
-            list.add(TextFormatting.YELLOW + "Channel is not set!");
+            list.add(I18n.format("tooltip.rftools.channel_is_not_set"));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Sneak right-click on a space chamber controller");
-            list.add(TextFormatting.WHITE + "to set the channel for this card.");
-            list.add(TextFormatting.WHITE + "Right-click in the air to show an overview of");
-            list.add(TextFormatting.WHITE + "the area contents.");
-            list.add(TextFormatting.WHITE + "Insert it in a builder to copy/move the");
-            list.add(TextFormatting.WHITE + "linked area");
-            list.add(TextFormatting.GREEN + "Base cost: " + BuilderConfiguration.builderRfPerOperation.get() + " RF/t per block");
-            list.add(TextFormatting.GREEN + "(final cost depends on infusion level)");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_a_space_chamber"));
+            list.add(I18n.format("tooltip.rftools.base_cost_s_rf_t_per_block", BuilderConfiguration.builderRfPerOperation.get()));
+            list.add(I18n.format("tooltip.rftools.final_cost_depends_on_infusion_level"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -92,7 +91,7 @@ public class SpaceChamberCardItem extends GenericRFToolsItem {
         } else {
             tagCompound.setInteger("channel", channel);
             if (world.isRemote) {
-                Logging.message(player, "Card is set to channel '" + channel + "'");
+                Msg.message(player, "msg.rftools.card_is_set_to_channel_s", channel);
             }
         }
         return EnumActionResult.SUCCESS;
@@ -104,7 +103,7 @@ public class SpaceChamberCardItem extends GenericRFToolsItem {
             if (channel != -1) {
                 showDetailsGui(world, player);
             } else {
-                Logging.message(player, TextFormatting.YELLOW + "Card is not linked!");
+                Msg.message(player, "msg.rftools.card_is_not_linked");
             }
         }
     }

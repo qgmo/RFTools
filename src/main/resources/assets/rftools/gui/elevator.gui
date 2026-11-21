@@ -6,10 +6,10 @@ window {
     panel('','vertical') {
         bgthickness(2)
         panel('','horizontal') {
-            label('','Name:')
+            label('','gui.rftools.common.name')
             textfield('name') {
                 channel('name')
-                tooltips('Set the name of this floor')
+                tooltips('gui.rftools.elevator.name.tip')
             }
         }
     }

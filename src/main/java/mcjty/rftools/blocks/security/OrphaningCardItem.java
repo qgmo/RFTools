@@ -19,6 +19,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class OrphaningCardItem extends GenericRFToolsItem {
 
@@ -37,11 +41,9 @@ public class OrphaningCardItem extends GenericRFToolsItem {
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Sneak right-click on an RFTools machine to clear");
-            list.add(TextFormatting.WHITE + "the owner. You can only do this on blocks you own");
-            list.add(TextFormatting.WHITE + "(unless you are admin)");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_an_rftools_machine_to"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -53,20 +55,20 @@ public class OrphaningCardItem extends GenericRFToolsItem {
                 // Generalize with a security API interface @todo
                 GenericTileEntity genericTileEntity = (GenericTileEntity) te;
                 if (genericTileEntity.getOwnerUUID() == null) {
-                    Logging.message(player, TextFormatting.RED + "This block has no owner!");
+                    Msg.message(player, "msg.rftools.this_block_has_no_owner");
                 } else {
                     if (isPrivileged(player, world)) {
                         genericTileEntity.clearOwner();
-                        Logging.message(player, "Cleared owner!");
+                        Msg.message(player, "msg.rftools.cleared_owner");
                     } else if (genericTileEntity.getOwnerUUID().equals(player.getPersistentID())) {
                         genericTileEntity.clearOwner();
-                        Logging.message(player, "Cleared owner!");
+                        Msg.message(player, "msg.rftools.cleared_owner");
                     } else {
-                        Logging.message(player, TextFormatting.RED + "You cannot clear ownership of a block you don't own!");
+                        Msg.message(player, "msg.rftools.you_cannot_clear_ownership_of_a_block_you");
                     }
                 }
             } else {
-                Logging.message(player, TextFormatting.RED + "Onwership is not supported on this block!");
+                Msg.message(player, "msg.rftools.onwership_is_not_supported_on_this_block");
             }
             return EnumActionResult.SUCCESS;
         }

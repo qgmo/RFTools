@@ -37,6 +37,10 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.*;
 import java.util.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.util.text.TextComponentTranslation;
+import mcjty.rftools.varia.Msg;
 
 public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingIngredient {
 
@@ -78,11 +82,11 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
                 if (player.isSneaking()) {
                     if (world.getTileEntity(pos) instanceof BuilderTileEntity) {
                         setCurrentBlock(stack, new GlobalCoordinate(pos, world.provider.getDimension()));
-                        Logging.message(player, TextFormatting.GREEN + "Now select the first corner");
+                        Msg.message(player, "msg.rftools.now_select_the_first_corner");
                         setMode(stack, MODE_CORNER1);
                         setCorner1(stack, null);
                     } else {
-                        Logging.message(player, TextFormatting.RED + "You can only do this on a builder!");
+                        Msg.message(player, "msg.rftools.you_can_only_do_this_on_a_builder");
                     }
                 } else {
                     return EnumActionResult.SUCCESS;
@@ -90,30 +94,30 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
             } else if (mode == MODE_CORNER1) {
                 GlobalCoordinate currentBlock = getCurrentBlock(stack);
                 if (currentBlock.getDimension() != world.provider.getDimension()) {
-                    Logging.message(player, TextFormatting.RED + "The Builder is in another dimension!");
+                    Msg.message(player, "msg.rftools.the_builder_is_in_another_dimension");
                 } else if (currentBlock.getCoordinate().equals(pos)) {
-                    Logging.message(player, TextFormatting.RED + "Cleared area selection mode!");
+                    Msg.message(player, "msg.rftools.cleared_area_selection_mode");
                     setMode(stack, MODE_NONE);
                 } else {
-                    Logging.message(player, TextFormatting.GREEN + "Now select the second corner");
+                    Msg.message(player, "msg.rftools.now_select_the_second_corner");
                     setMode(stack, MODE_CORNER2);
                     setCorner1(stack, pos);
                 }
             } else {
                 GlobalCoordinate currentBlock = getCurrentBlock(stack);
                 if (currentBlock.getDimension() != world.provider.getDimension()) {
-                    Logging.message(player, TextFormatting.RED + "The Builder is in another dimension!");
+                    Msg.message(player, "msg.rftools.the_builder_is_in_another_dimension");
                 } else if (currentBlock.getCoordinate().equals(pos)) {
-                    Logging.message(player, TextFormatting.RED + "Cleared area selection mode!");
+                    Msg.message(player, "msg.rftools.cleared_area_selection_mode");
                     setMode(stack, MODE_NONE);
                 } else {
                     NBTTagCompound tag = getCompound(stack);
                     BlockPos c1 = getCorner1(stack);
                     if (c1 == null) {
-                        Logging.message(player, TextFormatting.RED + "Cleared area selection mode!");
+                        Msg.message(player, "msg.rftools.cleared_area_selection_mode");
                         setMode(stack, MODE_NONE);
                     } else {
-                        Logging.message(player, TextFormatting.GREEN + "New settings copied to the shape card!");
+                        Msg.message(player, "msg.rftools.new_settings_copied_to_the_shape_card");
                         BlockPos center = new BlockPos((int) Math.ceil((c1.getX() + pos.getX()) / 2.0f), (int) Math.ceil((c1.getY() + pos.getY()) / 2.0f), (int) Math.ceil((c1.getZ() + pos.getZ()) / 2.0f));
                         setDimension(stack, Math.abs(c1.getX() - pos.getX()) + 1, Math.abs(c1.getY() - pos.getY()) + 1, Math.abs(c1.getZ() - pos.getZ()) + 1);
                         setOffset(stack, center.getX() - currentBlock.getCoordinate().getX(), center.getY() - currentBlock.getCoordinate().getY(), center.getZ() - currentBlock.getCoordinate().getZ());
@@ -266,41 +270,40 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
 
         ShapeCardType type = ShapeCardType.fromDamage(itemStack.getItemDamage());
         if (!BuilderConfiguration.shapeCardAllowed.get()) {
-            list.add(TextFormatting.RED + "Disabled in config!");
+            list.add(I18n.format("tooltip.rftools.disabled_in_config"));
         } else if (type != ShapeCardType.CARD_SHAPE) {
             if (!BuilderConfiguration.quarryAllowed.get()) {
-                list.add(TextFormatting.RED + "Disabled in config!");
+                list.add(I18n.format("tooltip.rftools.disabled_in_config"));
             } else if (type.isQuarry() && type.isClearing()) {
                 if (!BuilderConfiguration.clearingQuarryAllowed.get()) {
-                    list.add(TextFormatting.RED + "Disabled in config!");
+                    list.add(I18n.format("tooltip.rftools.disabled_in_config"));
                 }
             }
         }
 
         Shape shape = getShape(itemStack);
         boolean issolid = isSolid(itemStack);
-        list.add(TextFormatting.GREEN + "Shape " + shape.getDescription() + " (" + (issolid ? "Solid" : "Hollow") + ")");
-        list.add(TextFormatting.GREEN + "Dimension " + BlockPosTools.toString(getDimension(itemStack)));
-        list.add(TextFormatting.GREEN + "Offset " + BlockPosTools.toString(getOffset(itemStack)));
+        list.add(I18n.format("tooltip.rftools.shape_s_s", GuiLoc.choice(shape.getDescription()), GuiLoc.choice(issolid ? "Solid" : "Hollow")));
+        list.add(I18n.format("tooltip.rftools.dimension_s", BlockPosTools.toString(getDimension(itemStack))));
+        list.add(I18n.format("tooltip.rftools.offset_s", BlockPosTools.toString(getOffset(itemStack))));
 
         if (shape.isComposition()) {
             NBTTagCompound card = itemStack.getTagCompound();
             NBTTagList children = card.getTagList("children", Constants.NBT.TAG_COMPOUND);
-            list.add(TextFormatting.DARK_GREEN + "Formulas: " + children.tagCount());
+            list.add(I18n.format("tooltip.rftools.formulas_s", children.tagCount()));
         }
 
         if (shape.isScan()) {
             NBTTagCompound card = itemStack.getTagCompound();
             int scanid = card.getInteger("scanid");
-            list.add(TextFormatting.DARK_GREEN + "Scan id: " + scanid);
+            list.add(I18n.format("tooltip.rftools.scan_id_s", scanid));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.YELLOW + "Sneak right click on builder to start mark mode");
-            list.add(TextFormatting.YELLOW + "Then right click to mark two corners of wanted area");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.sneak_right_click_on_builder_to_start_mark"));
             type.addInformation(list);
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -776,7 +779,7 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
 
     private static boolean validFile(EntityPlayer player, String filename) {
         if (filename.contains("\\") || filename.contains("/") || filename.contains(":")) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Invalid filename '" + filename + "'! Cannot be a path!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.invalid_filename_s_cannot_be_a_path", filename), false);
             return false;
         }
         return true;
@@ -815,10 +818,10 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
             byte[] encoded = Base64.getEncoder().encode(data);
             writer.write(new String(encoded));
         } catch (FileNotFoundException e) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Cannot write to file '" + filename + "'!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.cannot_write_to_file_s", filename), false);
             return;
         }
-        player.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + "Saved shape to file '" + file.getPath() + "'"), false);
+        player.sendStatusMessage(new TextComponentTranslation("msg.rftools.saved_shape_to_file_s", file.getPath()), false);
     }
 
     public static void load(EntityPlayer player, ItemStack card, String filename) {
@@ -829,14 +832,14 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
         Shape shape = ShapeCardItem.getShape(card);
 
         if (shape != Shape.SHAPE_SCAN) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "To load a file into this card you need a linked 'scan' type card!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.to_load_a_file_into_this_card_you_need_a"), false);
             return;
         }
 
         NBTTagCompound compound = ShapeCardItem.getCompound(card);
         int scanId = compound.getInteger("scanid");
         if (scanId == 0) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "This card is not linked to scan data!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.this_card_is_not_linked_to_scan_data"), false);
             return;
         }
 
@@ -847,18 +850,18 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
             String s = reader.readLine();
             if (!"SHAPE".equals(s)) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "This does not appear to be a valid shapecard file!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.this_does_not_appear_to_be_a_valid"), false);
                 return;
             }
             s = reader.readLine();
             if (!s.startsWith("DIM:")) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "This does not appear to be a valid shapecard file!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.this_does_not_appear_to_be_a_valid"), false);
                 return;
             }
             BlockPos dim = parse(s.substring(4));
             s = reader.readLine();
             if (!s.startsWith("OFF:")) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "This does not appear to be a valid shapecard file!"), false);
+                player.sendStatusMessage(new TextComponentTranslation("msg.rftools.this_does_not_appear_to_be_a_valid"), false);
                 return;
             }
             BlockPos off = parse(s.substring(4));
@@ -869,7 +872,7 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(split[0]));
                 int meta = Integer.parseInt(split[1]);
                 if (block == null) {
-                    player.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "Could not find block '" + split[0] + "'!"), false);
+                    player.sendStatusMessage(new TextComponentTranslation("msg.rftools.could_not_find_block_s", split[0]), false);
                     block = Blocks.STONE;
                     meta = 0;
                 }
@@ -881,19 +884,19 @@ public class ShapeCardItem extends GenericRFToolsItem implements INBTPreservingI
 
             setDataFromFile(scanId, card, dim, off, decoded, statePalette);
         } catch (FileNotFoundException e) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Cannot read from file '" + filename + "'!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.cannot_read_from_file_s", filename), false);
             return;
         } catch (IOException e) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Cannot read from file '" + filename + "'!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.cannot_read_from_file_s", filename), false);
             return;
         } catch (NullPointerException e) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "File '" + filename + "' is too short!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.file_s_is_too_short", filename), false);
             return;
         } catch (ArrayIndexOutOfBoundsException e) {
-            player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "File '" + filename + "' contains invalid entries!"), false);
+            player.sendStatusMessage(new TextComponentTranslation("msg.rftools.file_s_contains_invalid_entries", filename), false);
             return;
         }
-        player.sendStatusMessage(new TextComponentString(TextFormatting.GREEN + "Loaded shape from file '" + file.getPath() + "'"), false);
+        player.sendStatusMessage(new TextComponentTranslation("msg.rftools.loaded_shape_from_file_s", file.getPath()), false);
     }
 
     private static void setDataFromFile(int scanId, ItemStack card, BlockPos dimension, BlockPos offset, byte[] data, StatePalette palette) {

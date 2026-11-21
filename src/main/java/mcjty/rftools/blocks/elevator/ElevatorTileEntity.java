@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static mcjty.lib.blocks.BaseBlock.FACING_HORIZ;
+import mcjty.rftools.varia.Msg;
 
 public class ElevatorTileEntity extends GenericEnergyReceiverTileEntity implements ITickable {
 
@@ -671,14 +672,14 @@ public class ElevatorTileEntity extends GenericEnergyReceiverTileEntity implemen
         // Check if we have enough energy
         int rfNeeded = (int) (ElevatorConfiguration.rfPerHeightUnit.get() * Math.abs(getPos().getY() - platformPos.getY()) * (3.0f - getInfusedFactor()) / 3.0f);
         if (controller.getStoredPower() < rfNeeded) {
-            Broadcaster.broadcast(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), TextFormatting.RED + "Not enough power to move the elevator platform!", 10);
+            Msg.broadcast(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), 10, "msg.rftools.not_enough_power_to_move_the_elevator_platform");
             return;
         }
 
         if(controller.startMoving(platformPos, getPos(), getWorld().getBlockState(platformPos.offset(side)))) {
             controller.consumeEnergy(rfNeeded);
         } else {
-            Broadcaster.broadcast(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), TextFormatting.RED + "The block in front of the elevator platform could not be moved!", 10);
+            Msg.broadcast(getWorld(), getPos().getX(), getPos().getY(), getPos().getZ(), 10, "msg.rftools.the_block_in_front_of_the_elevator_platform_could_not");
         }
 
     }

@@ -53,6 +53,9 @@ import java.util.List;
 
 import static mcjty.rftools.blocks.storage.ModularStorageContainer.CONTAINER_GRID;
 import static mcjty.rftools.blocks.storage.ModularStorageTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocImageChoiceLabel;
 
 
 public class GuiModularStorage extends GenericGuiContainer<ModularStorageTileEntity> {
@@ -134,7 +137,7 @@ public class GuiModularStorage extends GenericGuiContainer<ModularStorageTileEnt
         cycleButton = new Button(mc, this)
                 .setName("cycle")
                 .setChannel("cycle")
-                .setText("C").setTooltips("Cycle to the next storage module").setLayoutHint(new PositionalLayout.PositionalHint(5, ySize - 23, 16, 16));
+                .setText("C").setTooltips(GuiLoc.lines("gui.rftools.cycle_to_the_next_storage_module")).setLayoutHint(new PositionalLayout.PositionalHint(5, ySize - 23, 16, 16));
 
         Panel toplevel = new Panel(mc, this).setLayout(new PositionalLayout()).addChild(itemList).addChild(slider)
                 .addChild(modePanel)
@@ -182,38 +185,38 @@ public class GuiModularStorage extends GenericGuiContainer<ModularStorageTileEnt
     }
 
     private Panel setupModePanel() {
-        filter = new TextField(mc, this).setLayoutHint(3, 3, 57, 13).setTooltips("Name based filter for items")
+        filter = new TextField(mc, this).setLayoutHint(3, 3, 57, 13).setTooltips(GuiLoc.lines("gui.rftools.name_based_filter_for_items"))
                 .addTextEvent((parent, newText) -> updateSettings());
 
-        viewMode = new ImageChoiceLabel(mc, this).setLayoutHint(4, 19, 16, 16).setTooltips("Control how items are shown", "in the view")
+        viewMode = new LocImageChoiceLabel(mc, this).setLayoutHint(4, 19, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.control_how_items_are_shown_in_the_view"))
                 .addChoiceEvent((parent, newChoice) -> updateSettings());
-        viewMode.addChoice(VIEW_LIST, "Items are shown in a list view", guiElements, 9 * 16, 16);
-        viewMode.addChoice(VIEW_COLUMNS, "Items are shown in columns", guiElements, 10 * 16, 16);
-        viewMode.addChoice(VIEW_ICONS, "Items are shown with icons", guiElements, 11 * 16, 16);
+        viewMode.addChoice(VIEW_LIST, I18n.format("gui.rftools.items_are_shown_in_a_list_view"), guiElements, 9 * 16, 16);
+        viewMode.addChoice(VIEW_COLUMNS, I18n.format("gui.rftools.items_are_shown_in_columns"), guiElements, 10 * 16, 16);
+        viewMode.addChoice(VIEW_ICONS, I18n.format("gui.rftools.items_are_shown_with_icons"), guiElements, 11 * 16, 16);
 
         updateTypeModule();
 
-        sortMode = new ImageChoiceLabel(mc, this).setLayoutHint(23, 19, 16, 16).setTooltips("Control how items are sorted", "in the view")
+        sortMode = new LocImageChoiceLabel(mc, this).setLayoutHint(23, 19, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.control_how_items_are_sorted_in_the_view"))
                 .addChoiceEvent((parent, newChoice) -> updateSettings());
         for (ItemSorter sorter : typeModule.getSorters()) {
-            sortMode.addChoice(sorter.getName(), sorter.getTooltip(), guiElements, sorter.getU(), sorter.getV());
+            sortMode.addChoice(sorter.getName(), GuiLoc.eng(sorter.getTooltip()), guiElements, sorter.getU(), sorter.getV());
         }
 
-        groupMode = new ImageChoiceLabel(mc, this).setLayoutHint(42, 19, 16, 16).setTooltips("If enabled it will show groups", "based on sorting criterium")
+        groupMode = new LocImageChoiceLabel(mc, this).setLayoutHint(42, 19, 16, 16).setTooltips(GuiLoc.lines("gui.rftools.if_enabled_it_will_show_groups_based_on"))
                 .addChoiceEvent((parent, newChoice) -> updateSettings());
-        groupMode.addChoice("Off", "Don't show groups", guiElements, 13 * 16, 0);
-        groupMode.addChoice("On", "Show groups", guiElements, 14 * 16, 0);
+        groupMode.addChoice("Off", I18n.format("gui.rftools.don_t_show_groups"), guiElements, 13 * 16, 0);
+        groupMode.addChoice("On", I18n.format("gui.rftools.show_groups"), guiElements, 14 * 16, 0);
 
         amountLabel = new Label(mc, this);
         amountLabel.setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT);
         amountLabel.setLayoutHint(16, 40, 66, 12);
-        amountLabel.setTooltips("Amount of stacks / maximum amount");
+        amountLabel.setTooltips(GuiLoc.lines("gui.rftools.amount_of_stacks_maximum_amount"));
         amountLabel.setText("?/?");
 
         compactButton = new Button(mc, this)
                 .setName("compact")
                 .setChannel("compact")
-                .setLayoutHint(4, 39, 12, 12).setText("z").setTooltips("Compact equal stacks");
+                .setLayoutHint(4, 39, 12, 12).setText("z").setTooltips(GuiLoc.lines("gui.rftools.compact_equal_stacks"));
 
         if (tileEntity != null) {
             filter.setText(ModularStorageConfiguration.clearSearchOnOpen.get() ? "" : tileEntity.getFilter());
@@ -406,7 +409,7 @@ public class GuiModularStorage extends GenericGuiContainer<ModularStorageTileEnt
         itemList.removeChildren();
 
         if (tileEntity != null && !inventorySlots.getSlot(ModularStorageContainer.SLOT_STORAGE_MODULE).getHasStack()) {
-            amountLabel.setText("(empty)");
+            amountLabel.setText(I18n.format("gui.rftools.empty"));
             compactButton.setEnabled(false);
             cycleButton.setEnabled(false);
             return;
@@ -527,7 +530,7 @@ public class GuiModularStorage extends GenericGuiContainer<ModularStorageTileEnt
         String sortName = sortMode.getCurrentChoice();
         sortMode.clear();
         for (ItemSorter sorter : typeModule.getSorters()) {
-            sortMode.addChoice(sorter.getName(), sorter.getTooltip(), guiElements, sorter.getU(), sorter.getV());
+            sortMode.addChoice(sorter.getName(), GuiLoc.eng(sorter.getTooltip()), guiElements, sorter.getU(), sorter.getV());
         }
         int sort = sortMode.findChoice(sortName);
         if (sort == -1) {

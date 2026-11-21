@@ -7,13 +7,13 @@ window {
     panel('','vertical') {
         bgthickness(2)
         panel('','horizontal') {
-            label('','Delay:')
+            label('','gui.rftools.common.delay')
             textfield('delay') {
                 channel('delay')
-                tooltips('Set the delay in ticks','(20 ticks is one second)')
+                tooltips('gui.rftools.timer.delay.tip')
             }
         }
-        togglebutton('pauses','Pause while redstone active') {
+        togglebutton('pauses','gui.rftools.timer.pauses.text') {
             channel('pauses')
             desired(-1,16)
             check(true)

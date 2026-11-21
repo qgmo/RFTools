@@ -27,6 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.varia.Msg;
 
 public abstract class RedstoneChannelBlock<T extends RedstoneChannelTileEntity, C extends Container> extends LogicSlabBlock<T, C> {
 
@@ -42,7 +44,7 @@ public abstract class RedstoneChannelBlock<T extends RedstoneChannelTileEntity, 
         NBTTagCompound tagCompound = itemStack.getTagCompound();
         if (tagCompound != null) {
             int channel = tagCompound.getInteger("channel");
-            list.add(TextFormatting.GREEN + "Channel: " + channel);
+            list.add(I18n.format("tooltip.rftools.channel_s", channel));
         }
     }
 
@@ -81,7 +83,7 @@ public abstract class RedstoneChannelBlock<T extends RedstoneChannelTileEntity, 
                         }
                         rcte.setChannel(channel);
                     }
-                    Logging.message(player, TextFormatting.YELLOW + "Channel set to " + channel + "!");
+                    Msg.message(player, "msg.rftools.channel_set_to_s", channel);
                 }
                 return true;
             }

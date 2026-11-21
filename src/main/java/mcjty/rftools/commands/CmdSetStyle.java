@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CmdSetStyle extends AbstractRfToolsCommand {
     @Override
@@ -28,7 +29,7 @@ public class CmdSetStyle extends AbstractRfToolsCommand {
     @Override
     public void execute(ICommandSender sender, String[] args) {
         if (args.length > 2) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Too many parameters!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.too_many_parameters");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -38,7 +39,7 @@ public class CmdSetStyle extends AbstractRfToolsCommand {
         }
 
         if (!(sender instanceof EntityPlayer)) {
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "This command only works as a player!");
+            ITextComponent component = new TextComponentTranslation("msg.rftools.this_command_only_works_as_a_player");
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -52,7 +53,7 @@ public class CmdSetStyle extends AbstractRfToolsCommand {
 
         if (args.length < 2) {
             GuiStyle style = properties.getStyle();
-            ITextComponent component = new TextComponentString(TextFormatting.YELLOW + "Current GUI style: " + style.getStyle());
+            ITextComponent component = new TextComponentTranslation("msg.rftools.current_gui_style_s", style.getStyle());
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {
@@ -69,7 +70,7 @@ public class CmdSetStyle extends AbstractRfToolsCommand {
                 buf = buf + " " + style.getStyle();
             }
 
-            ITextComponent component = new TextComponentString(TextFormatting.RED + "Unknown style! Options:" + buf);
+            ITextComponent component = new TextComponentTranslation("msg.rftools.unknown_style_options_s", buf);
             if (sender instanceof EntityPlayer) {
                 ((EntityPlayer) sender).sendStatusMessage(component, false);
             } else {

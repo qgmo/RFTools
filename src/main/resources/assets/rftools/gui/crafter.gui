@@ -38,25 +38,25 @@ window {
             hint(148,7,41,14)
             choices {
                 choice('All') {
-                    tooltips('All items in input slots are consumed','§a(press Apply after changing)')
+                    tooltips('gui.rftools.crafter.keep.all.tip')
                 }
                 choice('Keep') {
-                    tooltips('Keep one item in every inventory slot','§a(press Apply after changing)')
+                    tooltips('gui.rftools.crafter.keep.keep.tip')
                 }
             }
         }
         choicelabel('internal') {
             hint(148,24,41,14)
-            tooltips(''Int' will put result of','crafting operation in','inventory instead of','output buffer')
+            tooltips('gui.rftools.crafter.internal.tip')
             choices {
                 choice('Ext') {
-                    tooltips('Result of crafting operation','will go to output buffer','§a(press Apply after changing)')
+                    tooltips('gui.rftools.crafter.internal.ext.tip')
                 }
                 choice('Int') {
-                    tooltips('Result of crafting operation','will stay in input buffer','§a(press Apply after changing)')
+                    tooltips('gui.rftools.crafter.internal.int.tip')
                 }
                 choice('ExtC') {
-                    tooltips('Result of crafting operation','will go to output buffer','but remaining items (like','buckets) will stay in input','§a(press Apply after changing)')
+                    tooltips('gui.rftools.crafter.internal.extc.tip')
                 }
             }
         }
@@ -70,10 +70,10 @@ window {
             hint(137,7,10,84)
             scrollable('recipes')
         }
-        button('apply','Apply') {
+        button('apply','gui.rftools.crafter.apply.text') {
             channel('apply')
             hint(212,65,34,16)
-            tooltips('Press to apply the','recipe to the crafter')
+            tooltips('gui.rftools.crafter.apply.tip')
         }
         imagechoicelabel('redstone') {
             channel('redstone')
@@ -83,17 +83,17 @@ window {
             choices {
                 choice('Ignored') {
                     uv(0,0)
-                    tooltips('Redstone mode:','Ignored')
+                    tooltips('gui.rftools.common.redstone_mode_ignored')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('Off') {
                     uv(16,0)
-                    tooltips('Redstone mode:','Off to activate')
+                    tooltips('gui.rftools.common.redstone_mode_off_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('On') {
                     uv(32,0)
-                    tooltips('Redstone mode:','On to activate')
+                    tooltips('gui.rftools.common.redstone_mode_on_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
             }
@@ -106,12 +106,12 @@ window {
             choices {
                 choice('Slow') {
                     uv(48,0)
-                    tooltips('Speed mode:','Slow')
+                    tooltips('gui.rftools.crafter.speed.slow.tip')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('Fast') {
                     uv(64,0)
-                    tooltips('Speed mode:','Fast')
+                    tooltips('gui.rftools.crafter.speed.fast.tip')
                     image('rftools:textures/gui/guielements.png')
                 }
             }
@@ -119,12 +119,12 @@ window {
         button('','R') {
             channel('remember')
             hint(148,74,18,16)
-            tooltips('Remember the current items','in the internal and','external buffers')
+            tooltips('gui.rftools.crafter.remember_the_current_items_in.tip')
         }
         button('','F') {
             channel('forget')
             hint(168,74,18,16)
-            tooltips('Forget the remembered layout')
+            tooltips('gui.rftools.crafter.forget_the_remembered_layout.tip')
         }
     }
 }

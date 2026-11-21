@@ -33,6 +33,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.varia.Msg;
 
 //import net.minecraft.entity.monster.SkeletonType;
 
@@ -104,11 +106,11 @@ public class SyringeItem extends GenericRFToolsItem {
             if (tagCompound != null) {
                 String mobName = getMobName(stack);
                 if (mobName != null) {
-                    Logging.message(player, TextFormatting.BLUE + "Mob: " + mobName);
+                    Msg.message(player, "msg.rftools.mob_s", mobName);
                 }
                 int level = tagCompound.getInteger("level");
                 level = level * 100 / GeneralConfiguration.maxMobInjections.get();
-                Logging.message(player, TextFormatting.BLUE + "Essence level: " + level + "%");
+                Msg.message(player, "msg.rftools.essence_level_s", level);
             }
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
@@ -166,17 +168,17 @@ public class SyringeItem extends GenericRFToolsItem {
         if (tagCompound != null) {
             String mobName = getMobName(itemStack);
             if (mobName != null) {
-                list.add(TextFormatting.BLUE + "Mob: " + mobName);
+                list.add(I18n.format("tooltip.rftools.mob_s", mobName));
             }
             int level = tagCompound.getInteger("level");
             level = level * 100 / GeneralConfiguration.maxMobInjections.get();
-            list.add(TextFormatting.BLUE + "Essence level: " + level + "%");
+            list.add(I18n.format("tooltip.rftools.essence_level_s", level));
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Use this to extract essence from mobs");
+            list.add(I18n.format("tooltip.rftools.use_this_to_extract_essence_from_mobs"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

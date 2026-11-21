@@ -18,12 +18,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -36,12 +36,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -54,12 +54,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -72,12 +72,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -90,12 +90,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -108,12 +108,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -126,12 +126,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -144,12 +144,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -165,12 +165,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -183,12 +183,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -201,12 +201,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -219,12 +219,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -237,12 +237,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -255,12 +255,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -273,12 +273,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -291,12 +291,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -312,12 +312,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -330,12 +330,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -348,12 +348,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -366,12 +366,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -384,12 +384,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -402,12 +402,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -420,12 +420,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -438,12 +438,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -459,12 +459,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -477,12 +477,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -495,12 +495,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -513,12 +513,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -531,12 +531,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -549,12 +549,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -567,12 +567,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -585,12 +585,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -606,12 +606,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -624,12 +624,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -642,12 +642,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -660,12 +660,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -678,12 +678,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -696,12 +696,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -714,12 +714,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -732,12 +732,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -753,12 +753,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -771,12 +771,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -789,12 +789,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -807,12 +807,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -825,12 +825,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -843,12 +843,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -861,12 +861,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -879,12 +879,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -900,12 +900,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -918,12 +918,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -936,12 +936,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -954,12 +954,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -972,12 +972,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -990,12 +990,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1008,12 +1008,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1026,12 +1026,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1047,12 +1047,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1065,12 +1065,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1083,12 +1083,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1101,12 +1101,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1119,12 +1119,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1137,12 +1137,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1155,12 +1155,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1173,29 +1173,29 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
             }
         }
         panel('','horizontal') {
-            button('','Clear') {
+            button('','gui.rftools.common.clear') {
                 channel('clear')
                 desired(38,13)
-                tooltips('Clear the grid')
+                tooltips('gui.rftools.sequencer.clear_the_grid.tip')
             }
-            button('','Flip') {
+            button('','gui.rftools.common.flip') {
                 channel('flip')
                 desired(34,13)
-                tooltips('Invert all values in the grid')
+                tooltips('gui.rftools.sequencer.invert_all_values_in_the_grid.tip')
             }
-            label('','End on:')
+            label('','gui.rftools.sequencer.label.text')
             imagechoicelabel('endchoice') {
                 channel('endchoice')
                 desired(-1,11)
@@ -1204,12 +1204,12 @@ window {
                 choices {
                     choice('0') {
                         uv(160,0)
-                        tooltips('Disabled')
+                        tooltips('gui.rftools.common.disabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                     choice('1') {
                         uv(176,0)
-                        tooltips('Enabled')
+                        tooltips('gui.rftools.common.enabled')
                         image('rftools:textures/gui/guielements.png')
                     }
                 }
@@ -1221,35 +1221,35 @@ window {
                 desired(55,13)
                 choices {
                     choice('Once1') {
-                        tooltips('When a redstone signal is','received, loop the cycle once.','Ignore further pulses')
+                        tooltips('gui.rftools.sequencer.mode.once1.tip')
                     }
                     choice('Once2') {
-                        tooltips('When a redstone signal is','received, loop the cycle once.','Restart if new pulse arrives')
+                        tooltips('gui.rftools.sequencer.mode.once2.tip')
                     }
                     choice('Loop1') {
-                        tooltips('Loop the cycle all the time.','Ignore redstone signals')
+                        tooltips('gui.rftools.sequencer.mode.loop1.tip')
                     }
                     choice('Loop2') {
-                        tooltips('Loop the cycle all the time.','Restart on redstone pulse')
+                        tooltips('gui.rftools.sequencer.mode.loop2.tip')
                     }
                     choice('Loop3') {
-                        tooltips('Loop the cycle when redstone.','signal is present. Continue at current step')
+                        tooltips('gui.rftools.sequencer.mode.loop3.tip')
                     }
                     choice('Loop4') {
-                        tooltips('Loop the cycle when redstone.','signal is present. Restart on no signal')
+                        tooltips('gui.rftools.sequencer.mode.loop4.tip')
                     }
                     choice('Step') {
-                        tooltips('Do one step in the cycle','for every redstone pulse')
+                        tooltips('gui.rftools.sequencer.mode.step.tip')
                     }
                 }
             }
-            label('','Delay:')
+            label('','gui.rftools.common.delay')
             textfield('speed') {
                 channel('speed')
             }
         }
         panel('','horizontal') {
-            label('','Sequence length:')
+            label('','gui.rftools.sequencer.label.text_2')
             textfield('count') {
                 channel('count')
             }

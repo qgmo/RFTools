@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 public class PowerCellCardItem extends GenericRFToolsItem {
 
@@ -21,12 +22,12 @@ public class PowerCellCardItem extends GenericRFToolsItem {
     @Override
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
-        list.add(TextFormatting.WHITE + "Use to connect a powercell multiblock");
+        list.add(I18n.format("tooltip.rftools.use_to_connect_a_powercell_multiblock"));
         int id = getId(itemStack);
         if (id == -1) {
-            list.add(TextFormatting.YELLOW + "[UNLINKED]");
+            list.add(I18n.format("tooltip.rftools.unlinked"));
         } else {
-            list.add(TextFormatting.GREEN + "Link id: " + id);
+            list.add(I18n.format("tooltip.rftools.link_id_s", id));
         }
     }
 

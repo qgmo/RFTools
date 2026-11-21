@@ -19,6 +19,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class OreDictTypeItem extends StorageTypeItem {
     private List<ItemSorter> sorters = null;
@@ -62,10 +65,9 @@ public class OreDictTypeItem extends StorageTypeItem {
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This module extends the Modular Storage block");
-            list.add(TextFormatting.WHITE + "with Ore dictionary specific capabilities");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_module_extends_the_modular_storage_2"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 }

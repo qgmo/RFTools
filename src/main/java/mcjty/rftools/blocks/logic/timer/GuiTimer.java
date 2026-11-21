@@ -9,6 +9,7 @@ import mcjty.rftools.RFTools;
 import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiTimer extends GenericGuiContainer<TimerTileEntity> {
 
@@ -19,6 +20,7 @@ public class GuiTimer extends GenericGuiContainer<TimerTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/timer.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

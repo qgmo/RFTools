@@ -11,6 +11,7 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import java.text.DecimalFormat;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiAnalog extends GenericGuiContainer<AnalogTileEntity> {
 
@@ -31,6 +32,7 @@ public class GuiAnalog extends GenericGuiContainer<AnalogTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/analog.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();

@@ -13,6 +13,8 @@ import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
 
 import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
+import mcjty.rftools.client.GuiLoc;
+import net.minecraft.client.resources.I18n;
 
 public class GuiEndergenic extends GenericGuiContainer<EndergenicTileEntity> {
 
@@ -38,6 +40,7 @@ public class GuiEndergenic extends GenericGuiContainer<EndergenicTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/endergenic.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         initializeFields();
@@ -65,10 +68,10 @@ public class GuiEndergenic extends GenericGuiContainer<EndergenicTileEntity> {
 
         checkStats();
 
-        lastRfPerTick.setText(fromServer_lastRfPerTick + " RF/tick");
-        lastLostPearls.setText(fromServer_lastPearlsLost + " pearls");
-        lastLaunchedPearls.setText(fromServer_lastPearlsLaunched + " pearls");
-        lastOpportunities.setText(fromServer_lastPearlOpportunities + " times");
+        lastRfPerTick.setText(I18n.format("gui.rftools.s_rf_tick", fromServer_lastRfPerTick));
+        lastLostPearls.setText(I18n.format("gui.rftools.s_pearls", fromServer_lastPearlsLost));
+        lastLaunchedPearls.setText(I18n.format("gui.rftools.s_pearls", fromServer_lastPearlsLaunched));
+        lastOpportunities.setText(I18n.format("gui.rftools.s_times", fromServer_lastPearlOpportunities));
 
     }
 

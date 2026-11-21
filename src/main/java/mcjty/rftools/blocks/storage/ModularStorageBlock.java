@@ -41,6 +41,9 @@ import java.util.function.BiFunction;
 
 import static mcjty.rftools.blocks.storage.ModularAmountOverlay.*;
 import static mcjty.rftools.blocks.storage.ModularTypeModule.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class ModularStorageBlock extends GenericRFToolsBlock<ModularStorageTileEntity, ModularStorageContainer> {
 
@@ -79,12 +82,9 @@ public class ModularStorageBlock extends GenericRFToolsBlock<ModularStorageTileE
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This modular storage system can store a lot");
-            list.add(TextFormatting.WHITE + "of items and allows easy searching and filtering.");
-            list.add(TextFormatting.WHITE + "You must first insert a storage module item before");
-            list.add(TextFormatting.WHITE + "you can use it");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_modular_storage_system_can_store_a_lot"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

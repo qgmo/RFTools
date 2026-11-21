@@ -24,6 +24,9 @@ import org.lwjgl.input.Keyboard;
 import java.awt.Rectangle;
 
 import static mcjty.rftools.blocks.screens.ScreenTileEntity.PARAM_TRUETYPE;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiScreen  extends GenericGuiContainer<ScreenTileEntity> {
     public static final int SCREEN_WIDTH = 256;
@@ -59,7 +62,7 @@ public class GuiScreen  extends GenericGuiContainer<ScreenTileEntity> {
         toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout());
 
         for (int i = 0 ; i < ScreenContainer.SCREEN_MODULES ; i++) {
-            buttons[i] = new ToggleButton(mc, this).setLayoutHint(new PositionalLayout.PositionalHint(30, 7 + i * 18 + 1, 40, 16)).setEnabled(false).setTooltips("Open the gui for this", "module");
+            buttons[i] = new ToggleButton(mc, this).setLayoutHint(new PositionalLayout.PositionalHint(30, 7 + i * 18 + 1, 40, 16)).setEnabled(false).setTooltips(GuiLoc.lines("gui.rftools.open_the_gui_for_this_module"));
             final int finalI = i;
             buttons[i].addButtonEvent(parent -> selectPanel(finalI));
             toplevel.addChild(buttons[i]);
@@ -69,17 +72,17 @@ public class GuiScreen  extends GenericGuiContainer<ScreenTileEntity> {
 
         bright = new ToggleButton(mc, this)
                 .setName("bright")
-                .setText("Bright")
+                .setText(I18n.format("gui.rftools.bright"))
                 .setCheckMarker(true)
-                .setTooltips("Toggle full brightness")
+                .setTooltips(GuiLoc.lines("gui.rftools.toggle_full_brightness"))
                 .setLayoutHint(85, 123, 55, 14);
 //        .setLayoutHint(7, 208, 63, 14);
         toplevel.addChild(bright);
 
-        toplevel.addChild(new Label(mc, this).setText("Font:").setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setLayoutHint(new PositionalLayout.PositionalHint(85+50+9, 123, 30, 14)));
-        trueType = new ChoiceLabel(mc, this)
+        toplevel.addChild(new Label(mc, this).setText(I18n.format("gui.rftools.font")).setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setLayoutHint(new PositionalLayout.PositionalHint(85+50+9, 123, 30, 14)));
+        trueType = new LocChoiceLabel(mc, this)
                 .addChoices("Default", "Truetype", "Vanilla")
-                .setTooltips("Set truetype font mode", "for the screen")
+                .setTooltips(GuiLoc.lines("gui.rftools.set_truetype_font_mode_for_the_screen"))
                 .setLayoutHint(new PositionalLayout.PositionalHint(85+50+14+30, 123, 68, 14));
         int trueTypeMode = tileEntity.getTrueTypeMode();
         trueType.setChoice(trueTypeMode == 0 ? "Default" : (trueTypeMode == -1 ? "Vanilla" : "Truetype"));

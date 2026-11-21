@@ -18,6 +18,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class ScreenControllerBlock extends GenericRFToolsBlock<ScreenControllerTileEntity, ScreenControllerContainer> implements Infusable {
 
@@ -42,14 +45,10 @@ public class ScreenControllerBlock extends GenericRFToolsBlock<ScreenControllerT
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Before screens can work they need to get power from");
-            list.add(TextFormatting.WHITE + "this controller. Even a screen that has only modules");
-            list.add(TextFormatting.WHITE + "that require no power will need to have a controller.");
-            list.add(TextFormatting.WHITE + "One controller can power many screens as long as they");
-            list.add(TextFormatting.WHITE + "are in range.");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: increased range for screens.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.before_screens_can_work_they_need_to_get"));
+            list.add(I18n.format("tooltip.rftools.infusing_bonus_increased_range_for_screens"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

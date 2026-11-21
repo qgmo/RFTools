@@ -11,26 +11,26 @@ window {
             hint(25,161,54,14)
             choices {
                 choice('Invisible') {
-                    tooltips('Shield is completely invisible')
+                    tooltips('gui.rftools.common.shield_is_completely_invisible')
                 }
                 choice('Shield') {
-                    tooltips('Default shield texture')
+                    tooltips('gui.rftools.common.default_shield_texture')
                 }
                 choice('Mimic') {
-                    tooltips('Use the texture from the supplied block')
+                    tooltips('gui.rftools.common.use_the_texture_from_the_supplied_block')
                 }
                 choice('Transp') {
-                    tooltips('Transparent shield texture')
+                    tooltips('gui.rftools.common.transparent_shield_texture')
                 }
                 choice('Solid') {
-                    tooltips('Solid shield texture')
+                    tooltips('gui.rftools.common.solid_shield_texture')
                 }
             }
         }
-        button('','Set') {
+        button('','gui.rftools.common.set') {
             channel('camo')
             hint(46,142,30,16)
-            tooltips('Set the camouflage block')
+            tooltips('gui.rftools.common.set_the_camouflage_block')
         }
         imagechoicelabel('redstone') {
             channel('redstone')
@@ -40,17 +40,17 @@ window {
             choices {
                 choice('Ignored') {
                     uv(0,0)
-                    tooltips('Redstone mode:','Ignored')
+                    tooltips('gui.rftools.common.redstone_mode_ignored')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('Off') {
                     uv(16,0)
-                    tooltips('Redstone mode:','Off to activate')
+                    tooltips('gui.rftools.common.redstone_mode_off_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
                 choice('On') {
                     uv(32,0)
-                    tooltips('Redstone mode:','On to activate')
+                    tooltips('gui.rftools.common.redstone_mode_on_to_activate')
                     image('rftools:textures/gui/guielements.png')
                 }
             }
@@ -75,16 +75,16 @@ window {
             hint(170,12,80,14)
             choices {
                 choice('Pass') {
-                    tooltips('Entity that matches this filter','can pass through')
+                    tooltips('gui.rftools.common.entity_that_matches_this_filter_can_pass_2')
                 }
                 choice('Solid') {
-                    tooltips('Entity that matches this filter','cannot pass')
+                    tooltips('gui.rftools.common.entity_that_matches_this_filter_cannot_pass_2')
                 }
                 choice('Damage') {
-                    tooltips('Entity that matches this filter','can pass but gets damage')
+                    tooltips('gui.rftools.common.entity_that_matches_this_filter_can_pass')
                 }
                 choice('SolDmg') {
-                    tooltips('Entity that matches this filter','cannot pass and gets damage')
+                    tooltips('gui.rftools.common.entity_that_matches_this_filter_cannot_pass')
                 }
             }
         }
@@ -92,49 +92,49 @@ window {
             hint(170,28,80,14)
             choices {
                 choice('All') {
-                    tooltips('Matches everything')
+                    tooltips('gui.rftools.common.matches_everything')
                 }
                 choice('Passive') {
-                    tooltips('Matches passive mobs')
+                    tooltips('gui.rftools.common.matches_passive_mobs')
                 }
                 choice('Hostile') {
-                    tooltips('Matches hostile mobs')
+                    tooltips('gui.rftools.common.matches_hostile_mobs')
                 }
                 choice('Item') {
-                    tooltips('Matches items')
+                    tooltips('gui.rftools.common.matches_items')
                 }
                 choice('Player') {
-                    tooltips('Matches players','(optionally named)')
+                    tooltips('gui.rftools.common.matches_players_optionally_named')
                 }
             }
         }
         textfield {
             hint(170,44,80,14)
-            tooltips('Optional player name')
+            tooltips('gui.rftools.common.optional_player_name')
         }
         panel('','positional') {
             hint(170,58,80,43)
             bgthickness(-2)
             bgfilled1(-7631989)
-            button('','Add') {
+            button('','gui.rftools.common.add') {
                 channel('addfilter')
                 hint(4,6,36,14)
-                tooltips('Add selected filter')
+                tooltips('gui.rftools.common.add_selected_filter')
             }
-            button('','Del') {
+            button('','gui.rftools.common.del') {
                 channel('delfilter')
                 hint(39,6,36,14)
-                tooltips('Delete selected filter')
+                tooltips('gui.rftools.common.delete_selected_filter')
             }
-            button('','Up') {
+            button('','gui.rftools.common.up') {
                 channel('upfilter')
                 hint(4,22,36,14)
-                tooltips('Move filter up')
+                tooltips('gui.rftools.common.move_filter_up')
             }
-            button('','Down') {
+            button('','gui.rftools.common.down') {
                 channel('downfilter')
                 hint(39,22,36,14)
-                tooltips('Move filter down')
+                tooltips('gui.rftools.common.move_filter_down')
             }
         }
         choicelabel('damage') {
@@ -142,27 +142,27 @@ window {
             hint(170,102,80,14)
             choices {
                 choice('Generic') {
-                    tooltips('Generic damage type')
+                    tooltips('gui.rftools.common.generic_damage_type')
                 }
                 choice('Player') {
-                    tooltips('Damage as done by a player')
+                    tooltips('gui.rftools.common.damage_as_done_by_a_player')
                 }
             }
         }
         colorselector('color') {
             channel('color')
             hint(25,177,30,16)
-            tooltips('Color for the shield')
+            tooltips('gui.rftools.common.color_for_the_shield')
         }
-        label('','Looting:') {
+        label('','gui.rftools.common.looting') {
             hint(160,118,60,18)
-            tooltips('Insert dimensional shards','for looting bonus')
+            tooltips('gui.rftools.common.insert_dimensional_shards_for_looting_bonus')
             horizalign('ALIGN_RIGHT')
         }
         togglebutton('light','L') {
             channel('light')
             hint(56,177,23,16)
-            tooltips('If pressed, light is blocked','by the shield')
+            tooltips('gui.rftools.common.if_pressed_light_is_blocked_by_the_shield')
             check(true)
         }
     }

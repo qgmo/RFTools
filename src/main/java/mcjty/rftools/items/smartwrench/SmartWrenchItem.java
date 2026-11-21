@@ -36,6 +36,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 @Optional.Interface(iface = "cofh.api.item.IToolHammer", modid = "cofhapi|item")
 public class SmartWrenchItem extends Item implements IToolHammer, SmartWrench {
@@ -107,7 +111,7 @@ public class SmartWrenchItem extends Item implements IToolHammer, SmartWrench {
                 stack.setTagCompound(tagCompound);
             }
             tagCompound.setString("mode", mode.getCode());
-            Logging.message(player, TextFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
+            Msg.message(player, "msg.rftools.smart_wrench_is_now_in_s_mode", mode.getName());
         }
         return super.onItemRightClick(world, player, hand);
     }
@@ -131,7 +135,7 @@ public class SmartWrenchItem extends Item implements IToolHammer, SmartWrench {
                 GlobalCoordinate b = getCurrentBlock(stack);
                 if (b != null) {
                     if (b.getDimension() != world.provider.getDimension()) {
-                        Logging.message(player, TextFormatting.RED + "The selected block is in another dimension!");
+                        Msg.message(player, "msg.rftools.the_selected_block_is_in_another_dimension");
                         return EnumActionResult.FAIL;
                     }
                     TileEntity te = world.getTileEntity(b.getCoordinate());
@@ -156,19 +160,15 @@ public class SmartWrenchItem extends Item implements IToolHammer, SmartWrench {
         super.addInformation(itemStack, player, list, whatIsThis);
         GlobalCoordinate b = getCurrentBlock(itemStack);
         if (b != null) {
-            list.add(TextFormatting.GREEN + "Block: " + BlockPosTools.toString(b.getCoordinate()) + " at dimension " + b.getDimension());
+            list.add(I18n.format("tooltip.rftools.block_s_at_dimension_s", BlockPosTools.toString(b.getCoordinate()), b.getDimension()));
         }
         SmartWrenchMode mode = getCurrentMode(itemStack);
-        list.add(TextFormatting.WHITE + "Right-click on air to change mode.");
-        list.add(TextFormatting.GREEN + "Mode: " + mode.getName());
+        list.add(I18n.format("tooltip.rftools.right_click_on_air_to_change_mode"));
+        list.add(I18n.format("tooltip.rftools.mode_s", mode.getName()));
         if (mode == SmartWrenchMode.MODE_WRENCH) {
-            list.add(TextFormatting.WHITE + "Use as a normal wrench:");
-            list.add(TextFormatting.WHITE + "    Sneak-right-click to pick up machines.");
-            list.add(TextFormatting.WHITE + "    Right-click to rotate machines.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.use_as_a_normal_wrench_sneak_right_click_to"));
         } else if (mode == SmartWrenchMode.MODE_SELECT) {
-            list.add(TextFormatting.WHITE + "Use as a block selector:");
-            list.add(TextFormatting.WHITE + "    Sneak-right-click select master block.");
-            list.add(TextFormatting.WHITE + "    Right-click to associate blocks with master.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.use_as_a_block_selector_sneak_right_click"));
         }
     }
 

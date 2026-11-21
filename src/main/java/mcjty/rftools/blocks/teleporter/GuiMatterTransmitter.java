@@ -25,6 +25,9 @@ import java.util.*;
 import java.util.List;
 
 import static mcjty.rftools.blocks.teleporter.MatterTransmitterTileEntity.PARAM_PLAYER;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiMatterTransmitter extends GenericGuiContainer<MatterTransmitterTileEntity> {
     public static final int MATTER_WIDTH = 180;
@@ -72,18 +75,18 @@ public class GuiMatterTransmitter extends GenericGuiContainer<MatterTransmitterT
 
         TextField textField = new TextField(mc, this)
                 .setName("name")
-                .setTooltips("Use this name to", "identify this transmitter", "in the dialer");
-        Panel namePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText("Name:")).addChild(textField).setDesiredHeight(16);
+                .setTooltips(GuiLoc.lines("gui.rftools.use_this_name_to_identify_this_transmitter"));
+        Panel namePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.name"))).addChild(textField).setDesiredHeight(16);
 
-        privateSetting = new ChoiceLabel(mc, this)
+        privateSetting = new LocChoiceLabel(mc, this)
                 .setName("private")
                 .addChoices(ACCESS_PUBLIC, ACCESS_PRIVATE).setDesiredHeight(14).setDesiredWidth(60).
-            setChoiceTooltip(ACCESS_PUBLIC, "Everyone can access this transmitter", "and change the dialing destination").
-            setChoiceTooltip(ACCESS_PRIVATE, "Only people in the access list below", "can access this transmitter");
+            setChoiceTooltip(ACCESS_PUBLIC, GuiLoc.lines("gui.rftools.everyone_can_access_this_transmitter_and")).
+            setChoiceTooltip(ACCESS_PRIVATE, GuiLoc.lines("gui.rftools.only_people_in_the_access_list_below_can_2"));
         ToggleButton beamToggle = new ToggleButton(mc, this)
                 .setName("beam")
-                .setText("Hide").setCheckMarker(true).setDesiredHeight(14).setDesiredWidth(49).setTooltips("Hide the teleportation beam");
-        Panel privatePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText("Access:")).addChild(privateSetting).addChild(beamToggle).setDesiredHeight(16);
+                .setText(I18n.format("gui.rftools.hide")).setCheckMarker(true).setDesiredHeight(14).setDesiredWidth(49).setTooltips(GuiLoc.lines("gui.rftools.hide_the_teleportation_beam"));
+        Panel privatePanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.common.access"))).addChild(privateSetting).addChild(beamToggle).setDesiredHeight(16);
 
         allowedPlayers = new WidgetList(mc, this).setName("allowedplayers");
         Slider allowedPlayerSlider = new Slider(mc, this).setDesiredWidth(10).setVertical().setScrollableName("allowedplayers");
@@ -91,8 +94,8 @@ public class GuiMatterTransmitter extends GenericGuiContainer<MatterTransmitterT
                 .setFilledBackground(0xff9e9e9e);
 
         nameField = new TextField(mc, this);
-        addButton = new Button(mc, this).setChannel("addplayer").setText("Add").setDesiredHeight(13).setDesiredWidth(34).setTooltips("Add a player to the access list");
-        delButton = new Button(mc, this).setChannel("delplayer").setText("Del").setDesiredHeight(13).setDesiredWidth(34).setTooltips("Remove the selected player", "from the access list");
+        addButton = new Button(mc, this).setChannel("addplayer").setText(I18n.format("gui.rftools.common.add")).setDesiredHeight(13).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.add_a_player_to_the_access_list"));
+        delButton = new Button(mc, this).setChannel("delplayer").setText(I18n.format("gui.rftools.common.del")).setDesiredHeight(13).setDesiredWidth(34).setTooltips(GuiLoc.lines("gui.rftools.common.remove_the_selected_player_from_the_access"));
         Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(nameField).addChild(addButton).addChild(delButton).setDesiredHeight(16);
 
         Panel toplevel = new Panel(mc, this).setFilledRectThickness(2).setLayout(new VerticalLayout().setHorizontalMargin(3).setVerticalMargin(3).setSpacing(1)).

@@ -36,6 +36,7 @@ import net.minecraftforge.common.util.Constants;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import mcjty.rftools.varia.Msg;
 
 public class EndergenicTileEntity extends GenericEnergyStorageTileEntity implements ITickable, MachineInformation,
         IHudSupport, IMachineInformation, TickOrderHandler.ICheckStateServer {
@@ -586,11 +587,11 @@ public class EndergenicTileEntity extends GenericEnergyStorageTileEntity impleme
             EndergenicTileEntity destinationTE = getDestinationTE();
             if (destinationTE == null) {
                 RFTools.instance.clientInfo.setDestinationTE(null);
-                Logging.message(player, "Select another endergenic generator as destination");
+                Msg.message(player, "msg.rftools.select_another_endergenic_generator_as");
             } else {
                 RFTools.instance.clientInfo.setDestinationTE(destinationTE.getPos());
                 int distance = getDistanceInTicks();
-                Logging.message(player, "Select another endergenic generator as destination (current distance " + distance + ")");
+                Msg.message(player, "msg.rftools.select_another_endergenic_generator_as_2", distance);
             }
         } else if (coord.equals(thisCoord)) {
             // Unselect this one.
@@ -601,13 +602,13 @@ public class EndergenicTileEntity extends GenericEnergyStorageTileEntity impleme
             EndergenicTileEntity otherTE = (EndergenicTileEntity) tileEntity;
             int distance = otherTE.calculateDistance(thisCoord);
             if (distance >= 5) {
-                Logging.warn(player, "Distance is too far (maximum 4)");
+                Msg.warn(player, "msg.rftools.distance_is_too_far_maximum_4");
                 return;
             }
             otherTE.setDestination(thisCoord);
             RFTools.instance.clientInfo.setSelectedTE(null);
             RFTools.instance.clientInfo.setDestinationTE(null);
-            Logging.message(player, "Destination is set (distance " + otherTE.getDistanceInTicks() + " ticks)");
+            Msg.message(player, "msg.rftools.destination_is_set_distance_s_ticks", otherTE.getDistanceInTicks());
         }
     }
 

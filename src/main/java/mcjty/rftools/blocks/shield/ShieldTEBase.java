@@ -51,6 +51,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import mcjty.rftools.varia.Msg;
 
 //        @Optional.Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = "ComputerCraft")
 @Optional.InterfaceList(@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "opencomputers"))
@@ -697,13 +698,13 @@ public class ShieldTEBase extends GenericEnergyReceiverTileEntity implements Def
     @Override
     public void selectBlock(EntityPlayer player, BlockPos pos) {
         if (!shieldComposed) {
-            Logging.message(player, TextFormatting.YELLOW + "Shield is not composed. Nothing happens!");
+            Msg.message(player, "msg.rftools.shield_is_not_composed_nothing_happens");
             return;
         }
 
         float squaredDistance = (float) getPos().distanceSq(pos.getX(), pos.getY(), pos.getZ());
         if (squaredDistance > ShieldConfiguration.maxDisjointShieldDistance.get() * ShieldConfiguration.maxDisjointShieldDistance.get()) {
-            Logging.message(player, TextFormatting.YELLOW + "This template is too far to connect to the shield!");
+            Msg.message(player, "msg.rftools.this_template_is_too_far_to_connect_to_the");
             return;
         }
 
@@ -714,7 +715,7 @@ public class ShieldTEBase extends GenericEnergyReceiverTileEntity implements Def
         Block origBlock = getWorld().getBlockState(pos).getBlock();
         if (origBlock == ShieldSetup.shieldTemplateBlock) {
             if (isShapedShield()) {
-                Logging.message(player, TextFormatting.YELLOW + "You cannot add template blocks to a shaped shield (using a shape card)!");
+                Msg.message(player, "msg.rftools.you_cannot_add_template_blocks_to_a_shaped");
                 return;
             }
             Map<BlockPos, IBlockState> templateBlocks = new HashMap<>();
@@ -738,7 +739,7 @@ public class ShieldTEBase extends GenericEnergyReceiverTileEntity implements Def
             shieldBlocks.remove(new RelCoordinate(pos.getX() - xCoord, pos.getY() - yCoord, pos.getZ() - zCoord));
             getWorld().setBlockState(pos, templateState, 2);
         } else {
-            Logging.message(player, TextFormatting.YELLOW + "The selected shield can't do anything with this block!");
+            Msg.message(player, "msg.rftools.the_selected_shield_can_t_do_anything_with");
             return;
         }
         markDirtyClient();

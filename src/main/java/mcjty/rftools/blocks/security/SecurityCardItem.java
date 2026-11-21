@@ -23,6 +23,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 public class SecurityCardItem extends GenericRFToolsItem {
 
@@ -53,18 +57,14 @@ public class SecurityCardItem extends GenericRFToolsItem {
                 lastTime = System.currentTimeMillis();
                 RFToolsMessages.sendToServer(CommandHandler.CMD_GET_SECURITY_NAME, TypedMap.builder().put(CommandHandler.PARAM_ID, channel));
             }
-            list.add(TextFormatting.YELLOW + "Channel: " + channel + " (" + channelNameFromServer + ")");
+            list.add(I18n.format("tooltip.rftools.channel_s_s", channel, channelNameFromServer));
         } else {
-            list.add(TextFormatting.YELLOW + "Channel is not set!");
+            list.add(I18n.format("tooltip.rftools.channel_is_not_set"));
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "Manage security channels in the Security Manager");
-            list.add(TextFormatting.WHITE + "and link this card to a channel. Sneak right-click");
-            list.add(TextFormatting.WHITE + "a block to link the channel to that block.");
-            list.add(TextFormatting.WHITE + "If you want to copy the channel from a block to");
-            list.add(TextFormatting.WHITE + "a card you can right click with an unlinked card");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.manage_security_channels_in_the_security"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -77,32 +77,32 @@ public class SecurityCardItem extends GenericRFToolsItem {
                 // @tod security api
                 GenericTileEntity genericTileEntity = (GenericTileEntity) te;
                 if (genericTileEntity.getOwnerUUID() == null) {
-                    Logging.message(player, TextFormatting.RED + "This block has no owner!");
+                    Msg.message(player, "msg.rftools.this_block_has_no_owner");
                 } else {
                     if (OrphaningCardItem.isPrivileged(player, world) || isOwner(player, genericTileEntity)) {
                         NBTTagCompound tagCompound = stack.getTagCompound();
                         if (tagCompound == null || !tagCompound.hasKey("channel")) {
                             int blockSecurity = genericTileEntity.getSecurityChannel();
                             if (blockSecurity == -1) {
-                                Logging.message(player, TextFormatting.RED + "This security card is not setup correctly!");
+                                Msg.message(player, "msg.rftools.this_security_card_is_not_setup_correctly");
                             } else {
                                 if (tagCompound == null) {
                                     tagCompound = new NBTTagCompound();
                                     stack.setTagCompound(tagCompound);
                                 }
                                 tagCompound.setInteger("channel", blockSecurity);
-                                Logging.message(player, TextFormatting.RED + "Copied security channel from block to card!");
+                                Msg.message(player, "msg.rftools.copied_security_channel_from_block_to_card");
                             }
                         } else {
                             int channel = tagCompound.getInteger("channel");
                             toggleSecuritySettings(player, genericTileEntity, channel);
                         }
                     } else {
-                        Logging.message(player, TextFormatting.RED + "You cannot change security settings of a block you don't own!");
+                        Msg.message(player, "msg.rftools.you_cannot_change_security_settings_of_a");
                     }
                 }
             } else {
-                Logging.message(player, TextFormatting.RED + "Security is not supported on this block!");
+                Msg.message(player, "msg.rftools.security_is_not_supported_on_this_block");
             }
             return EnumActionResult.SUCCESS;
         }
@@ -129,10 +129,10 @@ public class SecurityCardItem extends GenericRFToolsItem {
         int sec = genericTileEntity.getSecurityChannel();
         if (sec == channel) {
             genericTileEntity.setSecurityChannel(-1);
-            Logging.message(player, "Security settings cleared from block!");
+            Msg.message(player, "msg.rftools.security_settings_cleared_from_block");
         } else {
             genericTileEntity.setSecurityChannel(channel);
-            Logging.message(player, "Security settings applied on block!");
+            Msg.message(player, "msg.rftools.security_settings_applied_on_block");
         }
     }
 }

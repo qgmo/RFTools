@@ -38,6 +38,9 @@ import org.lwjgl.opengl.GL11;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocChoiceLabel;
 
 public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
 
@@ -153,7 +156,7 @@ public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
 
         getShapeRenderer().initView(getPreviewLeft(), guiTop);
 
-        shapeLabel = new ChoiceLabel(mc, this).setDesiredWidth(100).setDesiredHeight(16).addChoices(
+        shapeLabel = new LocChoiceLabel(mc, this).setDesiredWidth(100).setDesiredHeight(16).addChoices(
                 mcjty.rftools.shapes.Shape.SHAPE_BOX.getDescription(),
                 mcjty.rftools.shapes.Shape.SHAPE_TOPDOME.getDescription(),
                 mcjty.rftools.shapes.Shape.SHAPE_BOTTOMDOME.getDescription(),
@@ -168,7 +171,7 @@ public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
                 mcjty.rftools.shapes.Shape.SHAPE_SCAN.getDescription()
         ).addChoiceEvent((parent, newChoice) -> updateSettings());
 
-        solidLabel = new ChoiceLabel(mc, this).setDesiredWidth(50).setDesiredHeight(16).addChoices(
+        solidLabel = new LocChoiceLabel(mc, this).setDesiredWidth(50).setDesiredHeight(16).addChoices(
                 "Hollow",
                 "Solid"
         ).addChoiceEvent((parent, newChoice) -> updateSettings());
@@ -196,11 +199,11 @@ public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
         }).setText(String.valueOf(dim.getX()));
         dimY = new TextField(mc, this).addTextEvent((parent, newText) -> updateSettings()).setText(String.valueOf(dim.getY()));
         dimZ = new TextField(mc, this).addTextEvent((parent, newText) -> updateSettings()).setText(String.valueOf(dim.getZ()));
-        Panel dimPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(0)).addChild(new Label(mc, this).setText("Dim:").setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setDesiredWidth(40)).setDesiredHeight(18).addChild(dimX).addChild(dimY).addChild(dimZ);
+        Panel dimPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(0)).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.dim")).setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setDesiredWidth(40)).setDesiredHeight(18).addChild(dimX).addChild(dimY).addChild(dimZ);
         offsetX = new TextField(mc, this).addTextEvent((parent, newText) -> updateSettings()).setText(String.valueOf(offset.getX()));
         offsetY = new TextField(mc, this).addTextEvent((parent, newText) -> updateSettings()).setText(String.valueOf(offset.getY()));
         offsetZ = new TextField(mc, this).addTextEvent((parent, newText) -> updateSettings()).setText(String.valueOf(offset.getZ()));
-        Panel offsetPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(0)).addChild(new Label(mc, this).setText("Offset:").setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setDesiredWidth(40)).setDesiredHeight(18).addChild(offsetX).addChild(offsetY).addChild(offsetZ);
+        Panel offsetPanel = new Panel(mc, this).setLayout(new HorizontalLayout().setHorizontalMargin(0)).addChild(new Label(mc, this).setText(I18n.format("gui.rftools.offset")).setHorizontalAlignment(HorizontalAlignment.ALIGN_RIGHT).setDesiredWidth(40)).setDesiredHeight(18).addChild(offsetX).addChild(offsetY).addChild(offsetZ);
 
         Panel settingsPanel = new Panel(mc, this).setLayout(new VerticalLayout().setSpacing(1).setVerticalMargin(1).setHorizontalMargin(0))
                 .addChild(dimPanel).addChild(offsetPanel);
@@ -230,16 +233,16 @@ public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
                 .setFilledRectThickness(-2)
                 .setFilledBackground(StyleConfig.colorListBackground);
         voidPanel.setLayoutHint(5, 155, 350, 26);
-        Label label = new Label(mc, this).setText("Void:");
-        stone = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void stone").addButtonEvent(widget -> updateVoidSettings());
-        cobble = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void cobble").addButtonEvent(widget -> updateVoidSettings());
-        dirt = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void dirt").addButtonEvent(widget -> updateVoidSettings());
-        gravel = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void gravel").addButtonEvent(widget -> updateVoidSettings());
-        sand = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void sand").addButtonEvent(widget -> updateVoidSettings());
-        netherrack = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void netherrack").addButtonEvent(widget -> updateVoidSettings());
-        endstone = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips("Void end stone").addButtonEvent(widget -> updateVoidSettings());
-        oredict = new ToggleButton(mc, this).setDesiredWidth(60).setDesiredHeight(15).setTooltips("Enable ore dictionary matching")
-                .setText("Oredict")
+        Label label = new Label(mc, this).setText(I18n.format("gui.rftools.void"));
+        stone = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_stone")).addButtonEvent(widget -> updateVoidSettings());
+        cobble = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_cobble")).addButtonEvent(widget -> updateVoidSettings());
+        dirt = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_dirt")).addButtonEvent(widget -> updateVoidSettings());
+        gravel = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_gravel")).addButtonEvent(widget -> updateVoidSettings());
+        sand = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_sand")).addButtonEvent(widget -> updateVoidSettings());
+        netherrack = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_netherrack")).addButtonEvent(widget -> updateVoidSettings());
+        endstone = new ToggleButton(mc, this).setDesiredWidth(20).setDesiredHeight(20).setTooltips(GuiLoc.lines("gui.rftools.void_end_stone")).addButtonEvent(widget -> updateVoidSettings());
+        oredict = new ToggleButton(mc, this).setDesiredWidth(60).setDesiredHeight(15).setTooltips(GuiLoc.lines("gui.rftools.enable_ore_dictionary_matching"))
+                .setText(I18n.format("gui.rftools.oredict"))
                 .setCheckMarker(true)
                 .addButtonEvent(widget -> updateVoidSettings());
 
@@ -412,9 +415,9 @@ public class GuiShapeCard extends GuiScreen implements IShapeParentGui {
             updateCounter = 10;
             int count = getShapeRenderer().getCount();
             if (count >= ShapeCardItem.MAXIMUM_COUNT) {
-                blocksLabel.setText("#Blocks: ++" + count);
+                blocksLabel.setText(I18n.format("gui.rftools.blocks_s", count));
             } else {
-                blocksLabel.setText("#Blocks: " + count);
+                blocksLabel.setText(I18n.format("gui.rftools.blocks_s_2", count));
             }
         }
 

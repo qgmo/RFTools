@@ -32,6 +32,9 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class LevelEmitterBlock extends LogicSlabBlock<LevelEmitterTileEntity, LevelEmitterContainer> {
 
@@ -63,11 +66,9 @@ public class LevelEmitterBlock extends LogicSlabBlock<LevelEmitterTileEntity, Le
         super.addInformation(itemStack, player, list, whatIsThis);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This block can be retrofitted with a");
-            list.add(TextFormatting.WHITE + "Storage Control Screen Module so that");
-            list.add(TextFormatting.WHITE + "you can count items in your storage");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_block_can_be_retrofitted_with_a"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 

@@ -29,6 +29,10 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
+import mcjty.rftools.varia.Msg;
 
 //@Optional.InterfaceList({
 //        @Optional.Interface(iface = "crazypants.enderio.api.redstone.IRedstoneConnectable", modid = "EnderIO")})
@@ -68,18 +72,14 @@ public class ShieldBlock extends GenericRFToolsBlock<ShieldTEBase, ShieldContain
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
 
-        list.add(TextFormatting.GREEN + "Supports " + max + " blocks");
+        list.add(I18n.format("tooltip.rftools.supports_s_blocks", max));
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This machine forms a shield out of adjacent");
-            list.add(TextFormatting.WHITE + "template blocks. It can filter based on type of");
-            list.add(TextFormatting.WHITE + "mob and do various things (damage, solid, ...)");
-            list.add(TextFormatting.WHITE + "Use the Smart Wrench to add sections to the shield");
-            list.add(TextFormatting.RED + "Note: block mimic is not implemented yet!");
-            list.add(TextFormatting.YELLOW + "Infusing bonus: reduced power consumption and");
-            list.add(TextFormatting.YELLOW + "increased damage.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_machine_forms_a_shield_out_of_adjacent"));
+            list.add(I18n.format("tooltip.rftools.note_block_mimic_is_not_implemented_yet"));
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.infusing_bonus_reduced_power_consumption_2"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 
@@ -122,10 +122,10 @@ public class ShieldBlock extends GenericRFToolsBlock<ShieldTEBase, ShieldContain
             GlobalCoordinate currentBlock = SmartWrenchItem.getCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND));
             if (currentBlock == null) {
                 SmartWrenchItem.setCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND), new GlobalCoordinate(pos, world.provider.getDimension()));
-                Logging.message(player, TextFormatting.YELLOW + "Selected block");
+                Msg.message(player, "msg.rftools.selected_block");
             } else {
                 SmartWrenchItem.setCurrentBlock(player.getHeldItem(EnumHand.MAIN_HAND), null);
-                Logging.message(player, TextFormatting.YELLOW + "Cleared selected block");
+                Msg.message(player, "msg.rftools.cleared_selected_block");
             }
         }
         return true;

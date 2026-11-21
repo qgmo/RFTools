@@ -12,6 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
 
 public class RFToolsManualItem extends GenericRFToolsItem {
 
@@ -28,7 +29,7 @@ public class RFToolsManualItem extends GenericRFToolsItem {
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
-        tooltip.add("RFTools basic manual");
+        tooltip.add(I18n.format("tooltip.rftools.rftools_basic_manual"));
     }
 
     @Override

@@ -12,6 +12,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class RFToolsShapeManualItem extends GenericRFToolsItem {
 
@@ -28,10 +31,7 @@ public class RFToolsShapeManualItem extends GenericRFToolsItem {
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
-        tooltip.add("RFTools shape manual");
-        tooltip.add("The Builder, Shield, Shapecards,");
-        tooltip.add("The Scanner, Projector, Composor,");
-        tooltip.add("and Locator");
+        Collections.addAll(tooltip, GuiLoc.lines("tooltip.rftools.rftools_shape_manual_the_builder_shield"));
     }
 
 

@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import mcjty.rftools.varia.Msg;
 
 public class StorageTools {
 
@@ -44,7 +45,7 @@ public class StorageTools {
                 remoteStorage.compact(id);
                 remoteStorage.markDirty();
             } else {
-                Logging.message(player, TextFormatting.YELLOW + "Remote storage it not available (out of power or out of reach)!");
+                Msg.message(player, "msg.rftools.remote_storage_it_not_available_out_of");
             }
         } else {
             GenericContainer genericContainer = (GenericContainer) player.openContainer;
@@ -95,7 +96,7 @@ public class StorageTools {
             }
             remoteStorage.markDirty();
         } else {
-            Logging.message(player, TextFormatting.YELLOW + "Remote storage it not available (out of power or out of reach)!");
+            Msg.message(player, "msg.rftools.remote_storage_it_not_available_out_of");
         }
     }
 

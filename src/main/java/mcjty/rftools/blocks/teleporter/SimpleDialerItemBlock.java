@@ -13,6 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import mcjty.rftools.varia.Msg;
 
 public class SimpleDialerItemBlock extends GenericItemBlock {
     public SimpleDialerItemBlock(Block block) {
@@ -33,7 +34,7 @@ public class SimpleDialerItemBlock extends GenericItemBlock {
                 MatterTransmitterTileEntity matterTransmitterTileEntity = (MatterTransmitterTileEntity) te;
 
                 if (!matterTransmitterTileEntity.checkAccess(player.getName())) {
-                    Logging.message(player, TextFormatting.RED + "You have no access to this matter transmitter!");
+                    Msg.message(player, "msg.rftools.you_have_no_access_to_this_matter");
                     return EnumActionResult.FAIL;
                 }
 
@@ -46,15 +47,15 @@ public class SimpleDialerItemBlock extends GenericItemBlock {
                     Integer id = matterTransmitterTileEntity.getTeleportId();
                     boolean access = checkReceiverAccess(player, world, id);
                     if (!access) {
-                        Logging.message(player, TextFormatting.RED + "You have no access to the matter receiver!");
+                        Msg.message(player, "msg.rftools.you_have_no_access_to_the_matter_receiver");
                         return EnumActionResult.FAIL;
                     }
 
                     tagCompound.setInteger("receiver", id);
-                    Logging.message(player, TextFormatting.YELLOW + "Receiver set!");
+                    Msg.message(player, "msg.rftools.receiver_set");
                 }
 
-                Logging.message(player, TextFormatting.YELLOW + "Transmitter set!");
+                Msg.message(player, "msg.rftools.transmitter_set");
             }
         } else if (te instanceof MatterReceiverTileEntity) {
             if (!world.isRemote) {
@@ -63,12 +64,12 @@ public class SimpleDialerItemBlock extends GenericItemBlock {
                 Integer id  = matterReceiverTileEntity.getOrCalculateID();
                 boolean access = checkReceiverAccess(player, world, id);
                 if (!access) {
-                    Logging.message(player, TextFormatting.RED + "You have no access to this matter receiver!");
+                    Msg.message(player, "msg.rftools.you_have_no_access_to_this_matter_receiver");
                     return EnumActionResult.FAIL;
                 }
 
                 tagCompound.setInteger("receiver", id);
-                Logging.message(player, TextFormatting.YELLOW + "Receiver set!");
+                Msg.message(player, "msg.rftools.receiver_set");
             }
         } else {
             return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);

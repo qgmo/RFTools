@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static mcjty.rftools.blocks.teleporter.DialingDeviceTileEntity.*;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import mcjty.rftools.client.LocImageChoiceLabel;
+import mcjty.rftools.varia.Msg;
 
 public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntity> {
 
@@ -84,28 +88,28 @@ public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntit
         Panel transmitterPanel = setupTransmitterPanel();
         Panel receiverPanel = setupReceiverPanel();
 
-        dialButton = new Button(mc, this).setChannel("dial").setText("Dial").setTooltips("Start a connection between", "the selected transmitter", "and the selected receiver").
+        dialButton = new Button(mc, this).setChannel("dial").setText(I18n.format("gui.rftools.dial")).setTooltips(GuiLoc.lines("gui.rftools.start_a_connection_between_the_selected")).
                 setDesiredHeight(14).setDesiredWidth(65);
-        dialOnceButton = new Button(mc, this).setChannel("dialonce").setText("Dial Once").setTooltips("Dial a connection for a", "single teleport").
+        dialOnceButton = new Button(mc, this).setChannel("dialonce").setText(I18n.format("gui.rftools.dial_once")).setTooltips(GuiLoc.lines("gui.rftools.dial_a_connection_for_a_single_teleport")).
                 setDesiredHeight(14).setDesiredWidth(65);
-        interruptButton = new Button(mc, this).setChannel("interrupt").setText("Interrupt").setTooltips("Interrupt a connection", "for the selected transmitter").
+        interruptButton = new Button(mc, this).setChannel("interrupt").setText(I18n.format("gui.rftools.interrupt")).setTooltips(GuiLoc.lines("gui.rftools.interrupt_a_connection_for_the_selected")).
                 setDesiredHeight(14).setDesiredWidth(65);
-        favoriteButton = new ImageChoiceLabel(mc, this).setChannel("favorite").setDesiredWidth(10).setDesiredHeight(10);
-        favoriteButton.addChoice("No", "Unfavorited receiver", guielements, 131, 19);
-        favoriteButton.addChoice("Yes", "Favorited receiver", guielements, 115, 19);
+        favoriteButton = new LocImageChoiceLabel(mc, this).setChannel("favorite").setDesiredWidth(10).setDesiredHeight(10);
+        favoriteButton.addChoice("No", I18n.format("gui.rftools.unfavorited_receiver"), guielements, 131, 19);
+        favoriteButton.addChoice("Yes", I18n.format("gui.rftools.favorited_receiver"), guielements, 115, 19);
         favoriteButton.setCurrentChoice(tileEntity.isShowOnlyFavorites() ? 1 : 0);
 
         Panel buttonPanel = new Panel(mc, this).setLayout(new HorizontalLayout()).addChild(dialButton).addChild(dialOnceButton).addChild(interruptButton).
                 addChild(favoriteButton).setDesiredHeight(16);
 
         analyzerAvailable =  DialingDeviceTileEntity.isDestinationAnalyzerAvailable(mc.world, tileEntity.getPos());
-        statusButton = new Button(mc, this).setChannel("check").setText("Check").
+        statusButton = new Button(mc, this).setChannel("check").setText(I18n.format("gui.rftools.check")).
                 setDesiredHeight(14).setDesiredWidth(65).
                 setEnabled(analyzerAvailable);
         if (analyzerAvailable) {
-            statusButton.setTooltips("Check the status of", "the selected receiver");
+            statusButton.setTooltips(GuiLoc.lines("gui.rftools.check_the_status_of_the_selected_receiver"));
         } else {
-            statusButton.setTooltips("Check the status of", "the selected receiver", "(needs an adjacent analyzer!)");
+            statusButton.setTooltips(GuiLoc.lines("gui.rftools.check_the_status_of_the_selected_receiver_2"));
         }
 
         statusLabel = new Label(mc, this);
@@ -196,12 +200,12 @@ public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntit
         double distance = new Vec3d(c.getX(), c.getY(), c.getZ()).distanceTo(mc.player.getPositionVector());
 
         if (destination.getDimension() != mc.world.provider.getDimension() || distance > 150) {
-            Logging.warn(mc.player, "Receiver is too far to hilight!");
+            Msg.warn(mc.player, "msg.rftools.receiver_is_too_far_to_hilight");
             mc.player.closeScreen();
             return;
         }
         RFTools.instance.clientInfo.hilightBlock(c, System.currentTimeMillis()+1000*5);// @todo StorageScannerConfiguration.hilightTime);
-        Logging.message(mc.player, "The receiver is now highlighted");
+        Msg.message(mc.player, "msg.rftools.the_receiver_is_now_highlighted");
         mc.player.closeScreen();
     }
 
@@ -237,50 +241,50 @@ public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntit
 
     private void showStatus(int dialResult) {
         if ((dialResult & DialingDeviceTileEntity.DIAL_DIALER_POWER_LOW_MASK) != 0) {
-            setStatusError("Dialing device power low!");
+            setStatusError(I18n.format("gui.rftools.dial.dialing_device_power_low"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_RECEIVER_POWER_LOW_MASK) != 0) {
-            setStatusError("Matter receiver power low!");
+            setStatusError(I18n.format("gui.rftools.dial.matter_receiver_power_low"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_DIMENSION_POWER_LOW_MASK) != 0) {
-            setStatusError("Destination dimension power low!");
+            setStatusError(I18n.format("gui.rftools.dial.destination_dimension_power_low"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_TRANSMITTER_NOACCESS) != 0) {
-            setStatusError("No access to transmitter!");
+            setStatusError(I18n.format("gui.rftools.dial.no_access_to_transmitter"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_RECEIVER_NOACCESS) != 0) {
-            setStatusError("No access to receiver!");
+            setStatusError(I18n.format("gui.rftools.dial.no_access_to_receiver"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_INVALID_DESTINATION_MASK) != 0) {
-            setStatusError("Invalid destination!");
+            setStatusError(I18n.format("gui.rftools.dial.invalid_destination"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_INVALID_SOURCE_MASK) != 0) {
-            setStatusError("Invalid source!");
+            setStatusError(I18n.format("gui.rftools.dial.invalid_source"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_RECEIVER_BLOCKED_MASK) != 0) {
-            setStatusError("Receiver blocked!");
+            setStatusError(I18n.format("gui.rftools.dial.receiver_blocked"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_TRANSMITTER_BLOCKED_MASK) != 0) {
-            setStatusError("Transmitter blocked!");
+            setStatusError(I18n.format("gui.rftools.dial.transmitter_blocked"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_INVALID_TRANSMITTER) != 0) {
-            setStatusError("Invalid transmitter!!");
+            setStatusError(I18n.format("gui.rftools.dial.invalid_transmitter"));
             return;
         }
         if ((dialResult & DialingDeviceTileEntity.DIAL_INTERRUPTED) != 0) {
-            setStatusMessage("Interrupted!");
+            setStatusMessage(I18n.format("gui.rftools.dial.interrupted"));
             return;
         }
-        setStatusMessage("Dial ok!");
+        setStatusMessage(I18n.format("gui.rftools.dial.dial_ok"));
     }
 
     private void selectReceiverFromTransmitter() {
@@ -425,19 +429,19 @@ public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntit
 
             String dimName = destination.getDimensionName();
             if (dimName == null || dimName.trim().isEmpty()) {
-                dimName = "Id " + destination.getDimension();
+                dimName = I18n.format("gui.rftools.dimension_id", destination.getDimension());
             }
 
             boolean favorite = destination.isFavorite();
             Panel panel = new Panel(mc, this).setLayout(new HorizontalLayout().setSpacing(1).setHorizontalMargin(3));
             panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(destination.getName()).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setDesiredWidth(96).
-                    setTooltips("The name of the", "destination receiver:", destination.getName() + " (" + BlockPosTools.toString(coordinate) + ")"));
+                    setTooltips(GuiLoc.lines("gui.rftools.the_name_of_the_destination_receiver_s_s", destination.getName(), BlockPosTools.toString(coordinate))));
             panel.addChild(new Label(mc, this).setColor(StyleConfig.colorTextInListNormal).setText(dimName).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT)
-                    .setDynamic(true).setTooltips("The name of the", "destination dimension:", dimName)
+                    .setDynamic(true).setTooltips(GuiLoc.lines("gui.rftools.the_name_of_the_destination_dimension_s", dimName))
                     .setDesiredWidth(110));
-            ImageChoiceLabel choiceLabel = new ImageChoiceLabel(mc, this).addChoiceEvent((parent, newChoice) -> changeFavorite()).setDesiredWidth(10);
-            choiceLabel.addChoice("No", "Not favorited", guielements, 131, 19);
-            choiceLabel.addChoice("Yes", "Favorited", guielements, 115, 19);
+            ImageChoiceLabel choiceLabel = new LocImageChoiceLabel(mc, this).addChoiceEvent((parent, newChoice) -> changeFavorite()).setDesiredWidth(10);
+            choiceLabel.addChoice("No", I18n.format("gui.rftools.not_favorited"), guielements, 131, 19);
+            choiceLabel.addChoice("Yes", I18n.format("gui.rftools.favorited"), guielements, 115, 19);
             choiceLabel.setCurrentChoice(favorite ? 1 : 0);
             panel.addChild(choiceLabel);
             receiverList.addChild(panel);
@@ -563,13 +567,13 @@ public class GuiDialingDevice extends GenericGuiContainer<DialingDeviceTileEntit
             dialButton.setEnabled(true);
             dialOnceButton.setEnabled(true);
             String distance = calculateDistance(transmitterSelected, receiverSelected);
-            dialButton.setTooltips("Start a connection between", "the selected transmitter", "and the selected receiver.", "Distance: " + distance);
-            dialOnceButton.setTooltips("Dial a connection for a", "single teleport.", "Distance: " + distance);
+            dialButton.setTooltips(GuiLoc.lines("gui.rftools.start_a_connection_between_the_selected_2", distance));
+            dialOnceButton.setTooltips(GuiLoc.lines("gui.rftools.dial_a_connection_for_a_single_teleport_2", distance));
         } else {
             dialButton.setEnabled(false);
             dialOnceButton.setEnabled(false);
-            dialButton.setTooltips("Start a connection between", "the selected transmitter", "and the selected receiver");
-            dialOnceButton.setTooltips("Dial a connection for a", "single teleport");
+            dialButton.setTooltips(GuiLoc.lines("gui.rftools.start_a_connection_between_the_selected"));
+            dialOnceButton.setTooltips(GuiLoc.lines("gui.rftools.dial_a_connection_for_a_single_teleport"));
         }
         if (transmitterSelected != -1) {
             TeleportDestination destination = getSelectedTransmitterDestination();

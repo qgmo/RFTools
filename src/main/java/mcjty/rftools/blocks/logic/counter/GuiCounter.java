@@ -10,6 +10,7 @@ import mcjty.rftools.RFTools;
 import mcjty.rftools.setup.GuiProxy;
 import mcjty.rftools.network.RFToolsMessages;
 import net.minecraft.util.ResourceLocation;
+import mcjty.rftools.client.GuiLoc;
 
 public class GuiCounter extends GenericGuiContainer<CounterTileEntity> {
 
@@ -22,6 +23,7 @@ public class GuiCounter extends GenericGuiContainer<CounterTileEntity> {
     @Override
     public void initGui() {
         window = new Window(this, tileEntity, RFToolsMessages.INSTANCE, new ResourceLocation(RFTools.MODID, "gui/counter.gui"));
+        GuiLoc.localize(window);
         super.initGui();
 
         requestCurrentCounter();

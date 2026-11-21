@@ -10,6 +10,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
+import net.minecraft.client.resources.I18n;
+import mcjty.rftools.client.GuiLoc;
+import java.util.Collections;
 
 public class PeaceEssenceItem extends GenericRFToolsItem {
     public PeaceEssenceItem() {
@@ -22,11 +25,9 @@ public class PeaceEssenceItem extends GenericRFToolsItem {
     public void addInformation(ItemStack itemStack, World player, List<String> list, ITooltipFlag whatIsThis) {
         super.addInformation(itemStack, player, list, whatIsThis);
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            list.add(TextFormatting.WHITE + "This essence item is the main ingredient for");
-            list.add(TextFormatting.WHITE + "the peaceful dimlet in the Dimlet Workbench.");
-            list.add(TextFormatting.WHITE + "Getting this essence is somewhat harder though.");
+            Collections.addAll(list, GuiLoc.lines("tooltip.rftools.this_essence_item_is_the_main_ingredient"));
         } else {
-            list.add(TextFormatting.WHITE + GuiProxy.SHIFT_MESSAGE);
+            list.add(TextFormatting.WHITE + I18n.format("message.rftools.shiftmessage"));
         }
     }
 }

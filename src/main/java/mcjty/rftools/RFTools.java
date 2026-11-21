@@ -91,6 +91,7 @@ public class RFTools implements ModBase {
     public void serverStarted(FMLServerAboutToStartEvent event) {
         TickOrderHandler.clean();
         mcjty.rftools.network.PacketGuard.clear();
+        mcjty.rftools.shapes.ShapeDataManagerServer.clear();
     }
 
 

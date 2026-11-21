@@ -16,7 +16,7 @@ public class PacketRequestShapeData implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        card = NetworkTools.readItemStack(buf);
+        card = mcjty.rftools.network.SafeNetworkTools.readItemStack(buf);
         id = new ShapeID(buf);
     }
 
@@ -41,6 +41,10 @@ public class PacketRequestShapeData implements IMessage {
     public void handle(Supplier<Context> supplier) {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
+            // 只接受形状卡；工作量按玩家计预算（见 ShapeDataManagerServer）
+            if (ctx.getSender() == null || card.isEmpty() || !(card.getItem() instanceof ShapeCardItem)) {
+                return;
+            }
             Shape shape = ShapeCardItem.getShape(card);
             boolean solid = ShapeCardItem.isSolid(card);
             BlockPos dimension = ShapeCardItem.getDimension(card);

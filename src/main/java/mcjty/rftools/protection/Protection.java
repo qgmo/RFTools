@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * <ul>
  *     <li>有 SpongeForge 时：发 Sponge 的主手右键方块事件（{@link SpongeProtection}），由 Sponge 的保护插件判断。</li>
  *     <li>没有 Sponge 时：发 Forge 的 {@link PlayerInteractEvent.RightClickBlock}，被取消或“使用方块”被拒绝都算不能。
- *     Forge 的这个事件取的是玩家所在的世界，所以方块不在玩家所在的世界时问不了，按“不能”回答。</li>
+ *     Forge 的这个事件取的是玩家所在的世界，方块不在玩家所在的世界时问不了，放行（只有平板远程打开的界面会这样）。</li>
  * </ul>
  * 只问，不调用方块的 {@code onBlockActivated}；RFTools 自己的右键事件处理器在问的时候不做事（{@link #isChecking()}），
  * 但别的模组若在这个事件里做事，仍会被触发（有 Sponge 时 SpongeForge 也可能把 Sponge 事件转给 Forge 的监听者）。区块没加载时回答“不能”（不会因此加载区块）。出错时按“不能”处理。
@@ -53,7 +53,9 @@ public final class Protection {
                 return SpongeProtection.canInteract((WorldServer) world, pos, player);
             }
             if (player.world != world) {
-                return false;
+                // Forge 的事件取的是玩家所在的世界，问不了另一个世界的方块。能走到这里的只有平板远程打开的界面
+                // （守卫的距离检查要求同一世界），平板是玩家自己在机器上绑定的，放行
+                return true;
             }
             PlayerInteractEvent.RightClickBlock event = new PlayerInteractEvent.RightClickBlock(player, EnumHand.MAIN_HAND, pos,
                     EnumFacing.UP, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));

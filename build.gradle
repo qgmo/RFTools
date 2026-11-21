@@ -2,7 +2,7 @@
 //
 // 运行 Gradle 需要 JDK 25（RetroFuturaGradle 2.x 插件是 Java 25 字节码）；编译目标是 Java 8，
 // 编译用的 JDK 8 由工具链（foojay）自动下载，本机已有时用本机的。
-// 产物 build/libs/rftools-<version>.jar（version 取 gradle.properties，形如 1.12-7.73）。
+// 产物 build/libs/rftools-<version>.jar（version 取 gradle.properties，形如 1.12-7.73-yr1）。
 
 plugins {
     id 'java'

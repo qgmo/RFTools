@@ -1,0 +1,24 @@
+// RFTools 1.12（悠然服务器修改版）：构建照悠然服务器其它 1.12.2 工程（RetroFuturaGradle 2.x），
+// 用 JDK 25 运行 Gradle，编译目标 Java 8
+pluginManagement {
+    repositories {
+        maven {
+            // RetroFuturaGradle
+            name 'GTNH Maven'
+            url 'https://nexus.gtnewhorizons.com/repository/public/'
+            mavenContent {
+                includeGroup 'com.gtnewhorizons'
+                includeGroup 'com.gtnewhorizons.retrofuturagradle'
+            }
+        }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    // 自动下载编译用的 JDK 8（本机已有时用本机的）
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'rftools'

@@ -139,6 +139,21 @@ dependencies {
     // SpongeAPI 7.4.0（与 SpongeForge 7.4.7 对应）：只编译、不打包；运行时由 SpongeForge 提供，没有 Sponge 时相关类不会被加载
     compileOnly('org.spongepowered:spongeapi:7.4.0') { transitive = false }
     compileOnly('com.flowpowered:flow-math:1.0.3') { transitive = false }
+
+    // 单元测试（只测纯逻辑：范围、白名单、预算、上限、映射清理）
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    // Minecraft 的日志配置会在工作目录下建 logs/，放到 build 里
+    workingDir = layout.buildDirectory.dir('test-work').get().asFile
+    doFirst { workingDir.mkdirs() }
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+        vendor = JvmVendorSpec.AZUL
+    })
 }
 
 jar {

@@ -1,5 +1,6 @@
 package mcjty.rftools.items.builder;
 
+import mcjty.rftools.network.PacketGuard;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.NetworkTools;
 import mcjty.lib.thirteen.Context;
@@ -38,6 +39,18 @@ public class PacketUpdateNBTItemInventoryShape implements IMessage {
         return tileEntity instanceof ComposerTileEntity || tileEntity instanceof BuilderTileEntity;
     }
 
+    /** 能放形状卡的槽位：建造者的卡片槽；合成器的输出槽与 9 个输入槽（不含幽灵槽）。 */
+    protected static boolean isCardSlot(TileEntity te, int slot) {
+        if (te instanceof BuilderTileEntity) {
+            return slot == BuilderTileEntity.SLOT_TAB;
+        }
+        if (te instanceof ComposerTileEntity) {
+            return slot == ComposerTileEntity.SLOT_OUT
+                    || (slot >= ComposerTileEntity.SLOT_TABS && slot < ComposerTileEntity.SLOT_TABS + ComposerTileEntity.SLOT_COUNT);
+        }
+        return false;
+    }
+
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = NetworkTools.readPos(buf);
@@ -56,15 +69,18 @@ public class PacketUpdateNBTItemInventoryShape implements IMessage {
         Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             World world = ctx.getSender().getEntityWorld();
-            TileEntity te = world.getTileEntity(pos);
+            // 守卫：区块已加载、开着这台建造者 / 合成器的界面或在附近、安全卡、领地
+            TileEntity te = PacketGuard.machine(ctx.getSender(), world, pos);
             if (te instanceof IInventory) {
-                if (!isValidBlock(world, pos, te)) {
+                if (!isValidBlock(world, pos, te) || !isCardSlot(te, slotIndex)) {
                     return;
                 }
                 IInventory inv = (IInventory) te;
                 ItemStack stack = inv.getStackInSlot(slotIndex);
-                if (!stack.isEmpty()) {
-                    stack.setTagCompound(tagCompound);
+                if (!stack.isEmpty() && stack.getItem() instanceof ShapeCardItem) {
+                    // 只把形状卡界面会改的键套到服务端现有的 NBT 上，其余（组合形状、扫描编号等）保持不变
+                    stack.setTagCompound(ShapeCardNbtSanitizer.fromConfig().merge(stack.getTagCompound(), tagCompound));
+                    te.markDirty();
                 }
             }
         });

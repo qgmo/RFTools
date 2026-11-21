@@ -1,5 +1,7 @@
 package mcjty.rftools.items.storage;
 
+import mcjty.rftools.network.ItemNbtWhitelist;
+import mcjty.rftools.network.SafeNetworkTools;
 import io.netty.buffer.ByteBuf;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.thirteen.Context;
@@ -29,13 +31,17 @@ public class PacketUpdateNBTItemFilter implements IMessage {
         this.args = arguments;
     }
 
+    private static final ItemNbtWhitelist WHITELIST = ItemNbtWhitelist.builder()
+            .string("blacklistMode", 32).bool("oredictMode").bool("damageMode").bool("modMode").bool("nbtMode")
+            .build();
+
     protected boolean isValidItem(ItemStack itemStack) {
         return itemStack.getItem() instanceof StorageFilterItem;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        args = TypedMapTools.readArguments(buf);
+        args = SafeNetworkTools.readArguments(buf);
     }
 
     @Override
@@ -60,25 +66,9 @@ public class PacketUpdateNBTItemFilter implements IMessage {
                 tagCompound = new NBTTagCompound();
                 heldItem.setTagCompound(tagCompound);
             }
+            // 只收界面会写的键（类型、长度都检查）；以前任意键都能写（远程存储编号、扫描器坐标、能量等）
             for (Key<?> akey : args.getKeys()) {
-                String key = akey.getName();
-                if (Type.STRING.equals(akey.getType())) {
-                    tagCompound.setString(key, (String) args.get(akey));
-                } else if (Type.INTEGER.equals(akey.getType())) {
-                    tagCompound.setInteger(key, (Integer) args.get(akey));
-                } else if (Type.LONG.equals(akey.getType())) {
-                    tagCompound.setLong(key, (Long) args.get(akey));
-                } else if (Type.DOUBLE.equals(akey.getType())) {
-                    tagCompound.setDouble(key, (Double) args.get(akey));
-                } else if (Type.BOOLEAN.equals(akey.getType())) {
-                    tagCompound.setBoolean(key, (Boolean) args.get(akey));
-                } else if (Type.BLOCKPOS.equals(akey.getType())) {
-                    throw new RuntimeException("BlockPos not supported for PacketUpdateNBTItem!");
-                } else if (Type.ITEMSTACK.equals(akey.getType())) {
-                    throw new RuntimeException("ItemStack not supported for PacketUpdateNBTItem!");
-                } else {
-                    throw new RuntimeException(akey.getType().getType().getSimpleName() + " not supported for PacketUpdateNBTItem!");
-                }
+                WHITELIST.apply(tagCompound, akey.getName(), akey.getType(), args.get(akey));
             }
         });
         ctx.setPacketHandled(true);
